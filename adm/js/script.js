@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
           if (data.length > 0) {
             alert(`Bem-vindo, ${data[0].nome}!`);
-            window.location.href = "/views/controle.html";
+            window.location.href = "views/controle.html"; // Redireciona para a página de controle
           } else {
             alert("Email ou senha inválidos!");
           }
