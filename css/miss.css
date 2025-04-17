@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+  }
+  
+  /* Cabeçalho */
+  header {
+    background-color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  header img {
+    height: 50px;
+  }
+  
+  /* Navegação */
+  nav {
+    background-color: #a80000;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+  }
+  
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  
+  .voltar {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  
+  .usuario {
+    font-size: 20px;
+  }
+  
+  /* Conteúdo principal */
+  main {
+    display: flex;
+    align-items: flex-start; /* Alinha os itens no topo */
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .imagem {
+    flex: 2 1 500px;
+    max-width: 700px;
+  }
+  
+  .imagem img {
+    width: 750  px;
+    border-radius: 30px;
+    margin-left: -40px;
+  }
+  
+  .texto {
+    flex: 1 1 21px;
+    align-self: flex-start; /* Garante alinhamento no topo mesmo com wrap */
+    background-color: #b30000;
+    color: white;
+    padding: 20px;
+    border-radius: 30px;
+    position: relative;
+    max-width: 320px;
+    height: fit-content;
+    
+    margin-right: -10px; /* Adiciona margem direita para espaçamento */
+    
+  }
+  
+  
+  .texto p {
+    margin-top: 40px;
+    font-weight: bold;
+    line-height: 1.6;
+    font-size: 1.2rem; /* Aumentado de padrão para 1.1rem */
+  }
+  
+  
+  /* Emojis decorativos */
+  .emoji {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+  }
+  
+  .canto-inferior {
+    top: auto;
+    bottom: 10px;
+    right: 10px;
+    left: auto;
+    font-size: 20px;
+  }

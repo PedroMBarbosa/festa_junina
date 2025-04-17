@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/cadastro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <title>Modern Login Form</title>
+    
+  </head>
+  <body>
+  
+    <header>
+      <div class="top-header">
+        <!-- Ajuste o caminho da logo conforme sua pasta -->
+        <img src="../img/SENAI_São_Paulo_logo.png" alt="SENAI Logo" class="logo" />
+      </div>
+      <div class="bottom-bar">
+        <a href="../index.html" class="icon">
+          <i class="fas fa-home"></i>
+        </a>
+        <!-- Ícone de usuário com contorno branco e fundo transparente -->
+        <a href="#" class="icon icon-user">
+          <i class="far fa-user-circle"></i>
+        </a>
+      </div>
+    </header>
+    
+    <div class="txt1">Preencha os dados solicitados para se cadastrar.</div>
+    
+    <div class="main">
+      <!-- Checkbox para alternância dos formulários -->
+      <input type="checkbox" id="chk" aria-hidden="true" />
+      
+      <!-- Formulário de Cadastro -->
+      <div class="signup">
+        <form id="registerForm">
+          <label for="chk" aria-hidden="true">Cadastro</label>
+          <input type="text" id="nome" placeholder="Nome de usuário" required />
+          <input type="email" id="email" placeholder="Email" required />
+          <input type="password" id="senha" placeholder="Senha" required />
+          <input type="password" id="confirmSenha" placeholder="Confirmar senha" required />
+
+          <!-- Bloco "Lembre de mim" posicionado logo abaixo do confirmar senha -->
+          <div class="remember-container">
+            <input type="checkbox" id="rememberSignup"/>
+            <label for="rememberSignup">Lembre de mim nesse dispositivo</label>
+          </div>
+          
+          <button class="cadastro" type="submit">Cadastrar-se</button>
+        </form>
+      </div>
+
+      <!-- Formulário de Login -->
+      <div class="login">
+        <form id="loginForm">
+          <label for="chk" aria-hidden="true">Entrar na conta</label>
+          <input type="text" id="nomeLogin" placeholder="Nome de usuário" required />
+          <input type="email" id="loginEmail" placeholder="Email" required />
+          <input type="password" id="loginSenha" placeholder="Senha" required />
+          
+          <!-- Bloco "Lembre de mim" no formulário de Login -->
+          <!-- Botão "Esqueceu a senha?" posicionado abaixo do campo de senha -->
+          <div class="forgot-password">
+            <a href="#">Esqueceu a senha?</a>
+          </div>
+
+          <button type="submit" class="entrar">Entrar</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="script/entrada.js"></script>
+  </body>
+</html>

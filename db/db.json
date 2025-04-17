@@ -1,0 +1,52 @@
+{
+  "usuario": [
+    {
+      "id": "1",
+      "nome": "Javier Escuella",
+      "email": "javier.escuella@fodase.com",
+      "senha": "123"
+    },
+    {
+      "id": "912c",
+      "nome": "Emanuel",
+      "email": "emanuelbentodeoliveira@gmai12l.com",
+      "senha": "999"
+    },
+    {
+      "id": "ff76",
+      "nome": "Félix Gonzales",
+      "email": "felixgonzales@mexicano.com",
+      "senha": "123"
+    },
+    {
+      "id": "ac80",
+      "nome": "Chincharito",
+      "email": "chincharito@guatemala.com",
+      "senha": "1234"
+    },
+    {
+      "id": "b999",
+      "nome": "Juanito Cruz",
+      "email": "juanitocruz@bolivia.com",
+      "senha": "12345"
+    },
+    {
+      "id": "dd2e",
+      "nome": "Pablito Hernandez",
+      "email": "pablitohernandez@mexico.com",
+      "senha": "123456"
+    },
+    {
+      "id": "48dd",
+      "nome": "Emanuel",
+      "email": "emanuelbentodeoliveira@gmail.com",
+      "senha": "999"
+    },
+    {
+      "id": "0a53",
+      "nome": "lugano",
+      "email": "lugano@sccp.com",
+      "senha": "rogferioceni"
+    }
+  ]
+} 
