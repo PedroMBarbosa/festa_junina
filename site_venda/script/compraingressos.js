@@ -103,6 +103,6 @@ function atualizarTotal() {
     }
     document.getElementById('total').textContent = total.toFixed(2);
 }
-
-
 window.onload = adicionarCarrinho;
+
+

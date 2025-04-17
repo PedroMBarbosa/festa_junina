@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Endpoint do JSON Server
-    const urlUsuarios = 'http://localhost:4000/usuario';
+    const urlUsuarios = 'http://localhost:5192/api/clientes/register';
   
     // Função para registrar usuário
     function registrarUsuario(event) {
