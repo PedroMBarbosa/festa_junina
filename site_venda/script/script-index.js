@@ -3,6 +3,3 @@ function toggleMenu(btn) {
     document.getElementById('menu-options').classList.toggle('show');
 }
 
-
-
-
