@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Controle de Vendas - Festa Junina 2025</title>
-  <link rel="stylesheet" href="/css/controle.css">
-  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/controle.css">  
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  
 </head>
@@ -13,58 +12,51 @@
   <header>
     <div class="banner-topo">
       <img src="/images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo">
-      <div class="titulo">
-        <h1>Festa Junina <span>2025</span></h1>
-      </div>
     </div>
+  
     <nav class="menu">
-      <button class="menu-icon">☰</button>
-      <ul>
-        <li class="active"><a href="/views/controle.html">Controle de Vendas</a></li>
-        <li><a href="/views/baixa.html">Baixa no Pagamento</a></li>
-        <li><a href="/views/lotes.html">Gerenciamento de Lotes</a></li>
-        <li><a href="/views/festa.html">Gerenciamento da Festa</a></li>
-      </ul>
+      <a href="/views/home.html" class="menu-icon">🏠</a>
+      <span class="titulo-menu">Controle de Vendas</span>
+      <a href="perfil.html" class="perfil-icon">👤</a>
     </nav>
     
   </header>
-
+  
   <main class="dashboard">
+    <!-- Bloco VENDIDOS -->
     <section class="vendidos">
-      <h2>Vendidos</h2>
+      <button class="secao-btn">VENDIDOS 📅</button>
       <div class="box">
-        <p>• Alunos: 90 ingressos</p>
-        <p>• Familiares: 50 ingressos</p>
-        <p>• Infantil: 30 ingressos</p>
-        <p>• Colaboradores: 50 ingressos</p>
-        <p><strong>• Venda Total: 220 ingressos</strong></p>
+        <p>Alunos: 90 ingressos</p>
+        <p>Familiares: 50 ingressos</p>
+        <p>Infantil: 30 ingressos</p>
+        <p>Colaboradores: 50 ingressos</p>
+        <p>Comunidade: 100 ingressos</p>
+        <p><strong>TOTAL: 320 ingressos</strong></p>
       </div>
     </section>
-
-    <section class="vendas-dia">
-      <h2>Vendas no dia</h2>
-      <div class="date-picker">
-        <label for="data">Data de vendas</label><br>
-        <input type="date" id="data"><br>
-        <div class="buttons">
-          <button class="cancelar">Cancelar</button>
-          <button class="ok">OK</button>
-        </div>
-      </div>
-    </section>
-
+  
+    <!-- Campo de Data -->
+    <div class="data-box">
+      <label for="data">Data</label>
+      <input type="date" id="data" name="data">
+    </div>
+  
+    <!-- Bloco GRÁFICO -->
     <section class="grafico">
-      <h2>Gráfico dos ingressos</h2>
+      <button class="secao-btn">GRÁFICOS DOS INGRESSOS 📅</button>
       <canvas id="chart" width="300" height="300"></canvas>
       <ul class="legenda">
         <li><span class="dot alunos"></span> Alunos</li>
         <li><span class="dot familiares"></span> Familiares</li>
         <li><span class="dot infantil"></span> Infantil</li>
         <li><span class="dot colaboradores"></span> Colaboradores</li>
+        <li><span class="dot comunidade"></span> Comunidade</li>
       </ul>
     </section>
   </main>
-
-  <script src="/js/script.js"></script>
+  
+  
+  <script src="/js/controle.js"></script>
 </body>
 </html>
