@@ -1,0 +1,41 @@
+.logo{
+    height: 65px;
+    width: 250px;
+    margin-left: auto;
+    margin-right: 0;
+}
+.cabecario{
+    display: flex;
+    justify-content: center;
+}
+.perfil{
+    margin-left: auto;
+}
+
+.txt{
+    text-align: center;
+    margin-top: 100px ;
+}
+
+:root {
+    --fj-red: #97080A;
+  }
+  
+  .fundo1 {
+    margin-top: 20px;
+    background-color: var(--fj-red);
+    padding: 250px 0 40px;
+  }
+  
+  .fundo_container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  
+  .img {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+  }
+  
