@@ -7,7 +7,7 @@ class Perguntas {
         this.tipo_perguntas_id = tipo_perguntas_id;
     }    
 }
-
+ 
 const respostasUsuario = [];
 
 
