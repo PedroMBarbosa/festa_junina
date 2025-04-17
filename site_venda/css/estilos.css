@@ -17,27 +17,30 @@ body {
 
 /* Container do botão de menu */
 .icone_menu{
-  width: 40px;  
-  height: 40px;
-  margin-top: 20px;
-  margin-left: 20px;
+  width: 30px;  
+  height: 30px;
+  margin-top: 30px;
+  margin-left: 40px;
 }
 .menu-options{
   margin-top: 24px;
-  margin-left: 20px;
+  margin-left: 40px;
   background-color: white;
   color: black;
   width: 200px;
   border-radius: 0px 0px 10px 10px;
+  padding: 10px;
+  gap: 5px;
 }
 .menu-options a{
   color: rgb(0, 0, 0);
   font-size: 20px;
-  margin-left: 10px;
+  border-radius: 10px;
 }
 .menu-options a:hover{
   text-decoration: none;
-  color: rgb(88, 87, 87);
+  color: rgb(44, 42, 42);
+  background-color: rgb(211, 211, 211);
 }
 #menu-options {
   display: none;
