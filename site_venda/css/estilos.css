@@ -1,0 +1,224 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: gray  ;
+  color: rgb(0, 0, 0);
+}
+
+/* Posicionamento do botão no canto superior direito */
+/* ============================= */
+/* Estilo do MENU (modificações) */
+/* ============================= */
+
+/* Posicionamento do botão no canto superior direito */
+/* ============================= */
+/* MENU - Sempre com animação    */
+/* ============================= */
+
+/* Container do botão de menu */
+.icone_menu{
+  width: 40px;  
+  height: 40px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.menu-options{
+  margin-top: 24px;
+  margin-left: 20px;
+  background-color: white;
+  color: black;
+  width: 200px;
+  border-radius: 0px 0px 10px 10px;
+}
+.menu-options a{
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+  margin-left: 10px;
+}
+.menu-options a:hover{
+  text-decoration: none;
+  color: rgb(88, 87, 87);
+}
+#menu-options {
+  display: none;
+}
+#menu-options.ativo {
+  display: grid;
+}
+
+/* Keyframes das animações utilizadas */
+@keyframes navLinkFade {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes navFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* ============================= */
+/* O restante do CSS permanece inalterado */
+/* ============================= */
+
+/* ... (restante do código CSS fornecido) ... */
+
+
+
+
+/* Botão Cadastro */
+.btn-cadastro {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 40px;
+  top: 15px;
+}
+
+.icone-perfil {
+  width: 60px;  
+  height: 60px;
+}
+
+header{
+  background-color: white;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+#carouselExampleIndicators{
+  width: 1200px;
+  margin: 0 auto;
+}
+
+
+
+.conteiner-carrossel{
+  width: 100%;
+  background-color: #a80000;
+  height: 700px;
+  top: 0%;
+  padding-top: 60px;
+}
+
+.senai{
+  height: 60px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 15px;
+}
+
+.bemvindo{
+background-color: white;
+text-align: center;
+height: 500px;
+}
+.t1{
+font-size: 50px;
+color: #a80000;
+}
+.cdp{
+font-size: 30px;
+color: black;
+}
+.bot1{
+border-radius: 50px;
+background-color: #a80000; 
+margin-top: 100px;
+height: 100px;
+width: 550px;
+border: none;
+}
+.bot2{
+border-radius: 50px;
+background-color: #a80000;
+margin-left: 250px;
+margin-top: 100px;
+height: 100px;
+width: 550px;
+border: none;
+}
+.tt1{
+color: white;
+font-size: 35px;
+}
+.tt2{
+color: white;
+font-size: 35px;
+}
+
+.noite{
+text-align: center;
+color: white;
+background-color: #a80000;
+}
+.subtitulo{
+font-size: 60px;
+}
+.container_texto{
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+padding: 20px;
+
+}
+.texto{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  font-size: 15px;
+  text-align: left;
+  }
+  #centro{
+  grid-column: span 2;
+  justify-content: center;
+  text-align: center;
+  }
+  .texto img{
+  object-fit: cover;
+  margin-left: 10px;
+  width: 90px;
+  height: 90px;
+  }
+  .sup{
+  background-color: white;
+  height: 200px;
+  text-align: center;
+  
+  }
+  .contato{
+  font-size: 40px;
+  margin-top: 50px;
+  }
+  .sup1{
+  background-color: #a80000;
+  border-radius: 40px;
+  width: 500px;
+  margin-top: 50px;
+  font-size: 50px;
+  color: white;
+  border: none;
+  }
+  .rodape{
+  background-color: #a80000;
+  margin-bottom: 0;
+  margin-top: 30px;
+  height: 50px;
+  }
+  .rod1{
+  color: #a80000;
+  }
