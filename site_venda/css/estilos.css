@@ -23,16 +23,27 @@ body {
   margin-left: 20px;
 }
 .menu-options{
-  margin-top: 30px;
+  margin-top: 24px;
   margin-left: 20px;
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
+  width: 200px;
+  border-radius: 0px 0px 10px 10px;
+}
+.menu-options a{
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+  margin-left: 10px;
+}
+.menu-options a:hover{
+  text-decoration: none;
+  color: rgb(88, 87, 87);
 }
 #menu-options {
   display: none;
 }
 #menu-options.ativo {
-  display: flex;
+  display: grid;
 }
 
 /* Keyframes das animações utilizadas */

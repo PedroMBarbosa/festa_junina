@@ -2,7 +2,7 @@ const menu = document.getElementById('menu');
 const opcoes = document.getElementById('menu-options');
 
 function abre_menu() {
-    opcoes.style.display = 'flex';
+    opcoes.style.display = 'grid';
 }
 
 function fecha_menu() {
@@ -10,7 +10,7 @@ function fecha_menu() {
 }
 
 function toggle_menu() {
-    const estaAberto = opcoes.style.display === 'flex';
+    const estaAberto = opcoes.style.display === 'grid';
     if (estaAberto) {
         fecha_menu();
     } else {
