@@ -1,9 +1,9 @@
-const url = 'http://localhost:3000/Usuario'; // ENDPOINT ------>>>> DEVE SER TROCADA PELA ORIGINAL
+const url = 'http://localhost:3000/usuario?id=1'; // ENDPOINT ------>>>> DEVE SER TROCADA PELA ORIGINAL
 let usuarioId = null;
 
 
 class Usuario {
-    constructor(nome, telefone, email, senha) {
+    constructor(id, nome, telefone, email, senha) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
@@ -13,7 +13,8 @@ class Usuario {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    criarInputs(); // Garante que os inputs existem
+    criarInputs(); 
+
 
     fetch(url)
         .then(res => res.json())
@@ -21,14 +22,15 @@ document.addEventListener("DOMContentLoaded", function () {
             if (data.length > 0) {
                 const usuario = data[0];
                 
-                // Armazena o ID globalmente
                 usuarioId = usuario.id;
                 console.log("ID do usuário:", usuarioId);
 
                 document.getElementById('nome-completo').innerText = usuario.nome;
-                document.getElementById('telefone').innerText = usuario.telefone;
                 document.getElementById('email').innerText = usuario.email;
+                document.getElementById('telefone').innerText = usuario.telefone;
                 document.getElementById('senha').innerText = usuario.senha;
+
+                document.getElementById('username').innerText = usuario.nome
 
                 document.getElementById('input-nome').value = usuario.nome;
                 document.getElementById('input-telefone').value = usuario.telefone;
@@ -62,23 +64,31 @@ function criarInputs() {
     });
 }
 
-
-const senhaTexto = document.getElementById("senha");
+const senhaSpan = document.getElementById("senha")
+const senhaInput = document.getElementById("input-senha");
 const botaoOlho = document.getElementById("toggle-senha");
 
 let visivel = true;
 
 botaoOlho.addEventListener("click", () => {
-    visivel = !visivel;
-
-    if (visivel) {
-        senhaTexto.classList.remove("blur");
-        botaoOlho.src = "imagens/eye-close.png";
-    } else {
-        senhaTexto.classList.add("blur");
-        botaoOlho.src = "imagens/eye-open.png";
+    if (senhaSpan !== ""){ /////MERDA BOSTA
+        if (senhaInput.type === "password") {
+        senhaInput.type = "text";
+        botaoOlho.src = "../img/eye-open.png";
+        } else {
+        senhaInput.type = "password";
+        botaoOlho.src = "../img/eye-close.png";
+        }
     }
+    else{
+        senhaSpan.classList.add("blur");
+    }
+    
+
+    console.log("teste, clicado")
 });
+
+
 
 document.getElementById('btn-editar-dados').addEventListener('click', function editarCampos() {
     const spans = document.querySelectorAll('#nome-completo, #telefone, #email, #senha');
@@ -88,9 +98,12 @@ document.getElementById('btn-editar-dados').addEventListener('click', function e
     inputs.forEach(input => input.style.display = 'inline');
 
     const btnEditar = document.getElementById('btn-editar-dados');
-    btnEditar.innerHTML = '<img src="imagens/save.png" class="edit"> Salvar';
+    btnEditar.innerHTML = '<img src="../img/save.png" class="edit"> Salvar';
     btnEditar.removeEventListener('click', editarCampos);
     btnEditar.addEventListener('click', salvarEdicao);
+
+    document.getElementById('toggle-senha').style.display = 'inline';
+
 });
 
 async function salvarEdicao(){
@@ -111,7 +124,7 @@ async function salvarEdicao(){
         }) 
     
      console.log(dados)
-    let resposta = await fetch(`http://localhost:3000/Usuario?id=1`, { 
+    let resposta = await fetch(`http://localhost:3000/usuario?id=1`, { 
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -119,6 +132,7 @@ async function salvarEdicao(){
         body: dados
     })
 
+    
     
     
     
@@ -175,4 +189,9 @@ function voltar(){
 
 back.addEventListener("click", function () {  
     voltar()
+});
+
+
+document.getElementById('editar-imagem').addEventListener('click', function() {
+    
 });
