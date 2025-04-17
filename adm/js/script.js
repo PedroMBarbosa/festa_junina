@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
           if (data.length > 0) {
             alert(`Bem-vindo, ${data[0].nome}!`);
-            window.location.href = "views/controle.html"; // Redireciona para a página de controle
+            window.location.href = "/views/baixa.html"; // Redireciona para a página de controle
           } else {
             alert("Email ou senha inválidos!");
           }
@@ -26,28 +26,5 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Gráfico
-  const chartCanvas = document.getElementById('chart');
-  if (chartCanvas) {
-    const ctx = chartCanvas.getContext('2d');
-    new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: ['Alunos', 'Familiares', 'Infantil', 'Colaboradores'],
-        datasets: [{
-          label: 'Ingressos',
-          data: [90, 50, 30, 50],
-          backgroundColor: [
-            '#2e00ff',
-            '#d62828',
-            '#da70d6',
-            '#f4801f'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true
-      }
-    });
-  }
+  
 });
