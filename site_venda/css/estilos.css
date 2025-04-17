@@ -19,95 +19,20 @@ body {
 .icone_menu{
   width: 40px;  
   height: 40px;
-  margin-top: -10px;
-  margin-left: -10px;
+  margin-top: 20px;
+  margin-left: 20px;
 }
-.menu-container {
-  top: 30px;
-  left: 50px; /* mantido conforme sua versão */
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  width: 40px;
-}
-
-/* Botão do menu (hambúrguer) */
-.menu-btn {
-  width: 40px;
-  height: 30px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-/* Linhas do botão – sempre com transição animada */
-.menu-btn span {
-  display: block;
-  height: 4px;
-  background: #000000;
-  border-radius: 2px;
-  transition: 0.4s;
-}
-
-/* Animação do botão ao ser clicado */
-.menu-btn.active span:nth-child(1) {
-  transform: rotate(45deg) translate(6px, 6px);
-}
-
-.menu-btn.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.menu-btn.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -7px);
-}
-
-/* Menu de opções – sempre ativado, sem condições por media query */
-.menu-options {
-  position: absolute;
-  top: 40px;          /* posicionado logo abaixo do botão */
-  right: 0;           /* alinhado à direita do container de menu */
-  background: #1e1e1e;
-  border-radius: 8px;
-  padding: 10px;
-  display: none;      /* o menu é exibido/apagado via JS (classe .show) */
-  flex-direction: column;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-/* Exibição do menu com efeito fade e deslize */
-.menu-options.show {
-  display: flex;
-  animation: navFade 0.5s ease forwards;
-}
-
-/* Estilização dos links do menu com animação de entrada */
-.menu-options a {
+.menu-options{
+  margin-top: 30px;
+  margin-left: 20px;
+  background-color: black;
   color: white;
-  text-decoration: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: background 0.3s;
-  opacity: 0;
-  animation: navLinkFade 0.5s ease forwards;
 }
-
-/* Delays para um efeito cascata (ajuste conforme a quantidade de itens) */
-.menu-options a:nth-child(1) {
-  animation-delay: 0.1s;
+#menu-options {
+  display: none;
 }
-.menu-options a:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.menu-options a:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-.menu-options a:hover {
-  background: #333;
+#menu-options.ativo {
+  display: flex;
 }
 
 /* Keyframes das animações utilizadas */
