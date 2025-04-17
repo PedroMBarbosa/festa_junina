@@ -70,7 +70,7 @@ body {
 /* Caixa principal (.main) com dimensões fixas e efeito de escala para responsividade */
 .main {
   width: 800px;
-  height: 570px;
+  height: 600px;
   background: #a80000;
   overflow: hidden;
   border-radius: 10px;
