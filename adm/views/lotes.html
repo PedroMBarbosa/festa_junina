@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerenciamento de Lotes - Festa Junina 2025</title>
+  <link rel="stylesheet" href="/css/lotes.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+</head>
+<body>
+  <header>
+    <div class="banner-topo">
+      <img src="/images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo" style="height: 60px; width: auto;">
+      <div class="titulo">
+        <h1>Festa Junina <span>2025</span></h1>
+      </div>
+    </div>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Controle de Vendas</a></li>
+        <li><a href="baixa.html">Baixa no Pagamento</a></li>
+        <li class="active">Gerenciamento de Lotes</li>
+        <li><a href="festa.html">Gerenciamento da Festa</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Restante do seu código permanece igual -->
+  <main class="lotes-container">
+    <!-- Lote 1 -->
+    <div class="lote-card">
+      <div class="lote-topo">
+        <span class="lote-nome">Lote 1</span>
+        <span class="valor verde">Valor: 10,00 R$</span>
+        <span class="valor laranja">Valor: 5,00 R$</span>
+        <span class="status ativo">Ativo</span>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div class="lote-info">
+        <span class="ingressos">50 ingressos restantes</span>
+        <span class="data">Fechamento em dd/mm/yyyy</span>
+      </div>
+      <div class="lote-acoes">
+        <button class="editar">✏️ Editar</button>
+        <button class="excluir">🗑️ Excluir</button>
+      </div>
+    </div>
+
+    <!-- Resto dos lotes... -->
+    <button class="adicionar-lote">➕</button>
+  </main>
+</body>
+</html>

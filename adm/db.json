@@ -1,0 +1,18 @@
+{
+    "usuarios": [
+      {
+        "id": 1,
+        "email": "admin@senai.com",
+        "senha": "123456",
+        "nome": "Administrador"
+      },
+      {
+        "id": 2,
+        "email": "joao@senai.com",
+        "senha": "senha123",
+        "nome": "João"
+      }
+    ]
+  }
+ 
+  
