@@ -77,7 +77,7 @@ function atualizarListaCarrinho() {
         li.innerHTML = `
             ${nomeItem} R$${preco.toFixed(2)} <span>${String(carrinhoItens[item]).padStart(2, '0')}</span>
             <button onclick="removerItem('${item}')">
-                <img src="images/lixeira.png" alt="Remover" class="icone-lixeira">
+                <img src="../img/lixeira.png" alt="Remover" class="icone-lixeira">
             </button>
         `;
         listaCarrinho.appendChild(li);

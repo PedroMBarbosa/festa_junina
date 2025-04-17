@@ -90,18 +90,24 @@
 
                 <ul id="lista-carrinho">
                     <li>
-                        Aluno R$10,00 <span>01</span>
-                        <button onclick="removerItem('aluno')">
-                            <img src="../img/lixeira.png" alt="Remover" class="icone-lixeira">
-                        </button>
+                      <span class="item-nome">Aluno</span> 
+                      <span class="item-preco">R$10,00</span> 
+                      <span class="item-qtd" data-item="aluno">01</span>
+                      <button onclick="removerItem('aluno')">
+                        <img src="../img/lixeira.png" alt="Remover" class="icone-lixeira">
+                      </button>
                     </li>
+                  
                     <li>
-                        Comunidade R$10,00 <span>02</span>
-                        <button onclick="removerItem('comunidade')">
-                            <img src="../img/lixeira.png" alt="Remover" class="icone-lixeira">
-                        </button>
+                      <span class="item-nome">Comunidade</span> 
+                      <span class="item-preco">R$10,00</span> 
+                      <span class="item-qtd" data-item="comunidade">02</span>
+                      <button onclick="removerItem('comunidade')">
+                        <img src="../img/lixeira.png" alt="Remover" class="icone-lixeira">
+                      </button>
                     </li>
-                </ul>
+                  </ul>
+                  
 
                 <p>Total: R$<span id="total">30.00</span></p>
 
