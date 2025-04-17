@@ -205,23 +205,32 @@ display: grid;
 grid-template-columns: 1fr 1fr;
 gap: 20px;
 padding: 20px;
+align-items: center;
+text-align: center;
 
 }
 .texto{
 display: flex;
 align-items: center;
 flex-direction: row;
-font-size: 20px;
+font-size: 1px;
 text-align: center;
+justify-content: center;
+margin-left: -150px;
+margin-right: auto;
+}
+.texto h1{
+  font-size: 30px;
 }
 #centro{
-grid-column: span 2;
-justify-content: center;
-text-align: center;
+grid-column: 1 / span 2;
+margin: auto;
 }
 .texto img{
 object-fit: cover;
 margin-left: 150px;
+width: 90px;
+height: 90px;
 }
 .sup{
 background-color: white;
