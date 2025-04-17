@@ -64,21 +64,30 @@ function criarInputs() {
     });
 }
 
-
+const senhaSpan = document.getElementById("senha")
 const senhaInput = document.getElementById("input-senha");
 const botaoOlho = document.getElementById("toggle-senha");
 
 let visivel = true;
 
 botaoOlho.addEventListener("click", () => {
-    if (senhaInput.type === "password") {
+    if (senhaSpan !== ""){ /////MERDA BOSTA
+        if (senhaInput.type === "password") {
         senhaInput.type = "text";
         botaoOlho.src = "../img/eye-open.png";
-    } else {
+        } else {
         senhaInput.type = "password";
         botaoOlho.src = "../img/eye-close.png";
+        }
     }
+    else{
+        senhaSpan.classList.add("blur");
+    }
+    
+
+    console.log("teste, clicado")
 });
+
 
 
 document.getElementById('btn-editar-dados').addEventListener('click', function editarCampos() {
