@@ -1,9 +1,9 @@
-const url = 'http://localhost:3000/Usuario'; // ENDPOINT ------>>>> DEVE SER TROCADA PELA ORIGINAL
+const url = 'http://localhost:3000/usuario?id=1'; // ENDPOINT ------>>>> DEVE SER TROCADA PELA ORIGINAL
 let usuarioId = null;
 
 
 class Usuario {
-    constructor(nome, telefone, email, senha) {
+    constructor(id, nome, telefone, email, senha) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
@@ -13,7 +13,8 @@ class Usuario {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    criarInputs(); // Garante que os inputs existem
+    criarInputs(); 
+
 
     fetch(url)
         .then(res => res.json())
@@ -21,14 +22,15 @@ document.addEventListener("DOMContentLoaded", function () {
             if (data.length > 0) {
                 const usuario = data[0];
                 
-                // Armazena o ID globalmente
                 usuarioId = usuario.id;
                 console.log("ID do usuário:", usuarioId);
 
                 document.getElementById('nome-completo').innerText = usuario.nome;
-                document.getElementById('telefone').innerText = usuario.telefone;
                 document.getElementById('email').innerText = usuario.email;
+                document.getElementById('telefone').innerText = usuario.telefone;
                 document.getElementById('senha').innerText = usuario.senha;
+
+                document.getElementById('username').innerText = usuario.nome
 
                 document.getElementById('input-nome').value = usuario.nome;
                 document.getElementById('input-telefone').value = usuario.telefone;
@@ -73,10 +75,10 @@ botaoOlho.addEventListener("click", () => {
 
     if (visivel) {
         senhaTexto.classList.remove("blur");
-        botaoOlho.src = "imagens/eye-close.png";
+        botaoOlho.src = "../img/eye-close.png";
     } else {
         senhaTexto.classList.add("blur");
-        botaoOlho.src = "imagens/eye-open.png";
+        botaoOlho.src = "../img/eye-open.png";
     }
 });
 
@@ -111,7 +113,7 @@ async function salvarEdicao(){
         }) 
     
      console.log(dados)
-    let resposta = await fetch(`http://localhost:3000/Usuario?id=1`, { 
+    let resposta = await fetch(`http://localhost:3000/usuario?id=1`, { 
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -175,4 +177,9 @@ function voltar(){
 
 back.addEventListener("click", function () {  
     voltar()
+});
+
+
+document.getElementById('editar-imagem').addEventListener('click', function() {
+    
 });
