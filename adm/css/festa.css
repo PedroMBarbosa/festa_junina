@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #fdf6e3;
+    margin: 0;
+    padding: 0;
+  }
+  
+  main {
+    padding: 2rem;
+  }
+  
+  h2 {
+    margin-bottom: 1rem;
+  }
+  
+  .perguntas {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 2rem;
+  }
+  
+  input[type="text"] {
+    padding: 0.8rem;
+    border-radius: 40px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  .adicionar {
+    font-size: 30px;
+    background: #fff176;
+    border: 2px solid #555;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .voltar {
+    margin-top: 2rem;
+    background-color: #e53935;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  

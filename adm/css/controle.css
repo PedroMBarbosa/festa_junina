@@ -1,0 +1,159 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    background: #f6f4e9;
+    text-align: center;
+  }
+  
+  header {
+    position: relative;
+  }
+  
+  .banner-topo {
+    background: url('img/madeira.jpg') no-repeat center;
+    background-size: cover;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logo {
+    height: 60px;
+    margin-right: 20px;
+  }
+  
+  .titulo h1 {
+    font-size: 3em;
+    font-weight: bold;
+    color: #222;
+  }
+  
+  .titulo span {
+    color: red;
+    font-size: 1.2em;
+    margin-left: 10px;
+  }
+  
+  .bandeirinhas {
+    width: 100%;
+    height: auto;
+    margin-top: -10px;
+  }
+  
+  .menu {
+    background-color: #3b3f4e;
+    color: white;
+    padding: 10px 0;
+  }
+  
+  .menu ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 30px;
+  }
+  
+  .menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .menu li.active {
+    background-color: #d62828;
+    border-radius: 10px;
+  }
+  
+  .dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 30px;
+    justify-items: center;
+    align-items: start;
+  }
+  
+  .vendidos h2,
+  .vendas-dia h2,
+  .grafico h2 {
+    background-color: #d62828;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .vendidos .box {
+    background-color: #3b3f4e;
+    color: white;
+    padding: 15px;
+    border-radius: 15px;
+    width: 250px;
+    text-align: left;
+  }
+  
+  .vendas-dia .date-picker {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 15px;
+  }
+  
+  .vendas-dia .buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  button.cancelar {
+    background: red;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
+  
+  button.ok {
+    background: green;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
+  
+  .grafico {
+    grid-column: span 2;
+    text-align: center;
+  }
+  
+  canvas {
+    max-width: 300px;
+  }
+  
+  .legenda {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+    padding: 0;
+  }
+  
+  .dot {
+    height: 12px;
+    width: 12px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  
+  .alunos { background: #2e00ff; }
+  .familiares { background: #d62828; }
+  .infantil { background: #da70d6; }
+  .colaboradores { background: #f4801f; }
+  
