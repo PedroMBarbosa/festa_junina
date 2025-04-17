@@ -16,6 +16,12 @@ body {
 /* ============================= */
 
 /* Container do botão de menu */
+.icone_menu{
+  width: 40px;  
+  height: 40px;
+  margin-top: -10px;
+  margin-left: -10px;
+}
 .menu-container {
   top: 30px;
   left: 50px; /* mantido conforme sua versão */
