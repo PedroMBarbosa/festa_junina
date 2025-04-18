@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000/perguntas'; // ENDPOINT DAS PERGUNTAS
+const url = 'http://localhost:4000/perguntas'; // ENDPOINT DAS PERGUNTAS
 
 class Perguntas {
     constructor(id, nome, tipo_perguntas_id) {
@@ -25,14 +25,14 @@ function carregarPerguntas() {
                 perguntaDiv.classList.add('pergunta');
 
                 const p = document.createElement('p');
-                p.textContent = pergunta.nome;
+                p.textContent = pergunta.nome.toUpperCase();;
 
                 const opcoes = [
-                    { emoji: '😡', texto: 'Muito Ruim' },
-                    { emoji: '😕', texto: 'Ruim' },
-                    { emoji: '😐', texto: 'Intermediário' },
-                    { emoji: '🙂', texto: 'Bom' },
-                    { emoji: '😁', texto: 'Muito Bom' }
+                    { imagem: '../img/muitoruim.png', texto: 'Muito Ruim' },
+                    { imagem: '../img/ruim.png', texto: 'Ruim' },
+                    { imagem: '../img/intermediario.png', texto: 'Intermediário' },
+                    { imagem: '../img/bom.png', texto: 'Bom' },
+                    { imagem: '../img/muitobom.png', texto: 'Muito Bom' }
                 ];
 
                 const avaliacaoDiv = document.createElement('div');
@@ -41,29 +41,32 @@ function carregarPerguntas() {
                 opcoes.forEach((opcao, index) => {
                     const span = document.createElement('span');
                     span.classList.add('emoji');
-                    span.textContent = opcao.emoji;
                     span.dataset.resposta = opcao.texto;
 
-                    span.addEventListener('click', () => {
+                    const img = document.createElement('img');
+                    img.src = opcao.imagem;
+                    img.alt = opcao.texto;
+                    img.style.width = '80px';
+                    img.style.height = '80px';
 
+                    span.appendChild(img);
+
+                    span.addEventListener('click', () => {
                         const todos = avaliacaoDiv.querySelectorAll('.emoji');
                         todos.forEach(e => e.classList.remove('selecionado'));
                         span.classList.add('selecionado');
 
-                        // Remove resposta anterior da mesma pergunta, se houver
                         const indiceExistente = respostasUsuario.findIndex(r => r.perguntaId === pergunta.id);
                         if (indiceExistente !== -1) {
                             respostasUsuario.splice(indiceExistente, 1);
                         }
 
-                        // Adiciona a nova resposta
                         respostasUsuario.push({
                             perguntaId: pergunta.id,
                             resposta: span.dataset.resposta
                         });
 
                         console.log(respostasUsuario);
-
                     });
 
                     avaliacaoDiv.appendChild(span);
@@ -79,15 +82,24 @@ function carregarPerguntas() {
 
 
 
+
 //executando a funçao qnd a pagina carrega
 document.addEventListener("DOMContentLoaded", function () {
     carregarPerguntas();
 });
 
+const modal = document.getElementById('confirmationModal');
+
+function showModal() {
+    modal.style.display = 'block';
+}
 
 
 //enviar pra api qnd clicar no botao
-document.getElementById('enviarRespostas').addEventListener('click', () => {
+document.getElementById('enviarRespostas').addEventListener('click', (event) => {
+
+    event.preventDefault();
+
     fetch(url)
         .then(response => response.json())
         .then(perguntas => {
@@ -101,16 +113,25 @@ document.getElementById('enviarRespostas').addEventListener('click', () => {
                 return;
             }
 
-            fetch('http://localhost:3000/respostas', {
+            // Pega o texto do campo de comentário
+            const comentario = document.getElementById('comentario').value.trim();
+
+            // Cria um objeto com todas as informações
+            const payload = {
+                respostas: respostasUsuario,
+                comentario: comentario // pode ser string vazia se não escrever nada, e tá tudo certo
+            };
+
+            fetch('http://localhost:4000/respostas', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(respostasUsuario)
+                body: JSON.stringify(payload)
             })
             .then(response => {
                 if (response.ok) {
-                    alert("Respostas enviadas com sucesso! Clique em ok para enviar outra.");
+                    showModal()
                 } else {
                     alert("Erro ao enviar respostas.");
                 }
@@ -122,5 +143,12 @@ document.getElementById('enviarRespostas').addEventListener('click', () => {
         });
 });
 
+document.getElementById('okay').addEventListener('click', () => {
+    // fecha o modal
+    document.getElementById('confirmationModal').style.display = 'none';
 
-
+    // opcional: redireciona ou recarrega
+    // window.location.reload(); 
+    // ou
+    // window.location.href = 'pagina-final.html';
+});
