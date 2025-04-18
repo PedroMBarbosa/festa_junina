@@ -2,42 +2,56 @@
   "perguntas": [
     {
       "id": 1,
-      "nome": "Como você avalia o sistema de ingressos?",
+      "nome": "Entreterimento",
       "tipo_perguntas_id": 1,
       "usuário_id": 101,
       "usuário_perfil_id": 201
     },
     {
       "id": 2,
-      "nome": "O que você achou das comidas?",
-      "tipo_perguntas_id": 2,
+      "nome": "Atendimento",
+      "tipo_perguntas_id": 1,
       "usuário_id": 102,
       "usuário_perfil_id": 202
     },
     {
       "id": 3,
-      "nome": "Como você avalia nosso atendimento?",
-      "tipo_perguntas_id": 3,
+      "nome": "Segurança",
+      "tipo_perguntas_id": 1,
       "usuário_id": 103,
       "usuário_perfil_id": 203
     },
     {
       "id": 4,
-      "nome": "Como você avalia nossa estrutura?",
+      "nome": "Higiene",
       "tipo_perguntas_id": 1,
       "usuário_id": 104,
       "usuário_perfil_id": 204
     },
     {
       "id": 5,
-      "nome": "Como você avalia nosso site de compras do ingresso??",
-      "tipo_perguntas_id": 3,
+      "nome": "Decoração",
+      "tipo_perguntas_id": 1,
       "usuário_id": 105,
       "usuário_perfil_id": 205
     },
     {
       "id": 6,
-      "nome": "Como você avalia nossa agilidade de resposta?",
+      "nome": "Organização",
+      "tipo_perguntas_id": 1,
+      "usuário_id": 106,
+      "usuário_perfil_id": 206
+    },
+    {
+      "id": 6,
+      "nome": "Compra do ingresso",
+      "tipo_perguntas_id": 1,
+      "usuário_id": 106,
+      "usuário_perfil_id": 206
+    },
+    {
+      "id": 6,
+      "nome": "Comentários opcionais",
       "tipo_perguntas_id": 2,
       "usuário_id": 106,
       "usuário_perfil_id": 206
