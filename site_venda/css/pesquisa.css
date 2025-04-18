@@ -126,8 +126,7 @@ p{
 }
 
 .emoji.selecionado {
-    filter: brightness(3.0) drop-shadow(0 0 4px orange);
-    transform: scale(1.4);
+    /*aqui estava a configuração antiga*/
 }
 
 

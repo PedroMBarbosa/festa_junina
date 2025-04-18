@@ -53,21 +53,34 @@ function carregarPerguntas() {
 
                     span.addEventListener('click', () => {
                         const todos = avaliacaoDiv.querySelectorAll('.emoji');
-                        todos.forEach(e => e.classList.remove('selecionado'));
+                    
+                        todos.forEach(e => {
+                            e.classList.remove('selecionado');
+                            const imgInterno = e.querySelector('img');
+                            const baseNome = imgInterno.dataset.base;
+                            imgInterno.src = `../img/${baseNome}`; // volta pra imagem original
+                        });
+                    
                         span.classList.add('selecionado');
-
+                    
+                        // trocndo pra imagem colorida qnd clica
+                        const baseNome = opcao.imagem.replace('.png', '');
+                        img.src = `../img/${baseNome}-colorido.png`;
+                    
                         const indiceExistente = respostasUsuario.findIndex(r => r.perguntaId === pergunta.id);
                         if (indiceExistente !== -1) {
                             respostasUsuario.splice(indiceExistente, 1);
                         }
-
+                    
                         respostasUsuario.push({
                             perguntaId: pergunta.id,
                             resposta: span.dataset.resposta
                         });
-
+                    
                         console.log(respostasUsuario);
                     });
+                    
+                    img.dataset.base = opcao.imagem; // pra saber a imagem original depois
 
                     avaliacaoDiv.appendChild(span);
                 });
@@ -97,7 +110,6 @@ function showModal() {
 
 //enviar pra api qnd clicar no botao
 document.getElementById('enviarRespostas').addEventListener('click', (event) => {
-
     event.preventDefault();
 
     fetch(url)
