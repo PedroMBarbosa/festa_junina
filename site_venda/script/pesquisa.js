@@ -21,6 +21,11 @@ function carregarPerguntas() {
             data.forEach(item => {
                 const pergunta = new Perguntas(item.id, item.nome, item.tipo_perguntas_id);
 
+                // Ignora a pergunta do tipo "comentário" q vem da api
+                if (pergunta.nome.toLowerCase().includes("comentário")) {
+                    return; // pula essa pergunta
+                }
+
                 const perguntaDiv = document.createElement('div');
                 perguntaDiv.classList.add('pergunta');
 
@@ -97,7 +102,8 @@ function carregarPerguntas() {
 
 
 //executando a funçao qnd a pagina carrega
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function (event) {
+    event.preventDefault
     carregarPerguntas();
 });
 
@@ -120,18 +126,29 @@ document.getElementById('enviarRespostas').addEventListener('click', (event) => 
 
             const perguntasUnicas = [...new Set(respostasUsuario.map(r => r.perguntaId))];
 
-            if (perguntasUnicas.length < totalPerguntas) {
+            // Pega o texto do campo de comentário
+            const comentario = document.getElementById('comentario').value.trim();
+
+            // Verifica se todas as perguntas obrigatórias foram respondidas
+            // Comentário é opcional, então não entra nessa contagem
+            const idPerguntaComentario = perguntas.find(p => p.nome.toLowerCase().includes('comentário'))?.id;
+            const totalObrigatorias = idPerguntaComentario ? totalPerguntas - 1 : totalPerguntas;
+
+            if (perguntasUnicas.length < totalObrigatorias) {
                 alert("Responda todas as perguntas antes de enviar.");
                 return;
             }
 
-            // Pega o texto do campo de comentário
-            const comentario = document.getElementById('comentario').value.trim();
+            // Se tiver comentário, adiciona como resposta normal
+            if (comentario !== "" && idPerguntaComentario) {
+                respostasUsuario.push({
+                    perguntaId: idPerguntaComentario,
+                    resposta: comentario
+                });
+            }
 
-            // Cria um objeto com todas as informações
             const payload = {
-                respostas: respostasUsuario,
-                comentario: comentario // pode ser string vazia se não escrever nada, e tá tudo certo
+                respostas: respostasUsuario
             };
 
             fetch('http://localhost:4000/respostas', {
@@ -143,7 +160,7 @@ document.getElementById('enviarRespostas').addEventListener('click', (event) => 
             })
             .then(response => {
                 if (response.ok) {
-                    showModal()
+                    showModal();
                 } else {
                     alert("Erro ao enviar respostas.");
                 }
@@ -154,6 +171,8 @@ document.getElementById('enviarRespostas').addEventListener('click', (event) => 
             });
         });
 });
+
+
 
 document.getElementById('okay').addEventListener('click', () => {
     // fecha o modal
