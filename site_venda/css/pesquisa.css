@@ -125,12 +125,6 @@ p{
     transform: scale(1.2);
 }
 
-.emoji.selecionado {
-    /*aqui estava a configuração antiga*/
-}
-
-
-
 #container-total{
     display: flex;
     flex-direction: column;
