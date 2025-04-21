@@ -102,15 +102,14 @@ function carregarPerguntas() {
 
 
 //executando a funçao qnd a pagina carrega
-document.addEventListener("DOMContentLoaded", function (event) {
-    event.preventDefault
+document.addEventListener("DOMContentLoaded", function () {
     carregarPerguntas();
 });
 
 const modal = document.getElementById('confirmationModal');
 
-function showModal() {
-    modal.style.display = 'block';
+function showModal() { //para mostrar o modal, a função será executada quando os dados forem enviados para api
+    modal.style.display = 'flex';
 }
 
 
@@ -160,14 +159,15 @@ document.getElementById('enviarRespostas').addEventListener('click', (event) => 
             })
             .then(response => {
                 if (response.ok) {
-                    showModal();
+                    showModal(); //deu certo? então mostrei o modal
+                    setTimeout(() => location.reload(), 7000); // TESTE PRA LOCALIZAR ERRO
                 } else {
                     alert("Erro ao enviar respostas.");
                 }
             })
             .catch(error => {
-                console.error("Erro ao enviar:", error);
-                alert("Erro na conexão com a API.");
+                console.error("Erro:", error);
+                alert("Erro:", error);
             });
         });
 });
@@ -175,11 +175,6 @@ document.getElementById('enviarRespostas').addEventListener('click', (event) => 
 
 
 document.getElementById('okay').addEventListener('click', () => {
-    // fecha o modal
-    document.getElementById('confirmationModal').style.display = 'none';
-
-    // opcional: redireciona ou recarrega
-    // window.location.reload(); 
-    // ou
-    // window.location.href = 'pagina-final.html';
-});
+    document.getElementById('confirmationModal').style.display = 'none'
+    location.reload()
+});  //apertou o ok? ent tudo certo, atualiza a pagina automaticamente
