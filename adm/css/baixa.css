@@ -10,47 +10,51 @@ body {
   color: #333;
 }
 
-header {
-  position: relative;
-}
-
-/* Banner topo */
+/* =======================
+   BANNER TOPO (LOGO SENAI)
+========================== */
 .banner-topo {
-  background: white;
-  padding: 20px;
+  background-color: white;
   display: flex;
   justify-content: center;
+  padding: 20px;
 }
 
-.logo {
+.logo-senai {
   height: 60px;
+  object-fit: contain;
 }
 
-/* Menu */
-.menu {
-  background-color: #8b0000;
+/* =======================
+   CABEÇALHO DE NAVEGAÇÃO
+========================== */
+.cabecalho-lotes {
+  background-color: #97080A;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
-  color: white;
+  padding: 0 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.menu-icon,
-.perfil-icon {
-  font-size: 24px;
+.icone-voltar img,
+.icone-perfil img {
+  width: 30px;
+  height: 30px;
+  filter: brightness(0) invert(1);
   cursor: pointer;
-  text-decoration: none;
-  color: white;
-
 }
 
-.titulo-menu {
-  font-size: 20px;
+.titulo-cabecalho {
+  color: white;
+  font-size: 18px;
   font-weight: bold;
 }
 
-/* Contêiner do pagamento */
+/* =======================
+   PAINÉIS E BOTÕES
+========================== */
 .pagamento-container {
   display: flex;
   flex-wrap: wrap;
@@ -59,7 +63,6 @@ header {
   justify-content: center;
 }
 
-/* Tabela de pagamento */
 .tabela-pagamento {
   flex: 2;
   background: white;
@@ -69,7 +72,6 @@ header {
   min-width: 400px;
 }
 
-/* Cabeçalho da tabela */
 .cabecalho-tabela {
   display: flex;
   justify-content: space-between;
@@ -82,7 +84,6 @@ header {
   font-weight: bold;
 }
 
-/* Filtro */
 .filtro {
   display: flex;
   align-items: center;
@@ -95,7 +96,6 @@ header {
   border: none;
 }
 
-/* Lista de pagamentos */
 #lista-pagamentos {
   list-style: none;
 }
@@ -116,7 +116,7 @@ header {
   text-align: center;
 }
 
-/* Status */
+/* STATUS */
 .pendente {
   background-color: red;
   padding: 6px 12px;
@@ -129,7 +129,7 @@ header {
   border-radius: 20px;
 }
 
-/* Painel de status */
+/* PAINEL DE STATUS */
 .painel-status {
   flex: 1;
   background: #e0e0e0;
@@ -141,7 +141,7 @@ header {
   min-width: 280px;
 }
 
-/* Formulário de baixa */
+/* FORMULÁRIO DE BAIXA */
 .form-baixa {
   display: flex;
   flex-direction: column;
@@ -158,7 +158,7 @@ header {
   border: 1px solid #ccc;
 }
 
-/* Botões de ação */
+/* BOTÕES DE AÇÃO */
 .botoes {
   display: flex;
   justify-content: space-between;
@@ -191,7 +191,7 @@ header {
   background-color: #2e7d32;
 }
 
-/* Dropdown */
+/* DROPDOWN */
 .dropdown-container {
   position: relative;
 }
@@ -239,7 +239,7 @@ header {
   display: inline-block;
 }
 
-/* Botão de filtro */
+/* FILTRO */
 #btn-filtro {
   padding: 8px 12px;
   border-radius: 10px;
@@ -249,7 +249,6 @@ header {
   font-weight: bold;
 }
 
-/* Conteúdo do dropdown */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -280,91 +279,4 @@ header {
 
 .dropdown.show .dropdown-content {
   display: flex;
-}
-
-/* Cabeçalhos */
-.cabecalho2 {
-  background-color: #97080A;
-  width: 100%;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  padding-left: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-}
-
-.home-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  width: 58px;
-  height: 58px;
-}
-
-.home-btn img {
-  width: 40px;
-  height: 40px;
-}
-
-.perfil-btn {
-  margin-left: 1110px; /* Ajuste a margem à esquerda para mover o botão mais à direita */
-  margin-right: 0px; /* Ajuste a margem à direita para mover o botão mais à esquerda */
-}
-
-.perfil-btn img {
-  width: 45px;
-  height: 45px;
-}
-
-
-/* Cabeçalho com sombra */
-.cabecalho1 {
-  background-color: #97080A;
-  width: 100%;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  padding-left: -20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-}
-.topo {
-  background-color: #990000;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.icone-canto-esquerdo,
-.icone-canto-direito {
-  width: 40px;
-}
-
-.icone-header {
-  width: 28px;
-  height: 28px;
-  filter: brightness(0) invert(1);
-  transition: transform 0.2s;
-}
-
-.icone-header:hover {
-  transform: scale(1.1);
-}
-
-.logo-central {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.logo-senai {
-  height: 50px;
-  object-fit: contain;
 }
