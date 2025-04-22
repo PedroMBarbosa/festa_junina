@@ -1,4 +1,4 @@
-// Banco de dados simulado de ingressos
+// Banco de dados de ingressos
 const ingressosDB = {
     "ingresso": [
         { "id": 1, "tipo": "Aluno", "preco": 10 },
@@ -31,6 +31,7 @@ function adicionarCarrinho() {
     salvarCarrinho();
     atualizarListaCarrinho();
     atualizarTotal();
+    salvarNoBancoDeDados(); // Envia os dados para o servidor
 }
 
 // Função para atualizar item do carrinho
@@ -95,6 +96,24 @@ function salvarCarrinho() {
 function carregarCarrinho() {
     atualizarListaCarrinho();
     atualizarTotal();
+}
+
+// Função para salvar no banco de dados via API
+async function salvarNoBancoDeDados() {
+    try {
+        const response = await fetch("https://seuservidor.com/api/salvarCarrinho", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(carrinhoItens)
+        });
+
+        const resultado = await response.json();
+        console.log("Banco de dados atualizado:", resultado);
+    } catch (error) {
+        console.error("Erro ao salvar no banco:", error);
+    }
 }
 
 // Chama a função ao carregar a página
