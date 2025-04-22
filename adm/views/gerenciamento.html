@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Gerenciamento da Festa</title>
-  <link rel="stylesheet" href="../css/festa.css">
-  <link rel="stylesheet" href="../css/cabecalho.css">
+  <title>Gerenciar Festa</title>
+  <link rel="stylesheet" href="/css/gerenciamento.css">
+  <link rel="stylesheet" href="/css/cabecalho.css">
 </head>
 <body>
-  <header>
+  <header class="topo">
     <div class="banner-topo">
       <img src="../images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo-senai">
     </div>
@@ -16,21 +16,20 @@
       <a href="../views/home.html" class="icone-voltar">
         <img src="../images/home.png" alt="Voltar para Home" />
       </a>
-      <span class="titulo-cabecalho">Gerenciar festa</span>
+      <span class="titulo-cabecalho">Baixa de Pagamento</span>
       <a href="../views/perfil.html" class="icone-perfil">
         <img src="../images/icon.png" alt="Ir para Perfil" />
       </a>
     </div>
   </header>
 
-  <main>
-    <h2>Criação das Perguntas</h2>
-    <div class="perguntas">
-      <input type="text" placeholder="Pergunta 1">
-      <input type="text" placeholder="Pergunta 2">
+  <main class="conteudo">
+    <div class="botoes-container">
+      <button class="botao">Relatório da Pesquisa</button>
+      <button class="botao">Criação de Perguntas</button>
+      <button class="botao">Controle de Acesso</button>
+      <button class="botao">Listagem de Administradores</button>
     </div>
-    <button class="adicionar">+</button>
-    <button class="voltar">Voltar</button>
   </main>
 </body>
 </html>
