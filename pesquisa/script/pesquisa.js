@@ -1,8 +1,8 @@
-const urlPerguntas = 'http://localhost:3000/perguntas'; // ENDPOINT DAS PERGUNTAS FAKE
-const urlRespostas = 'http://localhost:3000/respostas'; 
+// const urlPerguntas = 'http://localhost:3000/perguntas'; // ENDPOINT DAS PERGUNTAS FAKE
+// const urlRespostas = 'http://localhost:3000/respostas'; 
 
-//const urlPerguntas = 'http://10.00.146.37/api/Perguntas';
-//const urlRespostas = 'http://10.00.146.37/api/Respostas'
+const urlPerguntas = 'http://10.90.146.37/api/api/Perguntas';
+const urlRespostas = 'http://10.90.146.37/api/api/Respostas'
 
 class Perguntas {
     constructor(id, nome, tipo_perguntas_id) {
@@ -151,12 +151,14 @@ async function enviar(event) {
         }
 
         const payload = {
-            respostas: respostasUsuario
+            respostas: respostasUsuario,
+            data: new Date().toISOString()
         };
 
         console.log(payload)
 
-        await fetch(urlRespostas, { //mudar
+
+        await fetch(urlRespostas, { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
