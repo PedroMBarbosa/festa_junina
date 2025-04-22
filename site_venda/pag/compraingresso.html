@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/compraingressos copy.css">
+    <link rel="stylesheet" href="/site_venda/css/compraingressos.css">
     <title>Compra de Ingressos</title>
 </head>
 <body>
@@ -36,8 +36,13 @@
      
         <div class="container">
             <section class="opcoes">
-                <select>
-                    <option>LOTE 1 - Selecione a sua opção...</option>
+                <select id="lotes">
+                    <option value="">LOTE 1 - Selecione a sua opção...</option>
+                    <option value="aluno">Aluno</option>
+                    <option value="comunidade">Comunidade</option>
+                    <option value="colaborador">Colaborador</option>
+                    <option value="familiar">Familiar</option>
+                    <option value="infantil">Infantil (até 10 anos)</option>
                 </select>
 
                 <div class="item-1">
@@ -75,7 +80,8 @@
                     <button onclick="alterarQtd('infantil', 1)">+</button>
                 </div>
                  
-                <button class="btn-add">
+
+                <button class="btn-add" onclick="adicionarAoCarrinho()">
                     <img src="../img/carrinho.png" alt="Carrinho" class="icone-carrinho-add">
                     Adicionar ao Carrinho
                 </button>
@@ -89,27 +95,11 @@
                 </h3>
 
                 <ul id="lista-carrinho">
-                    <li>
-                      <span class="item-nome">Aluno</span> 
-                      <span class="item-preco">R$10,00</span> 
-                      <span class="item-qtd" data-item="aluno">01</span>
-                      <button onclick="removerItem('aluno')">
-                        <img src="../img/lixeira.png" alt="Remover" class="icone-lixeira">
-                      </button>
-                    </li>
-                  
-                    <li>
-                      <span class="item-nome">Comunidade</span> 
-                      <span class="item-preco">R$10,00</span> 
-                      <span class="item-qtd" data-item="comunidade">02</span>
-                      <button onclick="removerItem('comunidade')">
-                        <img src="../img/lixeira.png" alt="Remover" class="icone-lixeira">
-                      </button>
-                    </li>
-                  </ul>
+                    
+                </ul>
                   
 
-                <p>Total: R$<span id="total">30.00</span></p>
+                <p>Total: R$<span id="total">0.00</span></p>
 
                 <button class="btn-finalizar">
                     <img src="../img/dinheiro.png" alt="Dinheiro" class="icone-dinheiro">
@@ -122,4 +112,3 @@
     <script src="../script/compraingressos.js"></script>
 </body>
 </html>
-
