@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Leitor de QR Code</title>
-    <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8">
+  <title>Leitor de QR Code</title>
+  <style>
+    #reader {
+      width: 300px;
+      margin: auto;
+      padding-top: 50px;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Leitor de QR Code</h1>
-        <p>Posicione o QR code dentro da área destacada</p>
-        
-        <div id="video-container">
-            <video id="video" playsinline></video>
-        </div>
+  <div id="reader"></div>
+  <div id="resultado">Aguardando leitura...</div>
 
-        <div id="success-message" style="display: none; text-align: center;">
-            <h2 style="color: green;">✅ Entrada Autorizada</h2>
-            <button id="okButton">OK</button>
-        </div>
-        
-        <div id="result"></div>
-        <div id="error" class="error"></div>
-        
-        <button id="actionButton">Iniciar Câmera</button>
-    </div>
+  <!-- Biblioteca html5-qrcode -->
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
-    <script src="../script/jsQR.min.js"></script>
-    <script src="../script/script.js"></script>
+  <script>
+    function onScanSuccess(decodedText, decodedResult) {
+      document.getElementById('resultado').innerText = `QR Code: ${decodedText}`;
+      html5QrcodeScanner.clear(); // parar scanner após leitura
+    }
+
+    const html5QrcodeScanner = new Html5QrcodeScanner(
+      "reader", { fps: 10, qrbox: 250 });
+
+    html5QrcodeScanner.render(onScanSuccess);
+  </script>
 </body>
 </html>
