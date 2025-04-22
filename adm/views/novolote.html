@@ -1,11 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Gerenciamento de Lotes</title>
+  <link rel="stylesheet" href="/css/novolote.css">
+  <link rel="stylesheet" href="/css/cabecalho.css">
 </head>
 <body>
-    
+  <header class="topo">
+    <img src="senai-logo.png" alt="SENAI" class="logo">
+  </header>
+
+  <div class="barra-navegacao">
+    <span class="voltar">← Gerenciamento de Lotes - Adicionar</span>
+    <div class="lote-box">LOTE 5</div>
+  </div>
+
+  <main class="container">
+    <div class="formulario">
+      <label>Valor</label>
+      <input type="text" id="valor" placeholder="R$ 16,00">
+
+      <label>Data Abertura</label>
+      <input type="date" id="abertura">
+
+      <label>Data Fechamento</label>
+      <input type="date" id="fechamento">
+
+      <label>Quantidade de Ingressos</label>
+      <input type="number" id="quantidade" placeholder="250">
+
+      <div class="botoes">
+        <button class="concluir" onclick="concluir()">CONCLUIR</button>
+        <button class="cancelar" onclick="cancelar()">CANCELAR</button>
+      </div>
+    </div>
+
+    <table class="tabela-lotes">
+      <thead>
+        <tr>
+          <th>Valor</th>
+          <th>Valor Infantil</th>
+          <th>Abertura</th>
+          <th>Fechamento</th>
+          <th>Quantidade</th>
+        </tr>
+      </thead>
+      <tbody id="tabela-corpo">
+        <!-- Itens adicionados aqui via JS -->
+      </tbody>
+    </table>
+
+    <button class="adicionar" onclick="adicionarLote()">ADICIONAR</button>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
