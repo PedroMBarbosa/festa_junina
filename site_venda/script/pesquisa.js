@@ -1,25 +1,30 @@
-const url = 'http://localhost:3000/perguntas'; // ENDPOINT DAS PERGUNTAS
+const url = 'http://localhost:3000/perguntas'; // ENDPOINT DAS PERGUNTAS FAKE
+
+//const urlPerguntas = 'http://10.00.146.37/api/Perguntas';
+//const urlRespostas = 'http://10.00.146.37/api/Respostas'
 
 class Perguntas {
     constructor(id, nome, tipo_perguntas_id) {
         this.id = id;
         this.nome = nome;
         this.tipo_perguntas_id = tipo_perguntas_id;
-    }    
+    }
 }
 
 const respostasUsuario = [];
+let perguntas = []
 
 
 //função que vai trazer as perguntas e carregar os rostos
 function carregarPerguntas() {
     const container = document.getElementById('container-perguntas');
 
-    fetch(url)
+    fetch(url) // MUDAR
         .then(response => response.json())
         .then(data => {
             data.forEach(item => {
                 const pergunta = new Perguntas(item.id, item.nome, item.tipo_perguntas_id);
+                perguntas.push(pergunta);
 
                 // Ignora a pergunta do tipo "comentário" q vem da api
                 if (pergunta.nome.toLowerCase().includes("comentário")) {
@@ -58,33 +63,33 @@ function carregarPerguntas() {
 
                     span.addEventListener('click', () => {
                         const todos = avaliacaoDiv.querySelectorAll('.emoji');
-                    
+
                         todos.forEach(e => {
                             e.classList.remove('selecionado');
                             const imgInterno = e.querySelector('img');
                             const baseNome = imgInterno.dataset.base;
                             imgInterno.src = `../img/${baseNome}`; // volta pra imagem original
                         });
-                    
+
                         span.classList.add('selecionado');
-                    
+
                         // trocndo pra imagem colorida qnd clica
                         const baseNome = opcao.imagem.replace('.png', '');
                         img.src = `../img/${baseNome}-colorido.png`;
-                    
+
                         const indiceExistente = respostasUsuario.findIndex(r => r.perguntaId === pergunta.id);
                         if (indiceExistente !== -1) {
                             respostasUsuario.splice(indiceExistente, 1);
                         }
-                    
+
                         respostasUsuario.push({
                             perguntaId: pergunta.id,
                             resposta: span.dataset.resposta
                         });
-                    
+
                         console.log(respostasUsuario);
                     });
-                    
+
                     img.dataset.base = opcao.imagem; // pra saber a imagem original depois
 
                     avaliacaoDiv.appendChild(span);
@@ -98,83 +103,218 @@ function carregarPerguntas() {
         .catch(error => console.error("ERRO NA API:", error));
 }
 
-
-
-
 //executando a funçao qnd a pagina carrega
 document.addEventListener("DOMContentLoaded", function () {
     carregarPerguntas();
 });
 
 const modal = document.getElementById('confirmationModal');
+const modal2 = document.getElementById('modal-content');
 
-function showModal() { //para mostrar o modal, a função será executada quando os dados forem enviados para api
-    modal.style.display = 'flex';
-}
+// function showModal() { //para mostrar o modal, a função será executada quando os dados forem enviados para api
+//     modal.style.display = 'flex';
+//     modal2.style.display = 'flex'
+// }
 
-
-//enviar pra api qnd clicar no botao
-document.getElementById('enviarRespostas').addEventListener('click', (event) => {
+async function enviar(event) {
     event.preventDefault();
 
-    fetch(url)
-        .then(response => response.json())
-        .then(perguntas => {
-            const totalPerguntas = perguntas.length;
-            const totalRespondidas = respostasUsuario.length;
+    try {
+        const totalPerguntas = perguntas.length;
+        const totalRespondidas = respostasUsuario.length;
 
-            const perguntasUnicas = [...new Set(respostasUsuario.map(r => r.perguntaId))];
+        const perguntasUnicas = [...new Set(respostasUsuario.map(r => r.perguntaId))];
 
-            // Pega o texto do campo de comentário
-            const comentario = document.getElementById('comentario').value.trim();
+        // Pega o texto do campo de comentário
+        const comentario = document.getElementById('comentario').value.trim();
 
-            // Verifica se todas as perguntas obrigatórias foram respondidas
-            // Comentário é opcional, então não entra nessa contagem
-            const idPerguntaComentario = perguntas.find(p => p.nome.toLowerCase().includes('comentário'))?.id;
-            const totalObrigatorias = idPerguntaComentario ? totalPerguntas - 1 : totalPerguntas;
+        // Verifica se todas as perguntas obrigatórias foram respondidas
+        // Comentário é opcional, então não entra nessa contagem
+        const idPerguntaComentario = perguntas.find(p => p.nome.toLowerCase().includes('comentário'))?.id;
+        const totalObrigatorias = idPerguntaComentario ? totalPerguntas - 1 : totalPerguntas;
 
-            if (perguntasUnicas.length < totalObrigatorias) {
-                alert("Responda todas as perguntas antes de enviar.");
-                return;
-            }
+        console.log(perguntas)
 
-            // Se tiver comentário, adiciona como resposta normal
-            if (comentario !== "" && idPerguntaComentario) {
-                respostasUsuario.push({
-                    perguntaId: idPerguntaComentario,
-                    resposta: comentario
-                });
-            }
+        if (perguntasUnicas.length < totalObrigatorias) {
+            alert("Responda todas as perguntas antes de enviar.");
+            return;
+        }
 
-            const payload = {
-                respostas: respostasUsuario
-            };
+        //Se tiver comentário, adiciona como resposta normal
+        if (comentario !== "" && idPerguntaComentario) {
+            respostasUsuario.push({
+                perguntaId: idPerguntaComentario,
+                resposta: comentario
+            });
+        }
 
-            fetch('http://localhost:3000/respostas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
+        const payload = {
+            respostas: respostasUsuario
+        };
+
+        console.log(payload)
+
+        await fetch('http://localhost:3000/respostas', { //mudar
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
             .then(response => {
                 if (response.ok) {
-                    showModal(); //deu certo? então mostrei o modal
-                    setTimeout(() => location.reload(), 7000); // TESTE PRA LOCALIZAR ERRO
+
+                    modal.style.display = 'flex';
+                    modal2.style.display = 'flex';
+
                 } else {
                     alert("Erro ao enviar respostas.");
                 }
             })
             .catch(error => {
                 console.error("Erro:", error);
-                alert("Erro:", error);
+                alert("Erro:", error.message);
             });
-        });
-});
+    } catch (error) {
+        alert("Error" + error.message)
+
+    }
 
 
 
-document.getElementById('okay').addEventListener('click', () => {
-    document.getElementById('confirmationModal').style.display = 'none'
-    location.reload()
-});  //apertou o ok? ent tudo certo, atualiza a pagina automaticamente
+}
+
+//enviar pra api qnd clicar no botao
+// document.getElementById('enviarRespostas').addEventListener('click', (event) => {
+//     event.preventDefault();
+
+//     const totalPerguntas = perguntas.length;
+//     const totalRespondidas = respostasUsuario.length;
+
+//     const perguntasUnicas = [...new Set(respostasUsuario.map(r => r.perguntaId))];
+
+//     // Pega o texto do campo de comentário
+//     const comentario = document.getElementById('comentario').value.trim();
+
+//     // Verifica se todas as perguntas obrigatórias foram respondidas
+//     // Comentário é opcional, então não entra nessa contagem
+//     const idPerguntaComentario = perguntas.find(p => p.nome.toLowerCase().includes('comentário'))?.id;
+//     const totalObrigatorias = idPerguntaComentario ? totalPerguntas - 1 : totalPerguntas;
+
+//     console.log(perguntas)
+
+//     // if (perguntasUnicas.length < totalObrigatorias) {
+//     //     alert("Responda todas as perguntas antes de enviar.");
+//     //     return;
+//     // }
+
+//     // Se tiver comentário, adiciona como resposta normal
+//     // if (comentario !== "" && idPerguntaComentario) {
+//     //     respostasUsuario.push({
+//     //         perguntaId: idPerguntaComentario,
+//     //         resposta: comentario
+//     //     });
+//     // }
+
+//     const payload = {
+//         respostas: respostasUsuario
+//     };
+
+//     console.log(payload)
+
+//     fetch('http://localhost:3000/respostas', {
+//         method: 'POST', redirect: 'manual',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(payload)
+//     })
+//     .then(response => {
+//         if (response.ok) {
+
+//             modal.style.display = 'flex';
+//             modal2.style.display = 'flex';
+//             console.log("mostrei o modal")
+//             //window.location.href = ''
+
+//             // showModal(); //deu certo? então mostrei o modal
+//         } else {
+//             alert("Erro ao enviar respostas.");
+//         }
+//     })
+//     .catch(error => {
+//         console.error("Erro:", error);
+//         alert("Erro:", error);
+//     });
+
+//     // fetch(url)
+//     //      .then(response => response.json())
+//     //      .then(perguntas => {
+//     //         const totalPerguntas = perguntas.length;
+//     //         const totalRespondidas = respostasUsuario.length;
+
+//     //         const perguntasUnicas = [...new Set(respostasUsuario.map(r => r.perguntaId))];
+
+//     //         // Pega o texto do campo de comentário
+//     //         const comentario = document.getElementById('comentario').value.trim();
+
+//     //         // Verifica se todas as perguntas obrigatórias foram respondidas
+//     //         // Comentário é opcional, então não entra nessa contagem
+//     //         const idPerguntaComentario = perguntas.find(p => p.nome.toLowerCase().includes('comentário'))?.id;
+//     //         const totalObrigatorias = idPerguntaComentario ? totalPerguntas - 1 : totalPerguntas;
+
+//     //         if (perguntasUnicas.length < totalObrigatorias) {
+//     //             alert("Responda todas as perguntas antes de enviar.");
+//     //             return;
+//     //         }
+
+//     //         // Se tiver comentário, adiciona como resposta normal
+//     //         if (comentario !== "" && idPerguntaComentario) {
+//     //             respostasUsuario.push({
+//     //                 perguntaId: idPerguntaComentario,
+//     //                 resposta: comentario
+//     //             });
+//     //         }
+
+//     //         const payload = {
+//     //             respostas: respostasUsuario
+//     //         };
+
+//     //         fetch('http://localhost:3000/respostas', {
+//     //             method: 'POST',
+//     //             headers: {
+//     //                 'Content-Type': 'application/json'
+//     //             },
+//     //             body: JSON.stringify(payload)
+//     //         })
+//     //         .then(response => {
+//     //             if (response.ok) {
+
+//     //                 modal.style.display = 'flex';
+//     //                 modal2.style.display = 'flex'
+//     //                 console.log("mostrei o modal")
+
+//     //                 // showModal(); //deu certo? então mostrei o modal
+//     //             } else {
+//     //                 alert("Erro ao enviar respostas.");
+//     //             }
+//     //         })
+//     //         .catch(error => {
+//     //             console.error("Erro:", error);
+//     //             alert("Erro:", error);
+//     //         });
+//     //     });
+//         //event.preventDefault();
+// });
+
+
+function fecharModal() {
+    modal.style.display = 'none'
+    modal2.style.display = 'none'
+}
+
+// document.getElementById('okay').addEventListener('click', () => {
+//     modal.style.display = 'none'
+//     modal2.style.display = 'none'
+//     //location.reload()
+// });  //apertou o ok? ent tudo certo, atualiza a pagina automaticamente
