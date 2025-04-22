@@ -21,18 +21,23 @@ function carregarPerguntas() {
             data.forEach(item => {
                 const pergunta = new Perguntas(item.id, item.nome, item.tipo_perguntas_id);
 
+                // Ignora a pergunta do tipo "comentário" q vem da api
+                if (pergunta.nome.toLowerCase().includes("comentário")) {
+                    return; // pula essa pergunta
+                }
+
                 const perguntaDiv = document.createElement('div');
                 perguntaDiv.classList.add('pergunta');
 
                 const p = document.createElement('p');
-                p.textContent = pergunta.nome;
+                p.textContent = pergunta.nome.toUpperCase();;
 
                 const opcoes = [
-                    { emoji: '😡', texto: 'Muito Ruim' },
-                    { emoji: '😕', texto: 'Ruim' },
-                    { emoji: '😐', texto: 'Intermediário' },
-                    { emoji: '🙂', texto: 'Bom' },
-                    { emoji: '😁', texto: 'Muito Bom' }
+                    { imagem: '../img/muitoruim.png', texto: 'Muito Ruim' },
+                    { imagem: '../img/ruim.png', texto: 'Ruim' },
+                    { imagem: '../img/intermediario.png', texto: 'Intermediário' },
+                    { imagem: '../img/bom.png', texto: 'Bom' },
+                    { imagem: '../img/muitobom.png', texto: 'Muito Bom' }
                 ];
 
                 const avaliacaoDiv = document.createElement('div');
@@ -41,30 +46,46 @@ function carregarPerguntas() {
                 opcoes.forEach((opcao, index) => {
                     const span = document.createElement('span');
                     span.classList.add('emoji');
-                    span.textContent = opcao.emoji;
                     span.dataset.resposta = opcao.texto;
 
+                    const img = document.createElement('img');
+                    img.src = opcao.imagem;
+                    img.alt = opcao.texto;
+                    img.style.width = '80px';
+                    img.style.height = '80px';
+
+                    span.appendChild(img);
+
                     span.addEventListener('click', () => {
-
                         const todos = avaliacaoDiv.querySelectorAll('.emoji');
-                        todos.forEach(e => e.classList.remove('selecionado'));
+                    
+                        todos.forEach(e => {
+                            e.classList.remove('selecionado');
+                            const imgInterno = e.querySelector('img');
+                            const baseNome = imgInterno.dataset.base;
+                            imgInterno.src = `../img/${baseNome}`; // volta pra imagem original
+                        });
+                    
                         span.classList.add('selecionado');
-
-                        // Remove resposta anterior da mesma pergunta, se houver
+                    
+                        // trocndo pra imagem colorida qnd clica
+                        const baseNome = opcao.imagem.replace('.png', '');
+                        img.src = `../img/${baseNome}-colorido.png`;
+                    
                         const indiceExistente = respostasUsuario.findIndex(r => r.perguntaId === pergunta.id);
                         if (indiceExistente !== -1) {
                             respostasUsuario.splice(indiceExistente, 1);
                         }
-
-                        // Adiciona a nova resposta
+                    
                         respostasUsuario.push({
                             perguntaId: pergunta.id,
                             resposta: span.dataset.resposta
                         });
-
+                    
                         console.log(respostasUsuario);
-
                     });
+                    
+                    img.dataset.base = opcao.imagem; // pra saber a imagem original depois
 
                     avaliacaoDiv.appendChild(span);
                 });
@@ -79,15 +100,23 @@ function carregarPerguntas() {
 
 
 
+
 //executando a funçao qnd a pagina carrega
 document.addEventListener("DOMContentLoaded", function () {
     carregarPerguntas();
 });
 
+const modal = document.getElementById('confirmationModal');
+
+function showModal() { //para mostrar o modal, a função será executada quando os dados forem enviados para api
+    modal.style.display = 'flex';
+}
 
 
 //enviar pra api qnd clicar no botao
-document.getElementById('enviarRespostas').addEventListener('click', () => {
+document.getElementById('enviarRespostas').addEventListener('click', (event) => {
+    event.preventDefault();
+
     fetch(url)
         .then(response => response.json())
         .then(perguntas => {
@@ -96,31 +125,56 @@ document.getElementById('enviarRespostas').addEventListener('click', () => {
 
             const perguntasUnicas = [...new Set(respostasUsuario.map(r => r.perguntaId))];
 
-            if (perguntasUnicas.length < totalPerguntas) {
+            // Pega o texto do campo de comentário
+            const comentario = document.getElementById('comentario').value.trim();
+
+            // Verifica se todas as perguntas obrigatórias foram respondidas
+            // Comentário é opcional, então não entra nessa contagem
+            const idPerguntaComentario = perguntas.find(p => p.nome.toLowerCase().includes('comentário'))?.id;
+            const totalObrigatorias = idPerguntaComentario ? totalPerguntas - 1 : totalPerguntas;
+
+            if (perguntasUnicas.length < totalObrigatorias) {
                 alert("Responda todas as perguntas antes de enviar.");
                 return;
             }
+
+            // Se tiver comentário, adiciona como resposta normal
+            if (comentario !== "" && idPerguntaComentario) {
+                respostasUsuario.push({
+                    perguntaId: idPerguntaComentario,
+                    resposta: comentario
+                });
+            }
+
+            const payload = {
+                respostas: respostasUsuario
+            };
 
             fetch('http://localhost:3000/respostas', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(respostasUsuario)
+                body: JSON.stringify(payload)
             })
             .then(response => {
                 if (response.ok) {
-                    alert("Respostas enviadas com sucesso! Clique em ok para enviar outra.");
+                    showModal(); //deu certo? então mostrei o modal
+                    setTimeout(() => location.reload(), 7000); // TESTE PRA LOCALIZAR ERRO
                 } else {
                     alert("Erro ao enviar respostas.");
                 }
             })
             .catch(error => {
-                console.error("Erro ao enviar:", error);
-                alert("Erro na conexão com a API.");
+                console.error("Erro:", error);
+                alert("Erro:", error);
             });
         });
 });
 
 
 
+document.getElementById('okay').addEventListener('click', () => {
+    document.getElementById('confirmationModal').style.display = 'none'
+    location.reload()
+});  //apertou o ok? ent tudo certo, atualiza a pagina automaticamente
