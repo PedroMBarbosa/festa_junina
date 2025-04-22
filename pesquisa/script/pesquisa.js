@@ -1,4 +1,5 @@
-const url = 'http://localhost:3000/perguntas'; // ENDPOINT DAS PERGUNTAS FAKE
+const urlPerguntas = 'http://localhost:3000/perguntas'; // ENDPOINT DAS PERGUNTAS FAKE
+const urlRespostas = 'http://localhost:3000/respostas'; 
 
 //const urlPerguntas = 'http://10.00.146.37/api/Perguntas';
 //const urlRespostas = 'http://10.00.146.37/api/Respostas'
@@ -19,7 +20,7 @@ let perguntas = []
 function carregarPerguntas() {
     const container = document.getElementById('container-perguntas');
 
-    fetch(url) // MUDAR
+    fetch(urlPerguntas) // MUDAR
         .then(response => response.json())
         .then(data => {
             data.forEach(item => {
@@ -38,11 +39,11 @@ function carregarPerguntas() {
                 p.textContent = pergunta.nome.toUpperCase();;
 
                 const opcoes = [
-                    { imagem: '../img/muitoruim.png', texto: 'Muito Ruim' },
-                    { imagem: '../img/ruim.png', texto: 'Ruim' },
-                    { imagem: '../img/intermediario.png', texto: 'Intermediário' },
-                    { imagem: '../img/bom.png', texto: 'Bom' },
-                    { imagem: '../img/muitobom.png', texto: 'Muito Bom' }
+                    { imagem: './img/muitoruim.png', texto: 'Muito Ruim' },
+                    { imagem: './img/ruim.png', texto: 'Ruim' },
+                    { imagem: './img/intermediario.png', texto: 'Intermediário' },
+                    { imagem: './img/bom.png', texto: 'Bom' },
+                    { imagem: './img/muitobom.png', texto: 'Muito Bom' }
                 ];
 
                 const avaliacaoDiv = document.createElement('div');
@@ -68,14 +69,14 @@ function carregarPerguntas() {
                             e.classList.remove('selecionado');
                             const imgInterno = e.querySelector('img');
                             const baseNome = imgInterno.dataset.base;
-                            imgInterno.src = `../img/${baseNome}`; // volta pra imagem original
+                            imgInterno.src = `./img/${baseNome}`; // volta pra imagem original
                         });
 
                         span.classList.add('selecionado');
 
                         // trocndo pra imagem colorida qnd clica
                         const baseNome = opcao.imagem.replace('.png', '');
-                        img.src = `../img/${baseNome}-colorido.png`;
+                        img.src = `./${baseNome}-colorido.png`;
 
                         const indiceExistente = respostasUsuario.findIndex(r => r.perguntaId === pergunta.id);
                         if (indiceExistente !== -1) {
@@ -90,7 +91,8 @@ function carregarPerguntas() {
                         console.log(respostasUsuario);
                     });
 
-                    img.dataset.base = opcao.imagem; // pra saber a imagem original depois
+                    img.dataset.base = opcao.imagem.split('/').pop(); 
+
 
                     avaliacaoDiv.appendChild(span);
                 });
@@ -154,7 +156,7 @@ async function enviar(event) {
 
         console.log(payload)
 
-        await fetch('http://localhost:3000/respostas', { //mudar
+        await fetch(urlRespostas, { //mudar
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
