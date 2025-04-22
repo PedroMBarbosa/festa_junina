@@ -44,12 +44,11 @@ function adicionarAoCarrinho() {
 function removerItem(item) {
     if (carrinhoItens[item]) {
         delete carrinhoItens[item]; // Remove do objeto carrinhoItens
+        salvarCarrinho(); // Atualiza o localStorage
+        atualizarListaCarrinho(); // Atualiza visualmente a lista
+        atualizarTotal(); // Recalcula o total
+        salvarNoBancoDeDados(); // Atualiza o banco de dados
     }
-
-    salvarCarrinho(); // Atualiza o localStorage
-    atualizarListaCarrinho(); // Atualiza visualmente a lista
-    atualizarTotal(); // Recalcula o total
-    salvarNoBancoDeDados(); // Atualiza o banco de dados
 }
 
 // Função para salvar os dados no banco de dados via API
