@@ -1,6 +1,6 @@
 /* Cabeçalho Geral */
 header {
-  width: 100%;
+  width: 100%; 
   background-color: white;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -207,10 +207,11 @@ input {
 .login {
   height: 100%;
   background: #eee;
-  transform: translateY(-180px);
+  transform: translateY(-170px);
   transition: 0.8s ease-in-out;
   padding: 10px;
   margin-top:-50px;
+  border-radius: 50px;
 }
 
 
@@ -223,7 +224,7 @@ input {
 /* Alternância de estados via checkbox */
 #chk:checked ~ .login {
   tab-size: 25px;
-  transform: translateY(-500px);
+  transform: translateY(-550px);
 }
 
 #chk:checked ~ .login label {
