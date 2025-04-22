@@ -21,16 +21,23 @@ function alterarQtd(item, incremento) {
     qtdElement.textContent = String(qtd).padStart(2, '0');
 }
 
-// Função para adicionar ingressos ao carrinho
+// Função para adicionar ingressos ao carrinho e acumular quantidades corretamente
 function adicionarAoCarrinho() {
     compraingressos.ingresso.forEach(ingresso => {
         const qtd = parseInt(document.getElementById(`qtd-${ingresso.tipo.toLowerCase()}`).textContent);
+
         if (qtd > 0) { // Apenas adiciona itens com quantidade maior que zero
-            carrinhoItens[ingresso.tipo.toLowerCase()] = {
-                tipo: ingresso.tipo,
-                quantidade: qtd,
-                preco: ingresso.preco
-            };
+            if (carrinhoItens[ingresso.tipo.toLowerCase()]) {
+                // Se o ingresso já estiver no carrinho, acumula a quantidade
+                carrinhoItens[ingresso.tipo.toLowerCase()].quantidade += qtd;
+            } else {
+                // Se não estiver no carrinho, adiciona normalmente
+                carrinhoItens[ingresso.tipo.toLowerCase()] = {
+                    tipo: ingresso.tipo,
+                    quantidade: qtd,
+                    preco: ingresso.preco
+                };
+            }
         }
     });
 
