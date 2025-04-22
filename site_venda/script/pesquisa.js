@@ -1,4 +1,4 @@
-const url = 'http://localhost:4000/perguntas'; // ENDPOINT DAS PERGUNTAS
+const url = 'http://localhost:3000/perguntas'; // ENDPOINT DAS PERGUNTAS
 
 class Perguntas {
     constructor(id, nome, tipo_perguntas_id) {
@@ -150,7 +150,7 @@ document.getElementById('enviarRespostas').addEventListener('click', (event) => 
                 respostas: respostasUsuario
             };
 
-            fetch('http://localhost:4000/respostas', {
+            fetch('http://localhost:3000/respostas', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
