@@ -54,3 +54,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+function renderLista(filtrados = usuarios) {
+  lista.innerHTML = "";
+  filtrados.forEach((user, index) => {
+    const li = document.createElement("li");
+    li.className = "item-lista";
+
+    const statusClass = user.status.toLowerCase();
+
+    li.innerHTML = `
+      <span>${user.email}</span>
+      <span>${user.ingressos} ingressos</span>
+      <span class="status-label ${statusClass}" style="cursor:pointer;">${user.status}</span>
+    `;
+
+    // Clique para alternar status
+    li.querySelector('.status-label').addEventListener('click', () => {
+      if (user.status === "Pendente") {
+        user.status = "Confirmado";
+      } else {
+        user.status = "Pendente";
+      }
+      renderLista(filtrados === usuarios ? usuarios : filtrados); // Re-renderiza mantendo o filtro
+    });
+
+    lista.appendChild(li);
+  });
+}
+if (user.status === "Pendente") {
+  user.status = "Confirmado";
+}
+else {
+  user.status = "Pendente";
+}
