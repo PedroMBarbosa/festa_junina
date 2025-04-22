@@ -1,116 +1,91 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gerenciamento de Lotes</title>
-  <link rel="stylesheet" href="../css/lotes.css" />
-  <link rel="stylesheet" href="../css/cabecalho.css" />
+  <meta charset="UTF-8">
+  <title>Gerenciador de Lotes</title>
+  <link rel="stylesheet" href="/css/lotes.css">
+  <link rel="stylesheet" href="/css/cabecalho.css">
 </head>
 <body>
   <header>
     <div class="banner-topo">
-      <img src="../images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo-senai">
+      <img src="/images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo-senai">
     </div>
 
     <div class="cabecalho-lotes">
-      <a href="../views/home.html" class="icone-voltar">
-        <img src="../images/home.png" alt="Voltar para Home" class="icone-header"/>
+      <a href="#" class="icone-voltar">
+        <img src="/images/home.png" alt="Voltar para Home" />
       </a>
-      <span class="titulo-cabecalho">Lotes</span>
-      <a href="../views/perfil.html" class="icone-perfil">
-        <img src="../images/icon.png" alt="Ir para Perfil" class="icone-header"/>
+      <span class="titulo-cabecalho">Gerenciamento de Lotes</span>
+      <a href="#" class="icone-perfil">
+        <img src="/images/icon.png" alt="Ir para Perfil" />
       </a>
     </div>
   </header>
-  
-  <main>
-    <div class="btn-novo-lote">
-      <button onclick="window.location.href='novolote.html'">Criar Novo Lote</button>
+
+  <div class="container">
+    <button class="criar-lote">CRIAR NOVO LOTE</button>
+
+    <!-- Lotes -->
+    <div class="lote ativo">
+      <h2>PRIMEIRO LOTE</h2>
+      <div class="acoes">
+        <button class="editar">EDITAR</button>
+        <button class="excluir">EXCLUIR</button>
+        <p class="info">Restam 50 ingressos<br>para o fim do lote</p>
+        <p class="status-text">STATUS: ATIVADO</p>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      
     </div>
 
-    <section class="lotes">
-      <!-- Lote Ativo -->
-      <div class="lote ativo">
-        <div class="lote-header">
-          <span class="titulo-lote">Primeiro Lote</span>
-        </div>
-        <div class="lote-conteudo">
-          <button class="editar">Editar</button>
-          <button class="excluir" onclick="abrirModal()">Excluir</button>
-          <span class="descricao">Restam 50 ingressos para o fim do lote</span>
-          <span class="status">Status: Ativado</span>
-          <label class="switch">
-            <input type="checkbox" checked>
-            <span class="slider"></span>
-          </label>
-        </div>
+    <div class="lote inativo">
+      <h2>SEGUNDO LOTE</h2>
+      <div class="acoes">
+        <button class="editar">EDITAR</button>
+        <button class="excluir">EXCLUIR</button>
+        <p class="info">LOTE NÃO INICIADO</p>
+        <p class="status-text">STATUS: DESATIVADO</p>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider"></span>
+        </label>
       </div>
+    </div>
 
-      <!-- Lote Desativado -->
-      <div class="lote desativado">
-        <div class="lote-header">
-          <span class="titulo-lote">Segundo Lote</span>
-        </div>
-        <div class="lote-conteudo">
-          <button class="editar" disabled>Editar</button>
-          <button class="excluir" onclick="abrirModal()">Excluir</button>
-          <span class="descricao">Lote não iniciado</span>
-          <span class="status">Status: Desativado</span>
-          <label class="switch">
-            <input type="checkbox">
-            <span class="slider"></span>
-          </label>
-        </div>
+    <div class="lote inativo">
+      <h2>TERCEIRO LOTE</h2>
+      <div class="acoes">
+        <button class="editar">EDITAR</button>
+        <button class="excluir">EXCLUIR</button>
+        <p class="info">LOTE NÃO INICIADO</p>
+        <p class="status-text">STATUS: DESATIVADO</p>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider"></span>
+        </label>
       </div>
+    </div>
 
-      <div class="lote desativado">
-        <div class="lote-header">
-          <span class="titulo-lote">Terceiro Lote</span>
-        </div>
-        <div class="lote-conteudo">
-          <button class="editar" disabled>Editar</button>
-          <button class="excluir" onclick="abrirModal()">Excluir</button>
-          <span class="descricao">Lote não iniciado</span>
-          <span class="status">Status: Desativado</span>
-          <label class="switch">
-            <input type="checkbox">
-            <span class="slider"></span>
-          </label>
-        </div>
+    <div class="lote inativo">
+      <h2>QUARTO LOTE</h2>
+      <div class="acoes">
+        <button class="editar">EDITAR</button>
+        <button class="excluir">EXCLUIR</button>
+        <p class="info">LOTE NÃO INICIADO</p>
+        <p class="status-text">STATUS: DESATIVADO</p>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider"></span>
+        </label>
       </div>
-
-      <div class="lote desativado">
-        <div class="lote-header">
-          <span class="titulo-lote">Quarto Lote</span>
-        </div>
-        <div class="lote-conteudo">
-          <button class="editar" disabled>Editar</button>
-          <button class="excluir" onclick="abrirModal()">Excluir</button>
-          <span class="descricao">Lote não iniciado</span>
-          <span class="status">Status: Desativado</span>
-          <label class="switch">
-            <input type="checkbox">
-            <span class="slider"></span>
-          </label>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Modal de confirmação -->
- <!-- Modal de confirmação -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <p id="texto-modal">TEM CERTEZA QUE DESEJA EXCLUIR O PRIMEIRO LOTE?</p>
-    <div class="modal-botoes">
-      <button class="confirmar" onclick="confirmarExclusao()">SIM</button>
-      <button class="cancelar" onclick="fecharModal()">NÃO</button>
     </div>
   </div>
-</div>
+  
 
-
-  <script src="../js/lotes.js"></script>
+  <script src="/js/lotes.js"></script>
 </body>
 </html>
