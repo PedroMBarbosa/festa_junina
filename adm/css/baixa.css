@@ -331,3 +331,40 @@ header {
   padding-left: -20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
+.topo {
+  background-color: #990000;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.icone-canto-esquerdo,
+.icone-canto-direito {
+  width: 40px;
+}
+
+.icone-header {
+  width: 28px;
+  height: 28px;
+  filter: brightness(0) invert(1);
+  transition: transform 0.2s;
+}
+
+.icone-header:hover {
+  transform: scale(1.1);
+}
+
+.logo-central {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.logo-senai {
+  height: 50px;
+  object-fit: contain;
+}
