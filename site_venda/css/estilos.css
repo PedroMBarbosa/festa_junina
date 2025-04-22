@@ -152,6 +152,14 @@ height: 100px;
 width: 550px;
 border: none;
 }
+.bot1 a:hover{
+  color: white;
+  text-decoration: none;
+}
+.bot2 a:hover{
+  color: white;
+  text-decoration: none;
+}
 .tt1{
 color: white;
 font-size: 35px;
