@@ -1,62 +1,63 @@
-let loteParaExcluir = null;
+document.addEventListener("DOMContentLoaded", () => {
+  const editarBtn = document.getElementById("btn-editar-dados");
+  const nomeSpan = document.getElementById("nome-completo");
+  const telefoneSpan = document.getElementById("telefone");
+  const emailSpan = document.getElementById("email");
+  const senhaSpan = document.getElementById("senha");
 
-document.querySelectorAll('.excluir').forEach(botao => {
-  botao.addEventListener('click', () => abrirModal(botao));
-});
+  const inputNome = document.getElementById("input-nome");
+  const inputTelefone = document.getElementById("input-telefone");
+  const inputEmail = document.getElementById("input-email");
+  const inputSenha = document.getElementById("input-senha");
 
-function abrirModal(botao) {
-  const lote = botao.closest('.lote');
-  const titulo = lote.querySelector('h2').textContent;
-  document.getElementById('texto-modal').textContent = `TEM CERTEZA QUE DESEJA EXCLUIR ${titulo}?`;
-  document.getElementById('modal').style.display = 'flex';
-  loteParaExcluir = lote;
-}
+  const toggleSenhaBtn = document.getElementById("toggle-senha");
 
-function fecharModal() {
-  document.getElementById('modal').style.display = 'none';
-  loteParaExcluir = null;
-}
+  let editando = false;
 
-function confirmarExclusao() {
-  if (loteParaExcluir) {
-    loteParaExcluir.remove();
-  }
-  fecharModal();
-}
+  editarBtn.addEventListener("click", () => {
+    if (!editando) {
+      // Modo edição
+      inputNome.value = nomeSpan.textContent.replace("Nome completo: ", "");
+      inputTelefone.value = telefoneSpan.textContent.replace("Telefone: ", "");
+      inputEmail.value = emailSpan.textContent.replace("E-mail: ", "");
+      inputSenha.value = "";
 
-document.querySelectorAll('.switch input[type="checkbox"]').forEach((checkbox) => {
-  checkbox.addEventListener('change', function () {
-    const todosLotes = document.querySelectorAll('.lote');
+      nomeSpan.classList.add("hidden");
+      telefoneSpan.classList.add("hidden");
+      emailSpan.classList.add("hidden");
+      senhaSpan.classList.add("hidden");
 
-    // Se o usuário ativou este lote
-    if (checkbox.checked) {
-      todosLotes.forEach(lote => {
-        const input = lote.querySelector('.switch input');
-        const statusText = lote.querySelector('.status-text');
-        const descricao = lote.querySelector('.info');
+      inputNome.classList.remove("hidden");
+      inputTelefone.classList.remove("hidden");
+      inputEmail.classList.remove("hidden");
+      inputSenha.classList.remove("hidden");
 
-        if (input !== checkbox) {
-          input.checked = false;
-          statusText.textContent = 'STATUS: DESATIVADO';
-          descricao.textContent = 'LOTE NÃO INICIADO';
-          lote.classList.remove('ativo');
-          lote.classList.add('inativo');
-        } else {
-          statusText.textContent = 'STATUS: ATIVADO';
-          descricao.innerHTML = 'Restam 50 ingressos<br>para o fim do lote';
-          lote.classList.add('ativo');
-          lote.classList.remove('inativo');
-        }
-      });
+      editarBtn.innerHTML = '<img src="../images/save.png" class="edit"/> Salvar';
+      editando = true;
     } else {
-      // Se o usuário desativou o único ativo
-      const lote = checkbox.closest('.lote');
-      const statusText = lote.querySelector('.status-text');
-      const descricao = lote.querySelector('.info');
-      statusText.textContent = 'STATUS: DESATIVADO';
-      descricao.textContent = 'LOTE NÃO INICIADO';
-      lote.classList.remove('ativo');
-      lote.classList.add('inativo');
+      // Modo salvar
+      nomeSpan.textContent = `Nome completo: ${inputNome.value}`;
+      telefoneSpan.textContent = `Telefone: ${inputTelefone.value}`;
+      emailSpan.textContent = `E-mail: ${inputEmail.value}`;
+      senhaSpan.textContent = `Senha: **********`;
+
+      nomeSpan.classList.remove("hidden");
+      telefoneSpan.classList.remove("hidden");
+      emailSpan.classList.remove("hidden");
+      senhaSpan.classList.remove("hidden");
+
+      inputNome.classList.add("hidden");
+      inputTelefone.classList.add("hidden");
+      inputEmail.classList.add("hidden");
+      inputSenha.classList.add("hidden");
+
+      editarBtn.innerHTML = '<img src="../images/edit (1).png" class="edit"/> Editar';
+      editando = false;
     }
+  });
+
+  toggleSenhaBtn.addEventListener("click", () => {
+    const tipo = inputSenha.getAttribute("type");
+    inputSenha.setAttribute("type", tipo === "password" ? "text" : "password");
   });
 });
