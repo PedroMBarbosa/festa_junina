@@ -14,6 +14,7 @@ header {
   position: relative;
 }
 
+/* Banner topo */
 .banner-topo {
   background: white;
   padding: 20px;
@@ -25,6 +26,7 @@ header {
   height: 60px;
 }
 
+/* Menu */
 .menu {
   background-color: #8b0000;
   display: flex;
@@ -40,6 +42,7 @@ header {
   cursor: pointer;
   text-decoration: none;
   color: white;
+
 }
 
 .titulo-menu {
@@ -47,6 +50,7 @@ header {
   font-weight: bold;
 }
 
+/* Contêiner do pagamento */
 .pagamento-container {
   display: flex;
   flex-wrap: wrap;
@@ -55,6 +59,7 @@ header {
   justify-content: center;
 }
 
+/* Tabela de pagamento */
 .tabela-pagamento {
   flex: 2;
   background: white;
@@ -64,6 +69,7 @@ header {
   min-width: 400px;
 }
 
+/* Cabeçalho da tabela */
 .cabecalho-tabela {
   display: flex;
   justify-content: space-between;
@@ -76,6 +82,7 @@ header {
   font-weight: bold;
 }
 
+/* Filtro */
 .filtro {
   display: flex;
   align-items: center;
@@ -88,6 +95,7 @@ header {
   border: none;
 }
 
+/* Lista de pagamentos */
 #lista-pagamentos {
   list-style: none;
 }
@@ -108,6 +116,7 @@ header {
   text-align: center;
 }
 
+/* Status */
 .pendente {
   background-color: red;
   padding: 6px 12px;
@@ -120,6 +129,7 @@ header {
   border-radius: 20px;
 }
 
+/* Painel de status */
 .painel-status {
   flex: 1;
   background: #e0e0e0;
@@ -131,6 +141,7 @@ header {
   min-width: 280px;
 }
 
+/* Formulário de baixa */
 .form-baixa {
   display: flex;
   flex-direction: column;
@@ -147,28 +158,29 @@ header {
   border: 1px solid #ccc;
 }
 
+/* Botões de ação */
 .botoes {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
 
-.btn-cancelar {
-  background-color: red;
-  color: white;
+.btn-cancelar,
+.btn-confirmar {
   padding: 10px 15px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
 }
 
+.btn-cancelar {
+  background-color: red;
+  color: white;
+}
+
 .btn-confirmar {
   background-color: limegreen;
   color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
 .btn-cancelar:hover {
@@ -179,6 +191,7 @@ header {
   background-color: #2e7d32;
 }
 
+/* Dropdown */
 .dropdown-container {
   position: relative;
 }
@@ -226,6 +239,7 @@ header {
   display: inline-block;
 }
 
+/* Botão de filtro */
 #btn-filtro {
   padding: 8px 12px;
   border-radius: 10px;
@@ -235,6 +249,7 @@ header {
   font-weight: bold;
 }
 
+/* Conteúdo do dropdown */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -267,6 +282,7 @@ header {
   display: flex;
 }
 
+/* Cabeçalhos */
 .cabecalho2 {
   background-color: #97080A;
   width: 100%;
@@ -289,25 +305,23 @@ header {
   height: 58px;
 }
 
-.home-btn {
-  margin-left: 0;
-}
-
 .home-btn img {
   width: 40px;
   height: 40px;
 }
 
 .perfil-btn {
-  margin-right: 0;
-  margin-left: auto;
+  margin-left: 1110px; /* Ajuste a margem à esquerda para mover o botão mais à direita */
+  margin-right: 0px; /* Ajuste a margem à direita para mover o botão mais à esquerda */
 }
 
 .perfil-btn img {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
 }
 
+
+/* Cabeçalho com sombra */
 .cabecalho1 {
   background-color: #97080A;
   width: 100%;

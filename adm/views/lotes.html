@@ -5,47 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gerenciamento de Lotes - Festa Junina 2025</title>
   <link rel="stylesheet" href="/css/lotes.css" />
-  
 </head>
 <body>
   <header>
     <div class="banner-topo">
-      <img src="/images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo" style="height: 60px; width: auto;">
+      <img src="/images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo">
       <div class="titulo">
         <h1>Festa Junina <span>2025</span></h1>
       </div>
     </div>
-    <nav class="menu">
-      
-    </nav>
   </header>
 
-  <!-- Restante do seu código permanece igual -->
   <main class="lotes-container">
     <!-- Lote 1 -->
-    <div class="lote-card">
+    <div class="lote-card" data-lote="PRIMEIRO LOTE">
       <div class="lote-topo">
-        <span class="lote-nome">Lote 1</span>
+        <span class="lote-nome">PRIMEIRO LOTE</span>
         <span class="valor verde">Valor: 10,00 R$</span>
         <span class="valor laranja">Valor: 5,00 R$</span>
-        <span class="status ativo">Ativo</span>
+        <span class="status ativo">STATUS: ATIVADO</span>
         <label class="switch">
           <input type="checkbox" checked>
           <span class="slider round"></span>
         </label>
       </div>
       <div class="lote-info">
-        <span class="ingressos">50 ingressos restantes</span>
-        <span class="data">Fechamento em dd/mm/yyyy</span>
+        Restam 50 ingressos para o fim do lote
       </div>
       <div class="lote-acoes">
-        <button class="editar">✏️ Editar</button>
-        <button class="excluir">🗑️ Excluir</button>
+        <button class="editar">EDITAR</button>
+        <button class="excluir">EXCLUIR</button>
       </div>
     </div>
 
-    <!-- Resto dos lotes... -->
+    <!-- Lote 2 -->
+    <div class="lote-card" data-lote="SEGUNDO LOTE">
+      <div class="lote-topo">
+        <span class="lote-nome">SEGUNDO LOTE</span>
+        <span class="valor">Valor: 15,00 R$</span>
+        <span class="status inativo">STATUS: DESATIVADO</span>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div class="lote-info">LOTE NÃO INICIADO</div>
+      <div class="lote-acoes">
+        <button class="editar">EDITAR</button>
+        <button class="excluir">EXCLUIR</button>
+      </div>
+    </div>
+
+    <!-- Adicionar botão flutuante -->
     <button class="adicionar-lote">➕</button>
   </main>
+
+  <!-- Modal de Confirmação -->
+  <div id="modal-confirmacao" class="modal">
+    <div class="modal-conteudo">
+      <p id="mensagem-modal">TEM CERTEZA QUE DESEJA EXCLUIR ESTE LOTE?</p>
+      <div class="modal-botoes">
+        <button id="btn-confirmar">SIM</button>
+        <button id="btn-cancelar">NÃO</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/lotes.js"></script>
 </body>
 </html>
