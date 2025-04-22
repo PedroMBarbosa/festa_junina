@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Baixa no Pagamento - Festa Junina 2025</title>
-  <link rel="stylesheet" href="/css/baixa.css">
-  <link rel="stylesheet" href="/css/global.css">
-  <script defer src="/js/baixa.js"></script>
+  <link rel="stylesheet" href="../css/baixa.css">
+  <script defer src="../js/baixa.js"></script>
 </head>
+
 <body>
   <header>
     <div class="banner-topo">
-      <img src="/images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo">
+      <img src="../images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo">
     </div>
 
-    <nav class="menu">
-      <a href="home.html" class="menu-icon">🏠</a>
-      <span class="titulo-menu">Gerenciar Pagamento</span>
-      <a href="perfil.html" class="perfil-icon">👤</a>
-    </nav>
+    <div class="cabecalho1">
+      <a href="../views/home.html" class="home-btn">
+        <img src="../images/home.png" alt="voltar" />
+      </a>
+      <a href="../views/perfil.html" class="perfil-btn">
+        <img src="../images/icon.png" alt="voltar" />
+      </a>
+    </div>
   </header>
 
   <main class="pagamento-container">
@@ -26,6 +30,7 @@
       <div class="cabecalho-tabela">
         <span>Nome</span>
         <span>Quantidade</span>
+
         <div class="dropdown">
           <button id="btn-filtro">🔍 Filtro</button>
           <div class="dropdown-content" id="dropdown-filtro">
@@ -33,7 +38,6 @@
             <button class="filtro-status" data-status="pendente">Pendente</button>
           </div>
         </div>
-        
       </div>
 
       <ul id="lista-pagamentos">
@@ -44,8 +48,10 @@
     <aside class="painel-status">
       <div class="form-baixa">
         <label for="email">E-mail</label>
-        <input type="email" id="email" placeholder="Digite o endereço de e-mail...">
-        <input type="text" id="mensagem" placeholder="Digite a mensagem...">
+        <input type="email" id="email" placeholder="Digite o endereço de e-mail..." />
+
+        <input type="text" id="mensagem" placeholder="Digite a mensagem..." />
+
         <div class="botoes">
           <button class="btn-cancelar">Cancelar</button>
           <button class="btn-confirmar">Enviar</button>
@@ -54,4 +60,5 @@
     </aside>
   </main>
 </body>
+
 </html>
