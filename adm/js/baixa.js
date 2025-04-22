@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Filtro funcional
+  // Dados de exemplo
   const usuarios = [
     { email: "carlos@gmail.com", ingressos: 5, status: "Pendente" },
     { email: "marcia@gmail.com", ingressos: 3, status: "Confirmado" },
@@ -28,62 +28,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderLista(filtrados = usuarios) {
     lista.innerHTML = "";
-    filtrados.forEach(user => {
+    filtrados.forEach((user, index) => {
       const li = document.createElement("li");
       li.className = "item-lista";
+
       li.innerHTML = `
         <span>${user.email}</span>
         <span>${user.ingressos} ingressos</span>
-        <span class="${user.status.toLowerCase()}">${user.status}</span>
+        <span class="status-label ${user.status.toLowerCase()}" style="cursor:pointer;">${user.status}</span>
       `;
+
+      const statusSpan = li.querySelector(".status-label");
+      statusSpan.addEventListener("click", () => {
+        // Alterna o status
+        user.status = user.status === "Pendente" ? "Confirmado" : "Pendente";
+
+        // Reaplica o filtro se necessário
+        const filtroAtivo = document.querySelector(".dropdown-content button.active");
+        if (filtroAtivo) {
+          const statusFiltro = filtroAtivo.dataset.status;
+          const filtrados = usuarios.filter(u => u.status.toLowerCase() === statusFiltro);
+          renderLista(filtrados);
+        } else {
+          renderLista(usuarios);
+        }
+      });
+
       lista.appendChild(li);
     });
   }
 
   renderLista();
 
-  // Clique nas opções do dropdown
+  // Filtro funcional
   document.querySelectorAll('.filtro-status').forEach(btn => {
     btn.addEventListener('click', () => {
+      // Destaca botão ativo
+      document.querySelectorAll('.filtro-status').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
       const status = btn.dataset.status;
-      const filtrados = usuarios.filter(user =>
-        user.status.toLowerCase() === status
-      );
+      const filtrados = usuarios.filter(user => user.status.toLowerCase() === status);
       renderLista(filtrados);
       dropdown.classList.remove('show');
     });
   });
 });
-function renderLista(filtrados = usuarios) {
-  lista.innerHTML = "";
-  filtrados.forEach((user, index) => {
-    const li = document.createElement("li");
-    li.className = "item-lista";
-
-    const statusClass = user.status.toLowerCase();
-
-    li.innerHTML = `
-      <span>${user.email}</span>
-      <span>${user.ingressos} ingressos</span>
-      <span class="status-label ${statusClass}" style="cursor:pointer;">${user.status}</span>
-    `;
-
-    // Clique para alternar status
-    li.querySelector('.status-label').addEventListener('click', () => {
-      if (user.status === "Pendente") {
-        user.status = "Confirmado";
-      } else {
-        user.status = "Pendente";
-      }
-      renderLista(filtrados === usuarios ? usuarios : filtrados); // Re-renderiza mantendo o filtro
-    });
-
-    lista.appendChild(li);
-  });
-}
-if (user.status === "Pendente") {
-  user.status = "Confirmado";
-}
-else {
-  user.status = "Pendente";
-}
