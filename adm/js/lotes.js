@@ -1,84 +1,62 @@
-const lista = document.getElementById('lista-pagamentos');
-const criarLoteBtn = document.getElementById('criarLoteBtn');
+let loteParaExcluir = null;
 
-// Carregar do localStorage ao iniciar
-document.addEventListener('DOMContentLoaded', () => {
-  const dadosSalvos = JSON.parse(localStorage.getItem('lotes')) || [];
-  dadosSalvos.forEach(lote => criarLote(lote.nome, lote.status));
+document.querySelectorAll('.excluir').forEach(botao => {
+  botao.addEventListener('click', () => abrirModal(botao));
 });
 
-// Criar novo lote
-function criarLote(nome = "Lote Exemplo", status = "pendente") {
-  const li = document.createElement('li');
-  li.className = 'item-lista';
-
-  const spanNome = document.createElement('span');
-  spanNome.textContent = nome;
-
-  const spanStatus = document.createElement('span');
-  spanStatus.textContent = status.charAt(0).toUpperCase() + status.slice(1);
-  spanStatus.className = status;
-
-  const botoes = document.createElement('span');
-  botoes.innerHTML = `
-    <button onclick="editarLote(this)">✏️</button>
-    <button onclick="excluirLote(this)">🗑️</button>
-    <button onclick="alternarStatus(this)">🔁</button>
-  `;
-  botoes.style.display = 'flex';
-  botoes.style.gap = '5px';
-
-  li.appendChild(spanNome);
-  li.appendChild(spanStatus);
-  li.appendChild(botoes);
-  lista.appendChild(li);
-
-  salvarLocalStorage();
+function abrirModal(botao) {
+  const lote = botao.closest('.lote');
+  const titulo = lote.querySelector('h2').textContent;
+  document.getElementById('texto-modal').textContent = `TEM CERTEZA QUE DESEJA EXCLUIR ${titulo}?`;
+  document.getElementById('modal').style.display = 'flex';
+  loteParaExcluir = lote;
 }
 
-function excluirLote(botao) {
-  if (confirm("Tem certeza que deseja excluir este lote?")) {
-    const li = botao.closest('li');
-    li.remove();
-    salvarLocalStorage();
+function fecharModal() {
+  document.getElementById('modal').style.display = 'none';
+  loteParaExcluir = null;
+}
+
+function confirmarExclusao() {
+  if (loteParaExcluir) {
+    loteParaExcluir.remove();
   }
+  fecharModal();
 }
 
-function editarLote(botao) {
-  const li = botao.closest('li');
-  const nomeAtual = li.children[0].textContent;
-  const novoNome = prompt("Editar nome do lote:", nomeAtual);
-  if (novoNome) {
-    li.children[0].textContent = novoNome;
-    salvarLocalStorage();
-  }
-}
+document.querySelectorAll('.switch input[type="checkbox"]').forEach((checkbox) => {
+  checkbox.addEventListener('change', function () {
+    const todosLotes = document.querySelectorAll('.lote');
 
-function alternarStatus(botao) {
-  const li = botao.closest('li');
-  const spanStatus = li.children[1];
-  if (spanStatus.classList.contains('pendente')) {
-    spanStatus.className = 'confirmado';
-    spanStatus.textContent = 'Confirmado';
-  } else {
-    spanStatus.className = 'pendente';
-    spanStatus.textContent = 'Pendente';
-  }
-  salvarLocalStorage();
-}
+    // Se o usuário ativou este lote
+    if (checkbox.checked) {
+      todosLotes.forEach(lote => {
+        const input = lote.querySelector('.switch input');
+        const statusText = lote.querySelector('.status-text');
+        const descricao = lote.querySelector('.info');
 
-criarLoteBtn.addEventListener('click', () => {
-  const nome = prompt("Digite o nome do novo lote:");
-  if (nome) criarLote(nome);
-});
-
-// Salvar todos os lotes no localStorage
-function salvarLocalStorage() {
-  const lotes = [];
-  document.querySelectorAll('#lista-pagamentos li').forEach(li => {
-    const nome = li.children[0].textContent;
-    const status = li.children[1].className;
-    lotes.push({ nome, status });
+        if (input !== checkbox) {
+          input.checked = false;
+          statusText.textContent = 'STATUS: DESATIVADO';
+          descricao.textContent = 'LOTE NÃO INICIADO';
+          lote.classList.remove('ativo');
+          lote.classList.add('inativo');
+        } else {
+          statusText.textContent = 'STATUS: ATIVADO';
+          descricao.innerHTML = 'Restam 50 ingressos<br>para o fim do lote';
+          lote.classList.add('ativo');
+          lote.classList.remove('inativo');
+        }
+      });
+    } else {
+      // Se o usuário desativou o único ativo
+      const lote = checkbox.closest('.lote');
+      const statusText = lote.querySelector('.status-text');
+      const descricao = lote.querySelector('.info');
+      statusText.textContent = 'STATUS: DESATIVADO';
+      descricao.textContent = 'LOTE NÃO INICIADO';
+      lote.classList.remove('ativo');
+      lote.classList.add('inativo');
+    }
   });
-  localStorage.setItem('lotes', JSON.stringify(lotes));
-}
+});

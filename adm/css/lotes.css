@@ -1,112 +1,136 @@
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
-  background: #ffffff;
+  margin: 0;
+  background-color: #f8f8f8;
 }
 
-.topo {
-  background-color: #9b0000;
+.banner-topo {
+  background-color: #f8f8f8;
+  text-align: center;
+  padding: 10px;
+}
+
+.logo-senai {
+  height: 40px;
+}
+
+.cabecalho-lotes {
+  background-color: #800000;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-}
-
-.logo {
-  height: 50px;
-}
-
-.icone-usuario {
+  justify-content: space-between;
+  padding: 15px 20px;
   color: white;
-  font-size: 22px;
 }
 
-.voltar {
-  margin: 15px;
-  color: #9b0000;
+.cabecalho-lotes img {
+  height: 24px;
+}
+
+.titulo-cabecalho {
+  font-size: 18px;
   font-weight: bold;
 }
 
-.btn-novo-lote {
-  text-align: right;
-  margin: 0 20px 20px;
-}
-
-.btn-novo-lote button {
-  background-color: #e53935;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.lotes {
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 0 20px 50px;
+}
+
+.criar-lote {
+  background-color: #d00000;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px;
+  float: right;
+  margin-bottom: 30px;
+  cursor: pointer;
+  text-align: center;
 }
 
 .lote {
-  background-color: #a30000;
-  border-radius: 20px;
-  color: white;
-  padding: 15px;
-}
-
-.lote-header {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.lote-conteudo {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #b80000;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  flex-wrap: wrap;
+}
+
+.lote h2 {
+  flex: 1 1 200px;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 15px 0;
+  text-transform: uppercase;
+}
+
+.acoes {
+  display: flex;
+  flex: 3;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 15px;
-  justify-content: space-between;
+  gap: 12px;
 }
 
-button.editar,
-button.excluir {
-  border: none;
-  padding: 8px 14px;
-  border-radius: 20px;
+.acoes button {
+  margin: 5px;
+  padding: 10px 20px;
+  border-radius: 30px;
   font-weight: bold;
-  color: white;
+  border: none;
   cursor: pointer;
 }
 
-.editar {
-  background-color: #b71c1c;
+button.editar {
+  background-color: #ff8a80;
+  color: white;
 }
 
-.excluir {
-  background-color: #f44336;
+button.excluir {
+  background-color: #8b0000;
+  color: white;
+}
+a.editar {
+  background-color: #ff8a80;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  display: inline-block;
+  transition: 0.3s;
 }
 
-button:disabled {
-  background-color: #757575;
-  cursor: not-allowed;
+a.editar:hover {
+  background-color: #ff6e6e;
 }
 
-.descricao {
+
+.info,
+.status-text {
+  font-size: 14px;
+  font-weight: 500;
   text-align: center;
-  font-weight: bold;
+  margin: 0 20px;
+  flex: 1;
 }
 
-.status {
-  font-weight: bold;
-}
-
-/* Switch */
 .switch {
   position: relative;
   display: inline-block;
   width: 50px;
-  height: 24px;
+  height: 25px;
+  margin-left: auto;
 }
 
 .switch input {
@@ -118,36 +142,40 @@ button:disabled {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #e53935;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: gray;
+  border-radius: 34px;
   transition: .4s;
-  border-radius: 24px;
 }
 
 .slider:before {
-  position: absolute;
   content: "";
-  height: 16px;
-  width: 16px;
+  position: absolute;
+  height: 17px;
+  width: 17px;
   left: 4px;
   bottom: 4px;
   background-color: white;
-  transition: .4s;
   border-radius: 50%;
+  transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: #4caf50;
+  background-color: #00c853;
 }
 
 input:checked + .slider:before {
   transform: translateX(26px);
 }
+
 /* Modal */
 .modal {
   display: none;
   position: fixed;
-  z-index: 10;
+  z-index: 999;
   left: 0;
   top: 0;
   width: 100%;
@@ -158,91 +186,50 @@ input:checked + .slider:before {
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: white;
   padding: 30px;
-  border-radius: 15px;
+  border-radius: 10px;
   text-align: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  max-width: 400px;
 }
 
 .modal-content p {
-  margin-bottom: 20px;
-  font-weight: bold;
-  color: #9b0000;
-}
-
-.modal-botoes {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.modal-botoes button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.cancelar {
-  background-color: #ccc;
-}
-
-.confirmar {
-  background-color: #e53935;
-  color: white;
-}
-.topo {
-  background-color: #990000;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.banner-topo {
-  background: white;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-}
-.logo {
-  height: 60px;
-}
-.icone-canto-esquerdo,
-.icone-canto-direito {
-  width: 50px;
-}
-
-.icone-header {
-  width: 30px;
-  height: 30px;
-  filter: brightness(0) invert(1);
-}
-
-.logo-central {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.logo-senai {
-  height: 50px;
-  object-fit: contain;
-}
-.menu-icon,
-.perfil-icon {
-  font-size: 24px;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
-
-}
-
-.titulo-menu {
   font-size: 20px;
   font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.botoes-modal {
+  display: flex;
+  justify-content: center;
+  gap: 250px;
+  margin-top: 30px;
+}
+
+.botoes-modal button {
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button.confirmar {
+  background-color: #b80000;
+  color: white;
+}
+
+button.cancelar {
+  background-color: #ccc;
+  color: #333;
+}
+
+button.confirmar:hover {
+  background-color: #a00000;
+}
+
+button.cancelar:hover {
+  background-color: #bbbbbb;
 }

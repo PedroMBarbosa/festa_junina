@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #fff;
+  }
+  
+  .topo {
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .logo {
+    height: 40px;
+  }
+  
+  .barra-navegacao {
+    background-color: #a00000;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+  .lote-box {
+    background-color: #ddd;
+    color: #333;
+    padding: 6px 16px;
+    border-radius: 10px;
+  }
+  
+  .container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .formulario label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #a00000;
+  }
+  
+  .formulario input {
+    width: 60%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: none;
+    background-color: #ddd;
+  }
+  
+  .botoes {
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .concluir {
+    background-color: #a00000;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .cancelar {
+    background-color: #a00000;
+    color: white;
+  }
+  
+  .tabela-lotes {
+    margin: 30px auto;
+    border-collapse: collapse;
+    width: 90%;
+  }
+  
+  .tabela-lotes th, .tabela-lotes td {
+    padding: 10px;
+    background-color: #ddd;
+    border: 1px solid white;
+  }
+  
+  .adicionar {
+    background-color: #a00000;
+    color: white;
+    margin-top: 10px;
+  }
+  .voltar-lotes {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: bold;
+    color: #000; /* ou a cor que você quiser */
+  }
+  
+  .icone-voltar {
+    width: 35px; /* Ajuste o tamanho da imagem */
+    height: auto;
+    margin-right: 5px; /* Espaço entre a imagem e o texto */
+    
+  }
+  

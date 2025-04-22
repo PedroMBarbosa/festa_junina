@@ -1,0 +1,45 @@
+/* =======================
+   BANNER TOPO (LOGO SENAI)
+========================== */
+.banner-topo {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .logo-senai {
+    height: 60px;
+    object-fit: contain;
+  }
+  
+  /* =======================
+     CABEÇALHO DE NAVEGAÇÃO
+  ========================== */
+  .cabecalho-lotes {
+    background-color: #97080A;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .icone-voltar img,
+  .icone-perfil img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) invert(1);
+    cursor: pointer;
+  }
+  
+  .titulo-cabecalho {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .icone-voltar {
+    width: 30px;
+    height: 30px;
+  }

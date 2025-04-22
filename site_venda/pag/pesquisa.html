@@ -31,34 +31,34 @@
     
     <div class="titulo"><h1>PESQUISA DE SATISFAÇÃO</h1></div>
 
-    <div id="container-perguntas"></div>
+        <div id="container-perguntas"></div>
 
 
+        <div class="texto">
+            <h1>COMENTÁRIOS OPCIONAIS</h1>
+            <textarea id="comentario" placeholder="Digite algo..."></textarea>
+        </div>
 
+        <div class="textos">
+            <h1>Muito obrigado! Um abraço apertado e 
+                até a próxima festança! <br> <br>
+                Viva São João!</h1>
+        </div>
+        <div class="btn"> 
+            <button id="enviarRespostas" onclick="enviar(event)">ENVIAR</button>
+        </div>
+    </form>
 
-    <div class="texto">
-        <h1>COMENTÁRIOS OPCIONAIS</h1>
-        <textarea id="comentario" placeholder="Digite algo..."></textarea>
-    </div>
-
-    <div class="textos">
-        <h1>Muito obrigado! Um abraço apertado e 
-            até a próxima festança! <br> <br>
-            Viva São João!</h1>
-    </div>
-    <div class="btn"> 
-        <button id="enviarRespostas" type="button">ENVIAR</button>
-    </div>
     <div class="rodape"></div>
 
 
     <!-- Modal de confirmação -->
     <div id="confirmationModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" id="modal-content">
             <h1>CONFIRMAÇÃO DE ENVIO!</h1>
             <p class="pmodal">SUA RESPOSTA FOI ENVIADA!</p>
             <P class="pmodal">MUITO OBRIGADO!</P>
-            <button id="okay"><p>Ok</p</button>
+            <button id="okay" onclick="fecharModal()"><p>Ok</p</button>
         </div>
     </div>
 
