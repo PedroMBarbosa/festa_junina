@@ -92,4 +92,18 @@ body {
     color: white;
     margin-top: 10px;
   }
+  .voltar-lotes {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: bold;
+    color: #000; /* ou a cor que você quiser */
+  }
+  
+  .icone-voltar {
+    width: 35px; /* Ajuste o tamanho da imagem */
+    height: auto;
+    margin-right: 5px; /* Espaço entre a imagem e o texto */
+    
+  }
   
