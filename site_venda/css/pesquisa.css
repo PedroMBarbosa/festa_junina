@@ -216,7 +216,7 @@ h1{
 }
 
 .modal {
-    display: none; /* Ela só aparece quando o JS ativa */
+    display: none; /*DEVE ESTAR NONE */
     position: fixed;
     top: 0;
     left: 0;
