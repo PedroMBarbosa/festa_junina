@@ -22,66 +22,67 @@ function alterarQtd(item, incremento) {
 }
 
 // Função para adicionar ingressos ao carrinho
-function adicionarCarrinho() {
+function adicionarAoCarrinho() {
     ingressosDB.ingresso.forEach(ingresso => {
         const qtd = parseInt(document.getElementById(`qtd-${ingresso.tipo.toLowerCase()}`).textContent);
-        atualizarItemCarrinho(ingresso.tipo.toLowerCase(), qtd);
+        if (qtd > 0) { // Apenas adiciona itens com quantidade maior que zero
+            carrinhoItens[ingresso.tipo.toLowerCase()] = {
+                tipo: ingresso.tipo,
+                quantidade: qtd,
+                preco: ingresso.preco
+            };
+        }
     });
 
     salvarCarrinho();
     atualizarListaCarrinho();
     atualizarTotal();
-    salvarNoBancoDeDados(); // Envia os dados para o servidor
+    salvarNoBancoDeDados(); // Envia os dados para o banco
 }
 
-// Função para atualizar item do carrinho
-function atualizarItemCarrinho(item, quantidade) {
-    if (quantidade > 0) {
-        carrinhoItens[item] = quantidade;
-    } else {
-        delete carrinhoItens[item];
+// Função para salvar os dados no banco de dados via API
+async function salvarNoBancoDeDados() {
+    try {
+        const response = await fetch("http://localhost:3000/api/salvarCarrinho", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ carrinho: carrinhoItens })
+        });
+
+        const resultado = await response.json();
+        console.log("Banco de dados atualizado:", resultado);
+    } catch (error) {
+        console.error("Erro ao salvar no banco:", error);
     }
 }
 
-// Função para remover um item do carrinho
-function removerItem(item) {
-    delete carrinhoItens[item];
-    document.getElementById(`qtd-${item}`).textContent = '00';
-    salvarCarrinho();
-    atualizarListaCarrinho();
-    atualizarTotal();
-}
-
-// Função para exibir os itens do carrinho
+// Função para atualizar a lista visual do carrinho
 function atualizarListaCarrinho() {
     const listaCarrinho = document.getElementById('lista-carrinho');
     listaCarrinho.innerHTML = '';
-    
+
     for (const item in carrinhoItens) {
-        let ingresso = ingressosDB.ingresso.find(i => i.tipo.toLowerCase() === item);
-        
-        if (ingresso) {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                ${ingresso.tipo} R$${ingresso.preco.toFixed(2)} <span>${String(carrinhoItens[item]).padStart(2, '0')}</span>
-                <button onclick="removerItem('${item}')">
-                    <img src="../img/lixeira.png" alt="Remover" class="icone-lixeira">
-                </button>
-            `;
-            listaCarrinho.appendChild(li);
-        }
+        let ingresso = carrinhoItens[item];
+
+        const li = document.createElement('li');
+        li.innerHTML = `
+            ${ingresso.tipo} R$${ingresso.preco.toFixed(2)} <span>${String(ingresso.quantidade).padStart(2, '0')}</span>
+            <button onclick="removerItem('${item}')">
+                <img src="../img/lixeira.png" alt="Remover" class="icone-lixeira">
+            </button>
+        `;
+        listaCarrinho.appendChild(li);
     }
 }
 
-// Função para calcular e exibir o total do carrinho
+// Função para calcular e exibir o total da compra
 function atualizarTotal() {
     let total = 0;
 
     for (const item in carrinhoItens) {
-        let ingresso = ingressosDB.ingresso.find(i => i.tipo.toLowerCase() === item);
-        if (ingresso) {
-            total += ingresso.preco * carrinhoItens[item];
-        }
+        total += carrinhoItens[item].preco * carrinhoItens[item].quantidade;
     }
 
     document.getElementById('total').textContent = total.toFixed(2);
@@ -93,28 +94,8 @@ function salvarCarrinho() {
 }
 
 // Função para carregar o carrinho ao iniciar a página
-function carregarCarrinho() {
+window.onload = () => {
+    carrinhoItens = JSON.parse(localStorage.getItem("carrinho")) || {};
     atualizarListaCarrinho();
     atualizarTotal();
-}
-
-// Função para salvar no banco de dados via API
-async function salvarNoBancoDeDados() {
-    try {
-        const response = await fetch("https://seuservidor.com/api/salvarCarrinho", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(carrinhoItens)
-        });
-
-        const resultado = await response.json();
-        console.log("Banco de dados atualizado:", resultado);
-    } catch (error) {
-        console.error("Erro ao salvar no banco:", error);
-    }
-}
-
-// Chama a função ao carregar a página
-window.onload = carregarCarrinho;
+};
