@@ -1,15 +1,17 @@
+/* Geral */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #ffffff;
+  font-family: 'Arial', sans-serif;
+  background: #f5f5f5;
 }
 
 .topo {
-  background-color: #9b0000;
+  background: linear-gradient(135deg, #9b0000, #b71c1c);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -27,21 +29,22 @@ body {
   font-weight: bold;
 }
 
-.btn-novo-lote {
-  text-align: right;
-  margin: 0 20px 20px;
-}
-
 .btn-novo-lote button {
-  background-color: #e53935;
+  background: #e53935;
   color: white;
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 12px 20px;
+  border-radius: 25px;
   border: none;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
+.btn-novo-lote button:hover {
+  background: #d32f2f;
+}
+
+/* Lotes */
 .lotes {
   display: flex;
   flex-direction: column;
@@ -50,15 +53,17 @@ body {
 }
 
 .lote {
-  background-color: #a30000;
-  border-radius: 20px;
+  background: linear-gradient(135deg, #a30000, #b71c1c);
+  border-radius: 15px;
   color: white;
-  padding: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .lote-header {
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 18px;
 }
 
 .lote-conteudo {
@@ -72,11 +77,12 @@ body {
 button.editar,
 button.excluir {
   border: none;
-  padding: 8px 14px;
-  border-radius: 20px;
+  padding: 10px 18px;
+  border-radius: 25px;
   font-weight: bold;
   color: white;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .editar {
@@ -92,13 +98,21 @@ button:disabled {
   cursor: not-allowed;
 }
 
+button.editar:hover,
+button.excluir:hover {
+  opacity: 0.9;
+}
+
 .descricao {
   text-align: center;
   font-weight: bold;
+  font-size: 14px;
+  color: #e53935;
 }
 
 .status {
   font-weight: bold;
+  font-size: 14px;
 }
 
 /* Switch */
@@ -122,6 +136,7 @@ button:disabled {
   background-color: #e53935;
   transition: .4s;
   border-radius: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .slider:before {
@@ -143,6 +158,11 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(26px);
 }
+
+.switch input:focus + .slider {
+  box-shadow: 0 0 0 2px #4caf50;
+}
+
 /* Modal */
 .modal {
   display: none;
@@ -152,7 +172,7 @@ input:checked + .slider:before {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
 }
@@ -162,7 +182,7 @@ input:checked + .slider:before {
   padding: 30px;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .modal-content p {
@@ -178,11 +198,12 @@ input:checked + .slider:before {
 }
 
 .modal-botoes button {
-  padding: 10px 20px;
+  padding: 12px 25px;
   border: none;
-  border-radius: 20px;
+  border-radius: 25px;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .cancelar {
@@ -193,38 +214,19 @@ input:checked + .slider:before {
   background-color: #e53935;
   color: white;
 }
-.topo {
-  background-color: #990000;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+
+.cancelar:hover {
+  background-color: #bbb;
 }
+
+.confirmar:hover {
+  background-color: #d32f2f;
+}
+
+/* Topo Banner */
 .banner-topo {
   background: white;
   padding: 20px;
-  display: flex;
-  justify-content: center;
-}
-.logo {
-  height: 60px;
-}
-.icone-canto-esquerdo,
-.icone-canto-direito {
-  width: 50px;
-}
-
-.icone-header {
-  width: 30px;
-  height: 30px;
-  filter: brightness(0) invert(1);
-}
-
-.logo-central {
-  flex: 1;
   display: flex;
   justify-content: center;
 }
@@ -233,16 +235,58 @@ input:checked + .slider:before {
   height: 50px;
   object-fit: contain;
 }
+
 .menu-icon,
 .perfil-icon {
   font-size: 24px;
   cursor: pointer;
   text-decoration: none;
   color: white;
-
 }
 
 .titulo-menu {
   font-size: 20px;
   font-weight: bold;
+}
+.modal-content {
+  background-color: #8B0000; /* vermelho escuro como fundo */
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.modal-content p {
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+}
+
+.modal-botoes button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.confirmar {
+  background-color: white;
+  color: #8B0000;
+}
+
+.cancelar {
+  background-color: #ccc;
+  color: #333;
+}
+
+.confirmar:hover {
+  background-color: #f5f5f5;
+}
+
+.cancelar:hover {
+  background-color: #bbb;
 }

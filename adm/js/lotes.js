@@ -82,3 +82,27 @@ function salvarLocalStorage() {
   });
   localStorage.setItem('lotes', JSON.stringify(lotes));
 }
+let loteParaExcluir = null;
+
+function abrirModal(botao) {
+  const lote = botao.closest('.lote');
+  loteParaExcluir = lote;
+  
+  const titulo = lote.querySelector('.titulo-lote').textContent;
+  const textoModal = document.getElementById('texto-modal');
+  textoModal.textContent = `TEM CERTEZA QUE DESEJA EXCLUIR O ${titulo.toUpperCase()}?`;
+  
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function fecharModal() {
+  document.getElementById('modal').style.display = 'none';
+  loteParaExcluir = null;
+}
+
+function confirmarExclusao() {
+  if (loteParaExcluir) {
+    loteParaExcluir.remove();
+    fecharModal();
+  }
+}
