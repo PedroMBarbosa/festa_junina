@@ -7,15 +7,22 @@
   <link rel="stylesheet" href="/css/cabecalho.css">
 </head>
 <body>
-  <header class="topo">
-    <img src="senai-logo.png" alt="SENAI" class="logo">
+  <header>
+    <div class="banner-topo">
+        <img src="../images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo-senai">
+      </div>
+  
+      <div class="cabecalho-lotes">
+        <a href="../views/home.html" class="icone-voltar">
+          <img src="../images/home.png" alt="Voltar para Home" />
+        </a>
+        <span class="titulo-cabecalho">Baixa de Pagamento</span>
+        <a href="../views/perfil.html" class="icone-perfil">
+          <img src="../images/icon.png" alt="Ir para Perfil" />
+        </a>
+     
   </header>
-
-  <div class="barra-navegacao">
-    <span class="voltar">← Gerenciamento de Lotes - Adicionar</span>
-    <div class="lote-box">LOTE 5</div>
-  </div>
-
+<a href="/views/lotes.html" class="voltar-lotes">VOLTAR</a>
   <main class="container">
     <div class="formulario">
       <label>Valor</label>
@@ -54,6 +61,6 @@
     <button class="adicionar" onclick="adicionarLote()">ADICIONAR</button>
   </main>
 
-  <script src="script.js"></script>
+  <script src="/js/adicionarlote.js"></script>
 </body>
 </html>
