@@ -1,5 +1,5 @@
 // Banco de dados de ingressos
-const ingressosDB = {
+const compraingressos = {
     "ingresso": [
         { "id": 1, "tipo": "Aluno", "preco": 10 },
         { "id": 2, "tipo": "Comunidade", "preco": 10 },
@@ -23,7 +23,7 @@ function alterarQtd(item, incremento) {
 
 // Função para adicionar ingressos ao carrinho
 function adicionarAoCarrinho() {
-    ingressosDB.ingresso.forEach(ingresso => {
+    compraingressos.ingresso.forEach(ingresso => {
         const qtd = parseInt(document.getElementById(`qtd-${ingresso.tipo.toLowerCase()}`).textContent);
         if (qtd > 0) { // Apenas adiciona itens com quantidade maior que zero
             carrinhoItens[ingresso.tipo.toLowerCase()] = {
@@ -38,6 +38,18 @@ function adicionarAoCarrinho() {
     atualizarListaCarrinho();
     atualizarTotal();
     salvarNoBancoDeDados(); // Envia os dados para o banco
+}
+
+// Função para remover um item do carrinho
+function removerItem(item) {
+    if (carrinhoItens[item]) {
+        delete carrinhoItens[item]; // Remove do objeto carrinhoItens
+    }
+
+    salvarCarrinho(); // Atualiza o localStorage
+    atualizarListaCarrinho(); // Atualiza visualmente a lista
+    atualizarTotal(); // Recalcula o total
+    salvarNoBancoDeDados(); // Atualiza o banco de dados
 }
 
 // Função para salvar os dados no banco de dados via API
