@@ -71,7 +71,7 @@ const admins = [
   }
   
   addButton.addEventListener("click", () => {
-    window.location.href = "../views/cadastroadm.html"; // Altere se o nome for diferente
+    window.location.href = "../gerenciamento/cadastroadm.html"; // Altere se o nome for diferente
   });
   
   renderAdmins();
