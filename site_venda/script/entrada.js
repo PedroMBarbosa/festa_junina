@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Endpoint do JSON Server
-    const urlUsuarios = 'http://localhost:5192/api/clientes/register';
+    const urlUsuarios = 'http://localhost:1010/usuario';
   
     // Função para registrar usuário
     function registrarUsuario(event) {
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
           console.error("Erro na requisição:", error);
           alert("Erro na requisição: " + error.message);
         });
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
 
     }
   
