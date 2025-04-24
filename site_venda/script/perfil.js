@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000/usuario?id=1'; // ENDPOINT ------>>>> DEVE SER TROCADA PELA ORIGINAL
+const url = 'http://localhost:1010/usuario'; // ENDPOINT ------>>>> DEVE SER TROCADA PELA ORIGINAL
 let usuarioId = null;
 
 
@@ -124,7 +124,7 @@ async function salvarEdicao(){
         }) 
     
      console.log(dados)
-    let resposta = await fetch(`http://localhost:3000/usuario?id=1`, { 
+    let resposta = await fetch(`http://localhost:1010/usuario`, { 
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -180,18 +180,3 @@ async function salvarEdicao(){
     //     alert('Erro ao salvar as alterações');
     // });
 }
-
-back = document.getElementById('back')
-
-function voltar(){
-    location.href= 'index.html'
-}
-
-back.addEventListener("click", function () {  
-    voltar()
-});
-
-
-document.getElementById('editar-imagem').addEventListener('click', function() {
-    
-});
