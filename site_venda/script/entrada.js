@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Endpoint do JSON Server
   const urlUsuarios = 'http://localhost:1010/usuario';
 
   // Função para registrar usuário
@@ -17,22 +16,22 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       body: JSON.stringify({ nome, email, senha, telefone })
     })
-      .then(response => {
-        const statusOk = response.ok;
-        return response.json().then(data => ({ data, statusOk }));
-      })
-      .then(({ data, statusOk }) => {
-        if (statusOk) {
-          alert("Usuário registrado com sucesso!");
-          console.log("Novo usuário:", data);
-        } else {
-          alert("Erro ao registrar usuário: " + (data.mensagem || "Problema desconhecido."));
-        }
-      })
-      .catch(error => {
-        console.error("Erro na requisição:", error);
-        alert("Erro na requisição: " + error.message);
-      });
+    .then(response => {
+      const statusOk = response.ok;
+      return response.json().then(data => ({ data, statusOk }));
+    })
+    .then(({ data, statusOk }) => {
+      if (statusOk) {
+        alert("Usuário registrado com sucesso!");
+        console.log("Novo usuário:", data);
+      } else {
+        alert("Erro ao registrar usuário: " + (data.mensagem || "Problema desconhecido."));
+      }
+    })
+    .catch(error => {
+      console.error("Erro na requisição:", error);
+      alert("Erro na requisição: " + error.message);
+    });
   }
 
   // Função para login de usuário
@@ -40,9 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
     const email = document.getElementById("loginEmail").value;
     const senha = document.getElementById("loginSenha").value;
-    const lembrar = document.getElementById("lembrarUsuario").checked;
+    const lembrar = document.getElementById("lembrarUsuario")?.checked;
 
-    // Salva dados no localStorage se o usuário marcar "lembrar"
     if (lembrar) {
       localStorage.setItem("usuarioEmail", email);
       localStorage.setItem("usuarioSenha", senha);
@@ -57,31 +55,30 @@ document.addEventListener("DOMContentLoaded", function () {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => {
-        const statusOk = response.ok;
-        return response.json().then(data => ({ data, statusOk }));
-      })
-      .then(({ data, statusOk }) => {
-        if (statusOk) {
-          const usuarioEncontrado = data.find(u => u.email === email && u.senha === senha);
-          if (usuarioEncontrado) {
-            alert(`Bem-vindo, ${usuarioEncontrado.nome}!`);
-            // Redireciona somente se login for válido
-            window.location.href = "../index.html";
-          } else {
-            alert("Email ou senha incorretos.");
-          }
+    .then(response => {
+      const statusOk = response.ok;
+      return response.json().then(data => ({ data, statusOk }));
+    })
+    .then(({ data, statusOk }) => {
+      if (statusOk) {
+        const usuarioEncontrado = data.find(u => u.email === email && u.senha === senha);
+        if (usuarioEncontrado) {
+          alert(`Bem-vindo, ${usuarioEncontrado.nome}!`);
+          window.location.href = "../pag/perfil.html"; // Caminho para a página de perfil
         } else {
-          alert("Ocorreu um problema ao verificar o usuário.");
+          alert("Email ou senha incorretos.");
         }
-      })
-      .catch(error => {
-        console.error("Erro na requisição:", error);
-        alert("Erro na requisição: " + error.message);
-      });
+      } else {
+        alert("Ocorreu um problema ao verificar o usuário.");
+      }
+    })
+    .catch(error => {
+      console.error("Erro na requisição:", error);
+      alert("Erro na requisição: " + error.message);
+    });
   }
 
-  // Preenche os campos automaticamente se o usuário marcou "lembrar"
+  // Preenche os campos se lembrar de mim estiver ativado
   const emailSalvo = localStorage.getItem("usuarioEmail");
   const senhaSalva = localStorage.getItem("usuarioSenha");
 
@@ -99,18 +96,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Vincula eventos aos formulários
+  // Lógica do botão de perfil/cadastro (usuário logado ou não)
+  const botaoPerfil = document.getElementById("perfilOuCadastro");
+  if (botaoPerfil) {
+    botaoPerfil.addEventListener("click", function (event) {
+      event.preventDefault();
+      const estaLogado = localStorage.getItem("usuarioEmail") && localStorage.getItem("usuarioSenha");
+
+      if (estaLogado) {
+        window.location.href = "../pag/perfil.html"; // Caminho do perfil
+      } else {
+        window.location.href = "../html/cadastro.html"; // Caminho do cadastro/login
+      }
+    });
+  }
+
+  // Eventos dos formulários
   const formRegistro = document.getElementById("registerForm");
   if (formRegistro) {
     formRegistro.addEventListener("submit", registrarUsuario);
-  } else {
-    console.error("Formulário de registro não encontrado!");
   }
 
   const formLogin = document.getElementById("loginForm");
   if (formLogin) {
     formLogin.addEventListener("submit", loginUsuario);
-  } else {
-    console.error("Formulário de login não encontrado!");
   }
 });
