@@ -8,22 +8,25 @@ document.addEventListener("DOMContentLoaded", function () {
       const email = document.getElementById("email").value.trim();
       const senha = document.getElementById("senha").value;
 
-      // Chama a API que retorna todos os usuários
-      fetch("http://10.90.146.37/api/api/Usuario")
+      // Chama a API de login usando POST
+      fetch("http://10.90.146.37/api/api/Usuario/LoginUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, senha })
+      })
         .then(response => {
-          if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+          if (!response.ok) {
+            return response.text().then(textoErro => {
+              console.error("Erro do servidor:", textoErro);
+              throw new Error(`Erro HTTP: ${response.status}`);
+            });
+          }
           return response.json();
         })
-        .then(data => {
-          console.log("Usuários retornados da API:", data);
-
-          // Filtra o usuário com email e senha corretos
-          const usuario = data.find(user =>
-            user.email.toLowerCase() === email.toLowerCase() &&
-            user.senha === senha
-          );
-
-          if (usuario) {
+        .then(usuario => {
+          if (usuario && usuario.email) {
             localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
             alert(`Bem-vindo, ${usuario.nome}!`);
             window.location.href = "./views/home.html";
