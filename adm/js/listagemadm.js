@@ -2,7 +2,7 @@
 (function() {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
   const listaBranca = [
-    { id: 1, email: "roberto.admsenai@gmail.com.com", senha: "123456" },
+    { id: 1, email: "roberto.admsenai@gmail.com", senha: "123456" },
     { id: 2, email: "juanito@admsenai.com", senha: "diadorock" }
   ];
 
