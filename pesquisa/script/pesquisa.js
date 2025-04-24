@@ -2,7 +2,7 @@
 // const urlRespostas = 'http://localhost:3000/respostas'; 
 
 const urlPerguntas = 'http://10.90.146.37/api/api/Perguntas';
-const urlRespostas = 'http://10.90.146.37/api/api/Respostas'
+const urlRespostas = 'http://10.90.146.37/api/api/Respostas/CadastrarRespostas'
 
 class Perguntas {
     constructor(id, nome, tipo_perguntas_id) {
@@ -150,13 +150,16 @@ async function enviar(event) {
             });
         }
 
-        const payload = {
-            respostas: respostasUsuario,
-            data: new Date().toISOString()
-        };
+        const dataAtual = new Date().toISOString();
 
-        console.log(payload)
-
+        const respostasFormatadas = respostasUsuario.map(r => ({
+            id: 0, 
+            resposta: r.resposta,
+            data: dataAtual,
+            perguntas_id: r.perguntaId
+        }));
+        
+        const payload = respostasFormatadas;
 
         await fetch(urlRespostas, { 
             method: 'POST',
