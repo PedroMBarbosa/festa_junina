@@ -32,7 +32,7 @@ document.getElementById("adminForm").addEventListener("submit", function (e) {
     })
     .then(data => {
       alert("Administrador cadastrado com sucesso!\n" + nome);
-      window.location.href = "../views/listagemadm.html";
+      window.location.href = "../gerenciamento/listagemadm.html";
     })
     .catch(error => {
       console.error(error);
