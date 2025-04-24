@@ -180,18 +180,3 @@ async function salvarEdicao(){
     //     alert('Erro ao salvar as alterações');
     // });
 }
-
-back = document.getElementById('back')
-
-function voltar(){
-    location.href= 'index.html'
-}
-
-back.addEventListener("click", function () {  
-    voltar()
-});
-
-
-document.getElementById('editar-imagem').addEventListener('click', function() {
-    
-});
