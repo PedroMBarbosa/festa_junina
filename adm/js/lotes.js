@@ -1,63 +1,62 @@
+let loteParaExcluir = null;
+
+function abrirModal(botao) {
+  const modal = document.getElementById("modal");
+  modal.style.display = "flex";
+  loteParaExcluir = botao.closest(".lote");
+}
+
+function fecharModal() {
+  const modal = document.getElementById("modal");
+  modal.style.display = "none";
+  loteParaExcluir = null;
+}
+
+function confirmarExclusao() {
+  if (loteParaExcluir) {
+    loteParaExcluir.remove();
+    fecharModal();
+  }
+}
+
+window.addEventListener("click", function(event) {
+  const modal = document.getElementById("modal");
+  if (event.target === modal) {
+    fecharModal();
+  }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
-  const editarBtn = document.getElementById("btn-editar-dados");
-  const nomeSpan = document.getElementById("nome-completo");
-  const telefoneSpan = document.getElementById("telefone");
-  const emailSpan = document.getElementById("email");
-  const senhaSpan = document.getElementById("senha");
+  const switches = document.querySelectorAll(".switch input[type='checkbox']");
 
-  const inputNome = document.getElementById("input-nome");
-  const inputTelefone = document.getElementById("input-telefone");
-  const inputEmail = document.getElementById("input-email");
-  const inputSenha = document.getElementById("input-senha");
+  switches.forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      const loteAtivado = checkbox.checked;
+      const loteAtual = checkbox.closest(".lote");
 
-  const toggleSenhaBtn = document.getElementById("toggle-senha");
+      if (loteAtivado) {
+        // Desativa todos os outros
+        switches.forEach((outroCheckbox) => {
+          const outroLote = outroCheckbox.closest(".lote");
 
-  let editando = false;
+          if (outroCheckbox !== checkbox) {
+            outroCheckbox.checked = false;
+            outroLote.classList.remove("ativo");
+            outroLote.classList.add("inativo");
+            outroLote.querySelector(".status-text").textContent = "STATUS: DESATIVADO";
+            outroLote.querySelector(".info").textContent = "LOTE NÃO INICIADO";
+          }
+        });
 
-  editarBtn.addEventListener("click", () => {
-    if (!editando) {
-      // Modo edição
-      inputNome.value = nomeSpan.textContent.replace("Nome completo: ", "");
-      inputTelefone.value = telefoneSpan.textContent.replace("Telefone: ", "");
-      inputEmail.value = emailSpan.textContent.replace("E-mail: ", "");
-      inputSenha.value = "";
-
-      nomeSpan.classList.add("hidden");
-      telefoneSpan.classList.add("hidden");
-      emailSpan.classList.add("hidden");
-      senhaSpan.classList.add("hidden");
-
-      inputNome.classList.remove("hidden");
-      inputTelefone.classList.remove("hidden");
-      inputEmail.classList.remove("hidden");
-      inputSenha.classList.remove("hidden");
-
-      editarBtn.innerHTML = '<img src="../images/save.png" class="edit"/> Salvar';
-      editando = true;
-    } else {
-      // Modo salvar
-      nomeSpan.textContent = `Nome completo: ${inputNome.value}`;
-      telefoneSpan.textContent = `Telefone: ${inputTelefone.value}`;
-      emailSpan.textContent = `E-mail: ${inputEmail.value}`;
-      senhaSpan.textContent = `Senha: **********`;
-
-      nomeSpan.classList.remove("hidden");
-      telefoneSpan.classList.remove("hidden");
-      emailSpan.classList.remove("hidden");
-      senhaSpan.classList.remove("hidden");
-
-      inputNome.classList.add("hidden");
-      inputTelefone.classList.add("hidden");
-      inputEmail.classList.add("hidden");
-      inputSenha.classList.add("hidden");
-
-      editarBtn.innerHTML = '<img src="../images/edit (1).png" class="edit"/> Editar';
-      editando = false;
-    }
-  });
-
-  toggleSenhaBtn.addEventListener("click", () => {
-    const tipo = inputSenha.getAttribute("type");
-    inputSenha.setAttribute("type", tipo === "password" ? "text" : "password");
+        // Ativa o atual
+        loteAtual.classList.remove("inativo");
+        loteAtual.classList.add("ativo");
+        loteAtual.querySelector(".status-text").textContent = "STATUS: ATIVADO";
+        loteAtual.querySelector(".info").textContent = "Restam 50 ingressos\npara o fim do lote";
+      } else {
+        // Impede de desmarcar (sempre deve ter um ativo)
+        checkbox.checked = true;
+      }
+    });
   });
 });
