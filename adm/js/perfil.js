@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // 1. carrega usuário do localStorage
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
   if (!usuario) {
-    alert("Você precisa fazer login primeiro.");
-    window.location.href = "/views/login.html";
+    t("Você precisa fazer login primeiro.");
+    window.location.href = "index.html";
     return;
   }
 
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // envia PATCH para o servidor
       try {
-        const resp = await fetch(`http://localhost:3000/usuarios/${usuario.id}`, {
+        const resp = await fetch(`http://10.90.146.37/api/api/Usuario${usuario.id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleField(spanSenha,inputSenha);
         btnEditar.innerText = "Editar";
         isEditMode = false;
-        alert("Dados atualizados com sucesso!");
+        t("Dados atualizados com sucesso!");
       } catch (err) {
         console.error(err);
         alert("Erro ao salvar: " + err.message);
@@ -102,8 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
     btnSenha.innerText = "Ver Senha";  // Troca o texto para "Ver Senha"
   }
 });
-
-
 
   // ——— helpers ———
   function toggleField(spanEl, inputEl) {

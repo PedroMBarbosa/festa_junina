@@ -12,10 +12,14 @@
   </header>
   <nav>
     <a href="../index.html" class="voltar"><img src="../img/casa.png" alt=""></a>
-    <a href="pag/perfil.html" class="usuario" title="Ir para o perfil"><img src="../img/icon.png" alt=""></a>
+    <a href="./cadastro.html" class="usuario" title="Ir para o perfil" id="perfil"><img src="../img/icon.png" alt=""></a>
   </nav>
   
-  <div class="teste"><a><-- Prepare-se para o Concurso Miss e Mister Caipira do SENAI 2025!</a></div>
+  <div class="teste"><a>Prepare-se para o Concurso Miss e Mister Caipira do SENAI 2025!</a></div>
+  <button class="back-btn" onclick="history.back();" aria-label="Voltar">
+    ←
+  </button>
+ 
 
   <main>
     <div class="imagem">
@@ -23,14 +27,22 @@
     </div>
 
     <div class="texto">
-      <p>
+
+      <div class="bandeira">
+        <img src="../img/bandeira.png" alt="bandeira">
+      </div>
+      <p class="txt2">
         Capriche no traje caipira e participe dessa festa cheia de animação!
         No dia do evento, venha caracterizado e inscreva-se na hora.
         Mostre seu charme, simpatia e arrase na passarela!
         Não perca essa chance de brilhar e se divertir com a galera.
         Vai ser bão demais, sô!
       </p>
+      <div class="fogueira">
+        <img src="../img/fogueira.png" alt="fogueira">
+      </div>
     </div>
   </main>
+  <script src="../script/entrada.js"></script>
 </body>
 </html>

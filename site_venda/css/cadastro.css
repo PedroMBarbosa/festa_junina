@@ -57,7 +57,7 @@ body {
 
 .cabecario {
   background-color: #ff0000;
-  width: 100%;
+  width: 120%;
 }
 
 .txt1 {
@@ -258,4 +258,8 @@ input {
   .main {
     transform: scale(0.6);
   }
+}
+
+.lembrar{
+  margin-left: 10px;
 }
