@@ -172,4 +172,12 @@ body {
   .hidden {
     display: none;
   }
+  .btn-ver-senha {
+    background: none;
+    border: none;
+    color: #0057b8;        /* Azul SENAI */
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 8px;
+  }
   
