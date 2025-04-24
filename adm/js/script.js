@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (usuario) {
             localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
             alert(`Bem-vindo, ${usuario.nome}!`);
-            window.location.href = "/views/home.html";
+            window.location.href = "./views/home.html";
           } else {
             alert("Email ou senha inválidos!");
           }
