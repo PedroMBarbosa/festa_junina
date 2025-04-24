@@ -9,14 +9,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
 
   // Verificação de acesso: apenas administradores (perfil_id === 1) podem prosseguir
-  (function checkAdminAccess() {
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-    if (!usuario || usuario.perfil_id !== 1) {
-      localStorage.removeItem("usuarioLogado");
-      alert("Acesso negado: você não é administrador.");
-      window.location.href = "/views/gerenciamento.html";
-    }
-  })();
+ // Verificação de acesso: apenas administradores (perfil_id === 1) podem prosseguir
+(function checkAdminAccess() {
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+  // Se não estiver logado ou não for admin, redireciona
+  if (!usuario || usuario.perfil_id !== 1) {
+    localStorage.removeItem("usuarioLogado");
+    alert("Acesso negado: você não é administrador.");
+    window.location.href = "/views/gerenciamento.html";
+    return;
+  }
+
+  // Apenas o Roberto pode acessar essa tela
+  const nomeNormalizado = usuario.nome?.toLowerCase().trim();
+  if (!nomeNormalizado.includes("roberto")) {
+    alert("Acesso restrito apenas ao administrador Roberto.");
+    window.location.href = "/views/gerenciamento.html";
+  }
+})();
+
+  
 
   // Container para armazenar administradores
   let admins = [];
