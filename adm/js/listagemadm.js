@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nomeNormalizado = usuario.nome?.toLowerCase().trim();
   if (!nomeNormalizado.includes("roberto")) {
     alert("Acesso restrito apenas ao administrador Roberto.");
-    window.location.href = "../views/gerenciamento.html";
+    window.location.href = "views/gerenciamento.html";
     return;
   }
 
