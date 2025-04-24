@@ -56,7 +56,7 @@ main {
 }
 
 .mapa-img {
-    max-width: 80%;  /* reduzida de 100% para 80% */
+    max-width: 600%;  /* reduzida de 100% para 80% */
     height: auto;
     border: 1px solid #ccc;
 }
