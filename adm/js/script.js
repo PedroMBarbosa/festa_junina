@@ -8,28 +8,25 @@ document.addEventListener("DOMContentLoaded", function () {
       const email = document.getElementById("email").value.trim();
       const senha = document.getElementById("senha").value;
 
-      // 🔐 Codifica os parâmetros para segurança
-      const url = `http://10.90.146.37/api/api/Usuario?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`;
-
-      fetch(url)
+      // Chama a API que retorna todos os usuários
+      fetch("http://10.90.146.37/api/api/Usuario")
         .then(response => {
           if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
           return response.json();
         })
         .then(data => {
-          console.log("Resposta da API:", data); // 👈 debug
+          console.log("Usuários retornados da API:", data);
 
-          if (data.length > 0) {
-            const usuario = data[0];
+          // Filtra o usuário com email e senha corretos
+          const usuario = data.find(user =>
+            user.email.toLowerCase() === email.toLowerCase() &&
+            user.senha === senha
+          );
 
-            // Salva o objeto do usuário no localStorage
+          if (usuario) {
             localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-
             alert(`Bem-vindo, ${usuario.nome}!`);
-
-            // Redireciona para página principal (para todos os perfis)
             window.location.href = "/views/home.html";
-
           } else {
             alert("Email ou senha inválidos!");
           }
