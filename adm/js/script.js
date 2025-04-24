@@ -1,30 +1,43 @@
-  document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("loginForm");
-    if (form) {
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("loginForm");
 
-        const email = document.getElementById("email").value;
-        const senha = document.getElementById("senha").value;
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
 
-        fetch(`http://10.90.146.37/api/api/Usuario?email=${email}&senha=${senha}`)
-          .then(response => response.json())
-          .then(data => {
-            if (data.length > 0) {
-              const usuario = data[0];
+      const email = document.getElementById("email").value.trim();
+      const senha = document.getElementById("senha").value;
 
-  +            // → salva todo o objeto no localStorage
-  +            localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+      // 🔐 Codifica os parâmetros para segurança
+      const url = `http://10.90.146.37/api/api/Usuario?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`;
 
-              alert(`Bem-vindo, ${usuario.nome}!`);
-              window.location.href = "/views/home.html";
-            } else {
-              alert("Email ou senha inválidos!");
-            }
-          })
-          .catch(error => {
-            console.error("Erro ao fazer login:", error);
-          });
-      });
-    }
-  });
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+          return response.json();
+        })
+        .then(data => {
+          console.log("Resposta da API:", data); // 👈 debug
+
+          if (data.length > 0) {
+            const usuario = data[0];
+
+            // Salva o objeto do usuário no localStorage
+            localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+
+            alert(`Bem-vindo, ${usuario.nome}!`);
+
+            // Redireciona para página principal (para todos os perfis)
+            window.location.href = "/views/home.html";
+
+          } else {
+            alert("Email ou senha inválidos!");
+          }
+        })
+        .catch(error => {
+          console.error("Erro ao fazer login:", error);
+          alert("Erro ao se conectar. Tente novamente.");
+        });
+    });
+  }
+});
