@@ -5,21 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/cadastro.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <title>Modern Login Form</title>
-    
+    <title>Cadastro/Login Festa Junina</title>
   </head>
+
   <body> 
-  
     <header>
       <div class="top-header">
-        <!-- Ajuste o caminho da logo conforme sua pasta -->
         <img src="../img/SENAI_São_Paulo_logo.png" alt="SENAI Logo" class="logo" />
       </div>
       <div class="bottom-bar">
         <a href="../index.html" class="icon">
           <i class="fas fa-home"></i>
         </a>
-        <!-- Ícone de usuário com contorno branco e fundo transparente -->
         <a href="#" class="icon icon-user">
           <i class="far fa-user-circle"></i>
         </a>
@@ -29,7 +26,7 @@
     <div class="txt1">Preencha os dados solicitados para se cadastrar.</div>
     
     <div class="main">
-      <!-- Checkbox para alternância dos formulários -->
+      <!-- Alternância entre login/cadastro -->
       <input type="checkbox" id="chk" aria-hidden="true" />
       
       <!-- Formulário de Cadastro -->
@@ -41,12 +38,9 @@
           <input type="password" id="senha" placeholder="Senha" required />
           <input type="password" id="confirmSenha" placeholder="Confirmar senha" required />
           <input type="password" id="telefone" placeholder="Telefone" required />  
-          <!-- Bloco "Lembre de mim" posicionado logo abaixo do confirmar senha -->
-          <div class="remember-container">
-            <input type="checkbox" id="rememberSignup"/>
-            <label for="rememberSignup">Lembre de mim nesse dispositivo</label>
-          </div>
+
           
+
           <button class="cadastro" type="submit">Cadastrar-se</button>
         </form>
       </div>
@@ -58,9 +52,13 @@
           <input type="text" id="nomeLogin" placeholder="Nome de usuário" required />
           <input type="email" id="loginEmail" placeholder="Email" required />
           <input type="password" id="loginSenha" placeholder="Senha" required />
-          
-          <!-- Bloco "Lembre de mim" no formulário de Login -->
-          <!-- Botão "Esqueceu a senha?" posicionado abaixo do campo de senha -->
+
+          <!-- Lembre de mim CORRIGIDO -->
+          <div class="remember-container">
+              <input type="checkbox" id="lembrarUsuario" />
+              <label class="lembrardemim" for="lembrarUsuario"> ​  ​  ​  ​ Lembre de mim neste dispositivo</label>
+          </div>
+
           <div class="forgot-password">
             <a href="#">Esqueceu a senha?</a>
           </div>

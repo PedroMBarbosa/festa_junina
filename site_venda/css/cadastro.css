@@ -259,3 +259,7 @@ input {
     transform: scale(0.6);
   }
 }
+
+.lembrar{
+  margin-left: 10px;
+}

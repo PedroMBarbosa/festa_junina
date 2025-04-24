@@ -39,6 +39,7 @@
     margin-left: 90px;
     margin-top: 10px;
     font-size: 25px;
+    position: absolute;
   }
   
   .voltar {
@@ -67,21 +68,21 @@
   
   .imagem img {
     width: 990px;
-    height: 690px;
+    height: 700px;
     border-radius: 30px;
-    margin-left: -390px;
-    margin-top: 40px;
+    margin-left: -410px;
+    margin-top: 20px;
   }
   
   .texto {
-    flex: 1 1 21px;
-    align-self: flex-start; /* Garante alinhamento no topo mesmo com wrap */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
     background-color: #97080A;
     color: white;
     padding: 20px;
     border-radius: 30px;
-    position: relative;
-    max-width: 450px;
+    width: 450px;
     height: 570px;
     margin-right: -210px; /* Adiciona margem direita para espaçamento */
     margin-top: 80px;
@@ -89,20 +90,12 @@
   }
   
   
-  .texto p {
-    margin-top: 60px;
+  .txt2 {
+    margin-top: auto;
     font-weight: bold;
     line-height: 1.6;
-    font-size: 27px; /* Aumentado de padrão para 1.1rem */
-  }
-  
-  
-  /* Emojis decorativos */
-  .emoji {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 24px;
+    font-size: 25px;
+    margin-top: -60px; /* Aumentado de padrão para 1.1rem */
   }
   
   .canto-inferior {
@@ -112,3 +105,44 @@
     left: auto;
     font-size: 20px;
   }
+
+  .bandeira{
+    text-align: left;
+  }
+  .bandeira img{
+    margin-top: -60px;
+    margin-left: -60px;
+    height: 200px;
+    width: 200px;
+  }
+  .fogueira{
+   text-align: right;
+   margin-top: 15px;
+  }
+
+  .fogueira img{
+    height: 110px;
+    width: 110px;
+  }
+
+  .back-btn {
+    background: none;
+    border: none;
+    color: #000;
+    font-size: 2.2rem;
+    padding: 0;
+    margin-top: 3px;
+    margin-left: 45px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  
+  .back-btn:hover {
+    opacity: 0.6;
+  }
+  
+  .back-btn:focus {
+    outline: none;
+  }
+  
+
