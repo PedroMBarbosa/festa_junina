@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!usuario || usuario.perfil_id !== 1) {
     localStorage.removeItem("usuarioLogado");
     alert("Acesso negado: você não é administrador.");
-    window.location.href = "/views/gerenciamento.html";
+    window.location.href = "../views/gerenciamento.html";
     return;
   }
 
