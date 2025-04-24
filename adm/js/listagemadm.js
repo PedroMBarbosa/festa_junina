@@ -21,12 +21,10 @@ const admins = [
       const actions = document.createElement("div");
       actions.className = "admin-actions";
   
-      // Botão de edição
       const editBtn = document.createElement("button");
       editBtn.innerHTML = "✏️";
-      editBtn.onclick = () => editAdmin(index, card);
+      editBtn.onclick = () => editAdmin(index);
   
-      // Botão de exclusão
       const deleteBtn = document.createElement("button");
       deleteBtn.innerHTML = "🗑️";
       deleteBtn.onclick = () => showDeleteConfirmation(card, index);
@@ -38,6 +36,14 @@ const admins = [
       card.appendChild(actions);
       adminList.appendChild(card);
     });
+  }
+  
+  function editAdmin(index) {
+    const newName = prompt("Editar nome do administrador:", admins[index]);
+    if (newName && newName.trim() !== "") {
+      admins[index] = newName.trim();
+      renderAdmins();
+    }
   }
   
   function showDeleteConfirmation(card, index) {
@@ -64,22 +70,8 @@ const admins = [
     card.appendChild(confirmBox);
   }
   
-  // Função para editar administrador
-  function editAdmin(index, card) {
-    const newName = prompt("Editar nome do administrador:", admins[index]);
-    if (newName && newName.trim() !== "") {
-      admins[index] = newName.trim();
-      renderAdmins();
-    }
-  }
-  
-  // Função para adicionar novo administrador
   addButton.addEventListener("click", () => {
-    const newName = prompt("Digite o nome do novo administrador:");
-    if (newName && newName.trim() !== "") {
-      admins.push(newName.trim());
-      renderAdmins();
-    }
+    window.location.href = "../views/cadastroadm.html"; // Altere se o nome for diferente
   });
   
   renderAdmins();
