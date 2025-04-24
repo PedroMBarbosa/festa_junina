@@ -13,5 +13,13 @@
       "nome": "Juanito"
     }
   ],
-  "administradores": []
+  "administradores": [
+    {
+      "id": "5277",
+      "nome": "Joaquim",
+      "email": "joaquimrafa2021@gmail.com",
+      "senha": "2502",
+      "telefone": "14 996434533"
+    }
+  ]
 }
