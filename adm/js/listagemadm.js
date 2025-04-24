@@ -1,40 +1,31 @@
 // admin.js
-// URL base da API de usuários
 const API_URL = "http://10.90.146.37/api/api/Usuario";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Referências aos elementos do DOM
   const adminList = document.querySelector(".admin-list");
   const addButton = document.querySelector(".add-button");
   const form = document.getElementById("loginForm");
 
-  // Verificação de acesso: apenas administradores (perfil_id === 1) podem prosseguir
- // Verificação de acesso: apenas administradores (perfil_id === 1) podem prosseguir
-(function checkAdminAccess() {
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+  // Verificação de acesso
+  (function checkAdminAccess() {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-  // Se não estiver logado ou não for admin, redireciona
-  if (!usuario || usuario.perfil_id !== 1) {
-    localStorage.removeItem("usuarioLogado");
-    alert("Acesso negado: você não é administrador.");
-    window.location.href = "/views/gerenciamento.html";
-    return;
-  }
+    if (!usuario || usuario.perfil_id !== 1) {
+      localStorage.removeItem("usuarioLogado");
+      alert("Acesso negado: você não é administrador.");
+      window.location.href = "/views/gerenciamento.html";
+      return;
+    }
 
-  // Apenas o Roberto pode acessar essa tela
-  const nomeNormalizado = usuario.nome?.toLowerCase().trim();
-  if (!nomeNormalizado.includes("roberto")) {
-    alert("Acesso restrito apenas ao administrador Roberto.");
-    window.location.href = "/views/gerenciamento.html";
-  }
-})();
+    const nomeNormalizado = usuario.nome?.toLowerCase().trim();
+    if (!nomeNormalizado.includes("roberto")) {
+      alert("Acesso restrito apenas ao administrador Roberto.");
+      window.location.href = "/views/gerenciamento.html";
+    }
+  })();
 
-  
-
-  // Container para armazenar administradores
   let admins = [];
 
-  // Função para buscar e renderizar administradores
   function loadAndRenderAdmins() {
     fetch(API_URL)
       .then(response => {
@@ -42,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then(data => {
-        // Filtra apenas perfis de administrador (perfil_id === 1)
         admins = data
           .filter(user => user.perfil_id === 1)
           .map(user => ({ id: user.id, nome: user.nome }));
@@ -54,10 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  // Renderiza os cartões de administradores
   function renderAdmins() {
     if (!adminList) return;
     adminList.innerHTML = "";
+
     if (admins.length === 0) {
       adminList.innerHTML = '<p>Nenhum administrador encontrado.</p>';
       return;
@@ -88,7 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Edita o nome de um administrador e persiste via API
   function editAdmin(userId, index) {
     const currentName = admins[index].nome;
     const newName = prompt("Editar nome do administrador:", currentName);
@@ -110,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Mostra confirmação antes de excluir um administrador e persiste via API
   function showDeleteConfirmation(userId, card, index) {
     const confirmBox = document.createElement("div");
     confirmBox.className = "confirm-delete";
@@ -141,17 +129,16 @@ document.addEventListener("DOMContentLoaded", () => {
     card.appendChild(confirmBox);
   }
 
-  // Adicionar novo administrador
   if (addButton) {
     addButton.addEventListener("click", () => {
       window.location.href = "cadastroadm.html";
     });
   }
 
-  // Carrega lista de administradores
+  // Carrega os administradores da API
   loadAndRenderAdmins();
 
-  // Processo de login (caso exista form de login nesta página)
+  // Caso tenha um formulário de login na mesma página
   if (form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -175,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(error => {
           console.error("Erro ao fazer login:", error);
-          alert("Ocorreu um erro ao tentar fazer login. Tente novamente mais tarde.");
+          alert("Erro ao tentar fazer login. Tente novamente mais tarde.");
         });
     });
   }
