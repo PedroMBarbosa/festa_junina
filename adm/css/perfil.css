@@ -172,4 +172,42 @@ body {
   .hidden {
     display: none;
   }
+  .btn-ver-senha {
+    background: none;
+    border: none;
+    color: #0057b8;        /* Azul SENAI */
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  .botao-logout {
+    background-color: #d62828;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .botao-logout:hover {
+    background-color: #a4161a;
+  }
+  
+  .cabecalho-lotes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    width: 100%;
+  }
+  
+  .icones-direita {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto; /* 👈 Isso força a div a ir para o canto direito */
+  }
   
