@@ -1,6 +1,4 @@
-// Aguarda o DOM estar carregado antes de rodar qualquer coisa
 document.addEventListener("DOMContentLoaded", function () {
-  // Login
   const form = document.getElementById("loginForm");
   if (form) {
     form.addEventListener("submit", function (e) {
@@ -13,8 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
           if (data.length > 0) {
-            alert(`Bem-vindo, ${data[0].nome}!`);
-            window.location.href = "/views/home.html"; // Redireciona para a página de controle
+            const usuario = data[0];
+
++            // → salva todo o objeto no localStorage
++            localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+
+            alert(`Bem-vindo, ${usuario.nome}!`);
+            window.location.href = "/views/home.html";
           } else {
             alert("Email ou senha inválidos!");
           }
@@ -24,7 +27,4 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
   }
-
-  // Gráfico
-  
 });
