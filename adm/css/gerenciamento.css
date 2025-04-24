@@ -48,4 +48,31 @@ body {
     font-size: 16px;
     cursor: pointer;
   }
+  .botao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    background-color: #ece9b4;
+    color: black;
+    font-weight: bold;
+    padding: 40px 20px;
+    width: 200px;
+    height: 130px;
+    border-radius: 15px;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+  
+  .botao:hover {
+    background-color: #dddca0;
+  }
+  .botoes-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    gap: 20px; /* Espaçamento entre os botões */
+    flex-wrap: wrap; /* Permite que quebrem linha em telas menores */
+    margin-top: 2rem;
+  }
   
