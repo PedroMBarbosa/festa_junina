@@ -11,15 +11,14 @@
       "email": "juanito@admsenai.com",
       "senha": "diadorock",
       "nome": "Juanito"
-    }
-  ],
-  "administradores": [
+    },
     {
-      "id": "5277",
-      "nome": "Joaquim",
-      "email": "joaquimrafa2021@gmail.com",
-      "senha": "2502",
-      "telefone": "14 996434533"
+      "id": "9334",
+      "nome": "caua",
+      "email": "caua@gmail.com",
+      "senha": "caua",
+      "telefone": "14 99132 6678"
     }
   ]
+
 }

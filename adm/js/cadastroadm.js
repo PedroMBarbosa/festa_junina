@@ -19,7 +19,7 @@ document.getElementById("adminForm").addEventListener("submit", function (e) {
     telefone
   };
 
-  fetch("http://localhost:3000/administradores", {
+  fetch("http://localhost:3000/usuarios", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
