@@ -1,76 +1,74 @@
-// admin.js
-const API_URL = "http://10.90.146.37/api/api/Usuario";
-
 document.addEventListener("DOMContentLoaded", () => {
   const adminList = document.querySelector(".admin-list");
   const addButton = document.querySelector(".add-button");
-  const form = document.getElementById("loginForm");
 
-  // Verificação de acesso
-  (function checkAdminAccess() {
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+  const API_URL = "http://10.90.146.37/api/api/Usuario";
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-    if (!usuario || usuario.perfil_id !== 1) {
-      localStorage.removeItem("usuarioLogado");
-      alert("Acesso negado: você não é administrador.");
-      window.location.href = "/views/gerenciamento.html";
-      return;
-    }
+  // 🔐 Verifica se está logado e se é administrador
+  if (!usuario || usuario.perfil_id !== 1) {
+    localStorage.removeItem("usuarioLogado");
+    alert("Acesso negado: você não é administrador.");
+    window.location.href = "/views/gerenciamento.html";
+    return;
+  }
 
-    const nomeNormalizado = usuario.nome?.toLowerCase().trim();
-    if (!nomeNormalizado.includes("roberto")) {
-      alert("Acesso restrito apenas ao administrador Roberto.");
-      window.location.href = "/views/gerenciamento.html";
-    }
-  })();
+  // ✅ Acesso à tela só se for Roberto
+  const nomeNormalizado = usuario.nome?.toLowerCase().trim();
+  if (!nomeNormalizado.includes("roberto")) {
+    alert("Acesso restrito apenas ao administrador Roberto.");
+    window.location.href = "/views/gerenciamento.html";
+    return;
+  }
 
-  let admins = [];
-
-  function loadAndRenderAdmins() {
+  // ✅ Se chegou até aqui, é o Roberto -> pode ver todos os usuários
+  function loadAndRenderUsuarios() {
     fetch(API_URL)
       .then(response => {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         return response.json();
       })
       .then(data => {
-        admins = data
-          .filter(user => user.perfil_id === 1)
-          .map(user => ({ id: user.id, nome: user.nome }));
-        renderAdmins();
+        console.log("Usuários carregados da API:", data);
+        renderUsuarios(data); // Renderiza TODOS os usuários
       })
       .catch(error => {
-        console.error("Erro ao buscar administradores:", error);
-        alert("Não foi possível carregar a lista de administradores.");
+        console.error("Erro ao buscar usuários:", error);
+        alert("Não foi possível carregar a lista de usuários.");
       });
   }
 
-  function renderAdmins() {
+  function renderUsuarios(usuarios) {
     if (!adminList) return;
     adminList.innerHTML = "";
 
-    if (admins.length === 0) {
-      adminList.innerHTML = '<p>Nenhum administrador encontrado.</p>';
+    if (usuarios.length === 0) {
+      adminList.innerHTML = '<p>Nenhum usuário encontrado.</p>';
       return;
     }
 
-    admins.forEach(({ id, nome }, index) => {
+    usuarios.forEach(({ id, nome, perfil_id }, index) => {
       const card = document.createElement("div");
       card.className = "admin-card";
 
       const info = document.createElement("div");
       info.className = "admin-info";
-      info.innerHTML = `<span>👤</span><span>${nome}</span>`;
+      info.innerHTML = `
+        <span>👤</span>
+        <span>${nome}</span>
+        ${perfil_id === 1 ? '<span style="color: red; font-weight: bold;">[Admin]</span>' : ''}
+      `;
 
       const actions = document.createElement("div");
       actions.className = "admin-actions";
 
       const editBtn = document.createElement("button");
       editBtn.innerText = "✏️";
-      editBtn.onclick = () => editAdmin(id, index);
+      editBtn.onclick = () => editUsuario(id, index, usuarios);
 
       const deleteBtn = document.createElement("button");
       deleteBtn.innerText = "🗑️";
-      deleteBtn.onclick = () => showDeleteConfirmation(id, card, index);
+      deleteBtn.onclick = () => showDeleteConfirmation(id, card, index, usuarios);
 
       actions.append(editBtn, deleteBtn);
       card.append(info, actions);
@@ -78,9 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function editAdmin(userId, index) {
-    const currentName = admins[index].nome;
-    const newName = prompt("Editar nome do administrador:", currentName);
+  function editUsuario(userId, index, usuarios) {
+    const currentName = usuarios[index].nome;
+    const newName = prompt("Editar nome do usuário:", currentName);
     if (newName && newName.trim()) {
       fetch(`${API_URL}/${userId}`, {
         method: 'PUT',
@@ -89,17 +87,17 @@ document.addEventListener("DOMContentLoaded", () => {
       })
         .then(response => {
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          admins[index].nome = newName.trim();
-          renderAdmins();
+          usuarios[index].nome = newName.trim();
+          renderUsuarios(usuarios);
         })
         .catch(err => {
           console.error('Erro ao atualizar:', err);
-          alert('Falha ao atualizar administrador.');
+          alert('Falha ao atualizar usuário.');
         });
     }
   }
 
-  function showDeleteConfirmation(userId, card, index) {
+  function showDeleteConfirmation(userId, card, index, usuarios) {
     const confirmBox = document.createElement("div");
     confirmBox.className = "confirm-delete";
     confirmBox.innerHTML = `
@@ -114,16 +112,16 @@ document.addEventListener("DOMContentLoaded", () => {
       fetch(`${API_URL}/${userId}`, { method: 'DELETE' })
         .then(response => {
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          admins.splice(index, 1);
-          renderAdmins();
+          usuarios.splice(index, 1);
+          renderUsuarios(usuarios);
         })
         .catch(err => {
           console.error('Erro ao excluir:', err);
-          alert('Falha ao excluir administrador.');
+          alert('Falha ao excluir usuário.');
         });
     };
 
-    noBtn.onclick = () => renderAdmins();
+    noBtn.onclick = () => renderUsuarios(usuarios);
 
     card.innerHTML = "";
     card.appendChild(confirmBox);
@@ -135,35 +133,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Carrega os administradores da API
-  loadAndRenderAdmins();
-
-  // Caso tenha um formulário de login na mesma página
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value;
-
-      fetch(`${API_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`)
-        .then(response => {
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          return response.json();
-        })
-        .then(data => {
-          if (data.length) {
-            const usuario = data[0];
-            localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-            alert(`Bem-vindo, ${usuario.nome}!`);
-            window.location.href = "/views/home.html";
-          } else {
-            alert("Email ou senha inválidos!");
-          }
-        })
-        .catch(error => {
-          console.error("Erro ao fazer login:", error);
-          alert("Erro ao tentar fazer login. Tente novamente mais tarde.");
-        });
-    });
-  }
+  loadAndRenderUsuarios();
 });
