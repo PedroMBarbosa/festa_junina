@@ -88,9 +88,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // 4. botão de mostrar/ocultar senha
-  document.getElementById("toggle-senha").addEventListener("click", () => {
-    inputSenha.type = inputSenha.type === "password" ? "text" : "password";
-  });
+ // substitua só esta parte no seu perfil.js
+ document.getElementById("toggle-senha").addEventListener("click", function () {
+  const inputSenha = document.getElementById("input-senha");
+  const btnSenha   = document.getElementById("toggle-senha");
+
+  // Verifica se a senha está oculta ou visível
+  if (inputSenha.type === "password") {
+    inputSenha.type = "text";  // Mostra a senha
+    btnSenha.innerText = "Ocultar Senha";  // Troca o texto para "Ocultar Senha"
+  } else {
+    inputSenha.type = "password";  // Oculta a senha
+    btnSenha.innerText = "Ver Senha";  // Troca o texto para "Ver Senha"
+  }
+});
+
+
 
   // ——— helpers ———
   function toggleField(spanEl, inputEl) {
