@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (addButton) {
     addButton.addEventListener("click", () => {
-      window.location.href = "cadastroadm.html";
+      window.location.href = "../gerenciamento/cadastroadm.html";
     });
   }
 

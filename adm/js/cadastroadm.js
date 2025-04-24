@@ -7,6 +7,11 @@ document.getElementById("adminForm").addEventListener("submit", function (e) {
   const confirmaSenha = e.target.confirmaSenha.value;
   const telefone = e.target.telefone.value.trim();
 
+  if (!nome || !email || !telefone || !senha || !confirmaSenha) {
+    alert("Preencha todos os campos.");
+    return;
+  }
+
   if (senha !== confirmaSenha) {
     alert("As senhas não coincidem.");
     return;
@@ -16,8 +21,11 @@ document.getElementById("adminForm").addEventListener("submit", function (e) {
     nome,
     email,
     senha,
-    telefone
+    telefone,
+    perfil_id: 1
   };
+
+  console.log("Enviando para a API:", novoAdmin);
 
   fetch("http://10.90.146.37/api/api/Usuario/CadastroUser", {
     method: "POST",
@@ -27,15 +35,19 @@ document.getElementById("adminForm").addEventListener("submit", function (e) {
     body: JSON.stringify(novoAdmin)
   })
     .then(response => {
-      if (!response.ok) throw new Error("Erro ao cadastrar administrador.");
+      if (!response.ok) {
+        return response.text().then(text => {
+          throw new Error("Erro: " + response.status + " - " + text);
+        });
+      }
       return response.json();
     })
     .then(data => {
-      alert("Administrador cadastrado com sucesso!\n" + nome);
+      alert("Administrador cadastrado com sucesso!");
       window.location.href = "../gerenciamento/listagemadm.html";
     })
     .catch(error => {
-      console.error(error);
-      alert("Erro ao cadastrar administrador.");
+      console.error("Erro ao cadastrar administrador:", error);
+      alert("Erro ao cadastrar administrador:\n" + error.message);
     });
 });
