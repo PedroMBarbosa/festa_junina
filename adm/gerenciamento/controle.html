@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Acesso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/acesso.css">
+  <link rel="stylesheet" href="/css/cabecalho.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <header>
+    <div class="banner-topo">
+        <img src="../images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo-senai">
+      </div>
+  
+      <div class="cabecalho-lotes">
+        <a href="../views/home.html" class="icone-voltar">
+          <img src="../images/home.png" alt="Voltar para Home" />
+        </a>
+        <span class="titulo-cabecalho">Baixa de Pagamento</span>
+        <a href="../views/perfil.html" class="icone-perfil">
+          <img src="../images/icon.png" alt="Ir para Perfil" />
+        </a>
+      </div>
+  </header>
+  <a href="/views/gerenciamento.html" class="voltar-lotes">
+    <img src="/images/seta.png" alt="Voltar" class="icone-voltar">
+  </a>
+  <main class="conteudo">
+    <div class="grafico-container">
+      <canvas id="graficoPizza" width="300" height="300"></canvas>
+    </div>
+
+    <div class="legenda-container">
+      <h3>Distribuição total de pessoas (619)</h3>
+      <div class="legenda">
+        <div class="item-legenda">
+          <div class="bolinha verde"></div>
+          <span>Pessoas que compareceram</span>
+        </div>
+        <div class="item-legenda">
+          <div class="bolinha vermelha"></div>
+          <span>Pessoas que não compareceram</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+<script src="/js/acesso.js"></script>
+</html>
