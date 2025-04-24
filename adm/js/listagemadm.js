@@ -1,57 +1,27 @@
-// js/listagemadm.js
-
-// Verificação de acesso: só admins autorizados podem entrar
-(function() {
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-  const listaBranca = [
-    { id: 1, email: "admin@senai.com",     senha: "123456"    },
-    { id: 2, email: "juanito@admsenai.com", senha: "diadorock" }
-  ];
-
-  const autorizado = usuario && listaBranca.some(adm =>
-    adm.email === usuario.email &&
-    adm.senha  === usuario.senha
-  );
-
-  if (!autorizado) {
-    localStorage.removeItem("usuarioLogado");
-    alert("Acesso negado: você não é administrador.");
-    window.location.href = "/views/login.html";
-    return;
-  }
-})();
-
-// Lista de administradores (apenas para exibição)
-const admins = [
-  "Roberto Mitsuo Inoue",
-  "Carlos Alexandre Cavalheiro",
-  "Ana Júlia Silva",
-  "Maria Isabela Pires"
-];
-
 const adminList = document.querySelector(".admin-list");
 const addButton = document.querySelector(".add-button");
 
-function renderAdmins() {
+// Renderiza os admins da API
+function renderAdmins(admins) {
   adminList.innerHTML = "";
-  admins.forEach((name, index) => {
+  admins.forEach((admin, index) => {
     const card = document.createElement("div");
     card.className = "admin-card";
 
     const info = document.createElement("div");
     info.className = "admin-info";
-    info.innerHTML = `<span>👤</span><span>${name}</span>`;
+    info.innerHTML = `<span>👤</span><span>${admin.nome}</span>`;
 
     const actions = document.createElement("div");
     actions.className = "admin-actions";
 
     const editBtn = document.createElement("button");
     editBtn.innerHTML = "✏️";
-    editBtn.onclick = () => editAdmin(index);
+    editBtn.onclick = () => editAdmin(admin, index);
 
     const deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = "🗑️";
-    deleteBtn.onclick = () => showDeleteConfirmation(card, index);
+    deleteBtn.onclick = () => showDeleteConfirmation(card, admin.id);
 
     actions.appendChild(editBtn);
     actions.appendChild(deleteBtn);
@@ -62,15 +32,22 @@ function renderAdmins() {
   });
 }
 
-function editAdmin(index) {
-  const newName = prompt("Editar nome do administrador:", admins[index]);
+// Edita admin (apenas frontend, pode ser adaptado para PUT)
+function editAdmin(admin, index) {
+  const newName = prompt("Editar nome do administrador:", admin.nome);
   if (newName && newName.trim() !== "") {
-    admins[index] = newName.trim();
-    renderAdmins();
+    fetch(`http://localhost:3000/administradores/${admin.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome: newName.trim() })
+    })
+      .then(() => loadAdmins())
+      .catch(error => console.error("Erro ao editar administrador:", error));
   }
 }
 
-function showDeleteConfirmation(card, index) {
+// Confirmação de exclusão
+function showDeleteConfirmation(card, id) {
   const confirmBox = document.createElement("div");
   confirmBox.className = "confirm-delete";
   confirmBox.innerHTML = `
@@ -82,21 +59,30 @@ function showDeleteConfirmation(card, index) {
   const [yesBtn, noBtn] = confirmBox.querySelectorAll("button");
 
   yesBtn.onclick = () => {
-    admins.splice(index, 1);
-    renderAdmins();
+    fetch(`http://localhost:3000/administradores/${id}`, {
+      method: "DELETE"
+    })
+      .then(() => loadAdmins())
+      .catch(error => console.error("Erro ao excluir:", error));
   };
 
-  noBtn.onclick = () => {
-    renderAdmins();
-  };
+  noBtn.onclick = () => loadAdmins();
 
   card.innerHTML = "";
   card.appendChild(confirmBox);
 }
 
+// Botão de adicionar redireciona para a tela de cadastro
 addButton.addEventListener("click", () => {
-  window.location.href = "../views/cadastroadm.html";
+  window.location.href = "../gerenciamento/cadastroadm.html";
 });
 
-// Renderiza após autorização
-renderAdmins();
+// Carrega admins da API
+function loadAdmins() {
+  fetch("http://localhost:3000/administradores")
+    .then(res => res.json())
+    .then(data => renderAdmins(data))
+    .catch(error => console.error("Erro ao carregar administradores:", error));
+}
+
+loadAdmins();

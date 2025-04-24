@@ -24,21 +24,5 @@
 
 }
 =======
-    "usuarios": [
-      {
-        "id": 1,
-        "email": "admin@senai.com",
-        "senha": "123456",
-        "nome": "Administrador"
-      },
-      {
-        "id": 2,
-        "email": "juanito@admsenai.com",
-        "senha": "diadorock",
-        "nome": "Juanito"
-      }
-    ]
-  }
- 
-  
+
 >>>>>>> 9cc2d757334244dd8bb9818361a526f037d7d28b
