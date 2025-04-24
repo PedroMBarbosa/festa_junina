@@ -124,3 +124,55 @@ function atualizarTotal() {
 window.onload = adicionarCarrinho;
 
 
+function montarPedido() {
+    const urlPedido = 'http://localhost:5224/api/Ingresso/ReservaIngressos';
+
+    const emailLogado = localStorage.getItem("usuarioEmail");
+    const senhaLogado = localStorage.getItem("usuarioSenha");
+    const idLogado = localStorage.getItem("usuarioId");
+    console.log("id: " + idLogado, " - Email: " + emailLogado);
+
+    fetch(urlPedido, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          tipo_ingresso_id: 1,
+          cliente_id: idLogado,
+          lote_id: 1 // coloquei id como 1 só para fins de teste
+        })
+      })
+      .then(response => {
+        const statusOk = response.ok;
+        
+        // Exibe a resposta da API
+        console.log("Resposta da API:", response);
+        
+        // Converte a resposta em JSON e retorna os dados
+        return response.json().then(data => ({ data, statusOk }));
+      })
+      .then(({ data, statusOk }) => {
+        // Exibe o corpo do que foi enviado
+        console.log("Corpo da requisição enviada:", {
+          tipo_ingresso_id: 1,
+          cliente_id: idLogado,
+          lote_id: 1
+        });
+        
+        if (statusOk) {
+          alert("Usuário registrado com sucesso!");
+          console.log("Novo usuário:", data);
+        } else {
+          alert("Erro ao registrar usuário: " + (data.mensagem || "Problema desconhecido."));
+        }
+      })
+      .catch(error => {
+        console.error("Erro na requisição:", error);
+        alert("Erro na requisição: " + error.message);
+      });
+      
+
+}
+
+
