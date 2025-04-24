@@ -22,7 +22,7 @@ document.getElementById("adminForm").addEventListener("submit", function (e) {
     email,
     senha,
     telefone,
-    perfil_id: 1
+    perfil_id: 2
   };
 
   console.log("Enviando para a API:", novoAdmin);
