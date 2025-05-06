@@ -30,6 +30,8 @@ function alterarQtd(item, incremento) {
 
 let carrinhoItens = {};
 
+let qtdTipos = [];
+
 function adicionarCarrinho() {
     const alunoQtd = parseInt(document.getElementById('qtd-aluno').textContent);
     const comunidadeQtd = parseInt(document.getElementById('qtd-comunidade').textContent);
@@ -43,6 +45,7 @@ function adicionarCarrinho() {
     atualizarItemCarrinho('familiar', familiarQtd);
     atualizarItemCarrinho('infantil', infantilQtd);
 
+    qtdTipos = [alunoQtd,  comunidadeQtd, colaboradorQtd, familiarQtd, infantilQtd]
     atualizarListaCarrinho();
     atualizarTotal();
 }
@@ -124,42 +127,56 @@ function atualizarTotal() {
 window.onload = adicionarCarrinho;
 
 
-function montarPedido() {
-    const urlPedido = 'http://localhost:5224/api/Ingresso/ReservaIngressos';
+function montarPedido(quantidadeTipos) {
+
+    quantidadeTipos = qtdTipos;
+
+    const urlPedido = 'http://10.90.146.37/api/api/Ingresso/ReservaIngressos';
 
     const emailLogado = localStorage.getItem("usuarioEmail");
     const senhaLogado = localStorage.getItem("usuarioSenha");
     const idLogado = localStorage.getItem("usuarioId");
     console.log("id: " + idLogado, " - Email: " + emailLogado);
 
+    const tiposId = [5, 2, 1, 4, 3];
+
+    const pedidos = [];
+
+    quantidadeTipos.forEach((quantidade, index) => {
+        const tipoId = tiposId[index];
+
+        for (let i = 0; i < quantidade; i++)
+        {
+            pedidos.push
+            ({
+                id: 0,
+                qrcode: "string",
+                data: "2025-05-06T11:32:12.597Z",
+                tipo_ingresso_id: tipoId,
+                usuario_id: 1, // ou quem estiver logado
+                lote_id: 1,
+                status_id: 0,
+                cliente_id: idLogado,
+                guid: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            })
+        }
+    });
+
+    console.log("Pedido montado:", pedidos);
+
     fetch(urlPedido, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          tipo_ingresso_id: 1,
-          cliente_id: idLogado,
-          lote_id: 1 // coloquei id como 1 só para fins de teste
-        })
+        body: JSON.stringify(pedidos)
       })
-      .then(response => {
-        const statusOk = response.ok;
-        
-        // Exibe a resposta da API
-        console.log("Resposta da API:", response);
-        
-        // Converte a resposta em JSON e retorna os dados
-        return response.json().then(data => ({ data, statusOk }));
+        .then(response => {
+            const statusOk = response.ok;
+            return response.json().then(data => ({ data, statusOk }));
       })
       .then(({ data, statusOk }) => {
-        // Exibe o corpo do que foi enviado
-        console.log("Corpo da requisição enviada:", {
-          tipo_ingresso_id: 1,
-          cliente_id: idLogado,
-          lote_id: 1
-        });
-        
+        console.log(data)
         if (statusOk) {
           alert("Usuário registrado com sucesso!");
           console.log("Novo usuário:", data);
@@ -171,8 +188,6 @@ function montarPedido() {
         console.error("Erro na requisição:", error);
         alert("Erro na requisição: " + error.message);
       });
-      
-
 }
 
 
