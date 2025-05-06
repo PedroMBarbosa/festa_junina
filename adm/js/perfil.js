@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const novoNome  = inputNome.value.trim();
       const novoTel   = inputTel.value.trim();
       const novoEmail = inputEmail.value.trim();
+      const novoSenha = inputSenha.value.trim();
 
       // envia PATCH para o servidor
       try {
