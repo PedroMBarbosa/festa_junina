@@ -1,22 +1,35 @@
 let loteParaExcluir = null;
+let idParaExcluir = null;
 
 function abrirModal(botao) {
   const modal = document.getElementById("modal");
   modal.style.display = "flex";
   loteParaExcluir = botao.closest(".lote");
+  idParaExcluir = botao.getAttribute("data-id");
 }
 
 function fecharModal() {
   const modal = document.getElementById("modal");
   modal.style.display = "none";
   loteParaExcluir = null;
+  idParaExcluir = null;
 }
 
 function confirmarExclusao() {
-  if (loteParaExcluir) {
-    loteParaExcluir.remove();
-    fecharModal();
-    // Aqui você pode integrar um DELETE, se sua API permitir exclusão
+  if (idParaExcluir) {
+    fetch(`http://10.90.146.37/api/api/Lote/ExcluirLote/${idParaExcluir}`, {
+      method: "DELETE"
+    })
+      .then(response => {
+        if (!response.ok) throw new Error("Erro ao excluir lote.");
+        alert("Lote excluído com sucesso!");
+        carregarLotes(); // atualiza a lista
+        fecharModal();
+      })
+      .catch(error => {
+        console.error("Erro ao excluir lote:", error);
+        alert("Erro ao excluir lote.");
+      });
   }
 }
 
@@ -38,26 +51,23 @@ function carregarLotes() {
         const ativo = lote.ativo === 1;
         const elemento = `
           <div class="lote ${ativo ? "ativo" : "inativo"}">
-            <div class="dados">
-              <p>R$ ${(lote.valor_un).toFixed(2).replace(".", ",")}</p>
-              <p>${new Date(lote.data_inicio).toLocaleString()}</p>
-              <p>${new Date(lote.data_termino).toLocaleString()}</p>
+            <strong>${lote.nome || "LOTE SEM NOME"}</strong>
+            <div class="acoes">
+              <button class="editar">EDITAR</button>
+              <button class="excluir" onclick="abrirModal(this)" data-id="${lote.id}">EXCLUIR</button>
+              <p class="info">${ativo ? "Restam 50 ingressos para o fim do lote" : "LOTE NÃO INICIADO"}</p>
               <p class="status-text">STATUS: ${ativo ? "ATIVADO" : "DESATIVADO"}</p>
-              <p class="info">${ativo ? "Restam 50 ingressos\npara o fim do lote" : "LOTE NÃO INICIADO"}</p>
-            </div>
-            <div class="switch">
               <label class="switch">
                 <input type="checkbox" ${ativo ? "checked" : ""}>
                 <span class="slider"></span>
               </label>
             </div>
-            <button onclick="abrirModal(this)">Excluir</button>
           </div>
         `;
         container.insertAdjacentHTML("beforeend", elemento);
       });
 
-      ativarSwitches(); // reativa os listeners nos novos switches
+      ativarSwitches();
     })
     .catch(erro => {
       console.error("Erro ao carregar lotes:", erro);
@@ -73,7 +83,6 @@ function ativarSwitches() {
       const loteAtual = checkbox.closest(".lote");
 
       if (loteAtivado) {
-        // Desativa todos os outros
         switches.forEach((outroCheckbox) => {
           const outroLote = outroCheckbox.closest(".lote");
 
@@ -83,20 +92,40 @@ function ativarSwitches() {
             outroLote.classList.add("inativo");
             outroLote.querySelector(".status-text").textContent = "STATUS: DESATIVADO";
             outroLote.querySelector(".info").textContent = "LOTE NÃO INICIADO";
+
+            const id = outroLote.querySelector("button.excluir").getAttribute("data-id");
+            atualizarStatus(id, false);
           }
         });
 
-        // Ativa o atual
         loteAtual.classList.remove("inativo");
         loteAtual.classList.add("ativo");
         loteAtual.querySelector(".status-text").textContent = "STATUS: ATIVADO";
-        loteAtual.querySelector(".info").textContent = "Restam 50 ingressos\npara o fim do lote";
+        loteAtual.querySelector(".info").textContent = "Restam 50 ingressos para o fim do lote";
+
+        const id = loteAtual.querySelector("button.excluir").getAttribute("data-id");
+        atualizarStatus(id, true);
       } else {
-        // Impede desmarcar
         checkbox.checked = true;
       }
     });
   });
+}
+
+function atualizarStatus(id, ativar) {
+  fetch(`http://10.90.146.37/api/api/Lote/AtivarDesativar/${id}?ativo=${ativar ? 1 : 0}`, {
+    method: "PUT"
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Erro ao atualizar status do lote");
+      return res.json();
+    })
+    .then(() => {
+      console.log(`Lote ${id} ${ativar ? "ativado" : "desativado"}`);
+    })
+    .catch(err => {
+      console.error("Erro ao alterar status do lote:", err);
+    });
 }
 
 function adicionarLote() {
@@ -119,7 +148,7 @@ function adicionarLote() {
     data_inicio: new Date(abertura).toISOString(),
     data_termino: new Date(fechamento).toISOString(),
     valor_un: valorNumerico,
-    usuario_id: 1, // ou pegue do localStorage
+    usuario_id: 1,
     ativo: 0
   };
 

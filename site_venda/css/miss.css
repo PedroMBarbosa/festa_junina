@@ -144,5 +144,72 @@
   .back-btn:focus {
     outline: none;
   }
-  
+  @media(max-width: 430px){
+    header {
+      background-color: #ffffff;
+      text-align: center;
+      padding: 10px 0;
+      width: 100%;
+    }
+    
+    header img {
+      height: 40px;
+    }
+    nav {
+      background-color: #a80000;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    .teste {
+      color: #D32F30;
+      text-decoration: none;
+      font-weight: bold;
+      
+      margin-top: 10px;
+      font-size: 15px;
+      position: absolute;
+      text-align: center;
+    }
+    
+    .voltar {
+      font-size: 20px;
+      margin-right: auto;
+      margin-left: 0;
+    }
+    
+    .usuario {
+      font-size: 20px;
+    }
+    .imagem {
+      max-width: auto;
+    }
+    
+    .imagem img {
+      width: 400px;
+      height: 300px;
+      border-radius: 30px;
+      margin-left: auto;
+      margin-top: auto;
+    }
+    .texto {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(3, 1fr);
+      background-color: #97080A;
+      color: white;
+      padding: 20px;
+      border-radius: 30px;
+      width: 100%;
+      height: 570px;
+      margin-left: auto; 
+      margin-right: auto;/* Adiciona margem direita para espaçamento */
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
 
