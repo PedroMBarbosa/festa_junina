@@ -1,5 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
+<<<<<<< Updated upstream
   const apiBase = "http://10.90.146.37/api/api/Clientes";
+=======
+  // Endpoint do JSON Server
+  const urlUsuarios = 'http://10.90.146.37/api/api/Clientes/CadastrarCliente';
+  const urlLogin = 'http://10.90.146.37/api/api/Clientes/LoginCliente';
+>>>>>>> Stashed changes
 
   // REGISTRO
   async function registrarUsuario(event) {
@@ -36,11 +42,58 @@ document.addEventListener("DOMContentLoaded", function () {
     const senha = document.getElementById("loginSenha").value;
     const lembrar = document.getElementById("lembrarUsuario")?.checked;
 
+<<<<<<< Updated upstream
     try {
       const response = await fetch(`${apiBase}/LoginCliente`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, senha })
+=======
+    // Salva dados no localStorage se o usuário marcar "lembrar"
+    if (lembrar) {
+      localStorage.setItem("usuarioEmail", email);
+      localStorage.setItem("usuarioSenha", senha);
+    } else {
+      localStorage.removeItem("usuarioEmail");
+      localStorage.removeItem("usuarioSenha");
+    }
+
+    fetch(urlLogin, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        email: email, 
+        senha: senha 
+      })
+    })
+      .then(response => {
+        const statusOk = response.ok;
+        return response.json().then(data => {
+          console.log("Resposta da API:", data); // <-- aqui mostra o corpo no console
+          return { data, statusOk };
+        });
+      })
+      .then(({ data, statusOk }) => {
+        if (statusOk) {
+
+          const idCliente = data.cliente?.id || "usuário";
+
+          localStorage.setItem("usuarioId", idCliente);
+          localStorage.setItem("usuarioEmail", email);
+          localStorage.setItem("usuarioSenha", senha);
+
+          alert(`Bem-vindo, ${data.cliente?.id}!`);
+          window.location.href = "../index.html";
+        } else {
+          alert("Email ou senha incorretos.");
+        }
+      })
+      .catch(error => {
+        console.error("Erro na requisição:", error);
+        alert("Erro na requisição: " + error.message);
+>>>>>>> Stashed changes
       });
 
       const data = await response.json();
