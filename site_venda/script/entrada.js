@@ -1,16 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-<<<<<<< Updated upstream
   const apiBase = "http://10.90.146.37/api/api/Clientes";
-=======
   // Endpoint do JSON Server
   const urlUsuarios = 'http://10.90.146.37/api/api/Clientes/CadastrarCliente';
   const urlLogin = 'http://10.90.146.37/api/api/Clientes/LoginCliente';
->>>>>>> Stashed changes
 
   // REGISTRO
   async function registrarUsuario(event) {
     event.preventDefault();
-    const nome = document.getElementById("nome").value;
+    const nome = document.getElementById("nome").value;   
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
     const telefone = document.getElementById("telefone").value;
@@ -42,13 +39,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const senha = document.getElementById("loginSenha").value;
     const lembrar = document.getElementById("lembrarUsuario")?.checked;
 
-<<<<<<< Updated upstream
     try {
       const response = await fetch(`${apiBase}/LoginCliente`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, senha })
-=======
+        body: JSON.stringify({ email, senha }),
+      });
     // Salva dados no localStorage se o usuário marcar "lembrar"
     if (lembrar) {
       localStorage.setItem("usuarioEmail", email);
@@ -93,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch(error => {
         console.error("Erro na requisição:", error);
         alert("Erro na requisição: " + error.message);
->>>>>>> Stashed changes
       });
 
       const data = await response.json();
