@@ -54,8 +54,8 @@ body {
     justify-content: center;
     text-align: center;
     text-decoration: none;
-    background-color: #ece9b4;
-    color: black;
+  background-color: #8b0000;
+    color: rgb(255, 255, 255);
     font-weight: bold;
     padding: 40px 20px;
     width: 200px;
@@ -66,7 +66,7 @@ body {
   }
   
   .botao:hover {
-    background-color: #dddca0;
+    background-color: #d73d3d;
   }
   .botoes-container {
     display: flex;
