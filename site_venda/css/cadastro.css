@@ -235,6 +235,9 @@ input {
   transform: scale(0.6);
 }
 
+.lembrar{
+  margin-left: 10px;
+}
 /* Responsividade: ajuste o tamanho visual da caixa sem alterar seu formato */
 @media (max-width: 900px) {
   .main {
@@ -258,8 +261,4 @@ input {
   .main {
     transform: scale(0.6);
   }
-}
-
-.lembrar{
-  margin-left: 10px;
 }

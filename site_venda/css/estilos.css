@@ -21,30 +21,33 @@ body {
   height: 40px;
   margin-top: 20px;
   margin-left: 20px;
+  display: none;
 }
 .menu-options{
-  margin-top: 24px;
-  margin-left: 20px;
-  background-color: white;
   color: black;
-  width: 200px;
   border-radius: 0px 0px 10px 10px;
+  display: flex;
 }
 .menu-options a{
   color: rgb(0, 0, 0);
   font-size: 20px;
-  margin-left: 10px;
+  margin-left: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 15px;
 }
 .menu-options a:hover{
   text-decoration: none;
-  color: rgb(88, 87, 87);
+  color: rgb(255, 255, 255);
+  background-color: #a80000;
 }
 #menu-options {
-  display: none;
+  display: flex;
 }
 #menu-options.ativo {
-  display: grid;
+  display: none;
 }
+
 
 /* Keyframes das animações utilizadas */
 @keyframes navLinkFade {
@@ -104,7 +107,10 @@ header{
   margin: 0 auto;
 }
 
-
+.img_festa{
+  display: block;
+  width: 100%;
+}
 
 .conteiner-carrossel{
   width: 100%;
@@ -164,7 +170,14 @@ border: none;
   color: white;
   font-size: 20px;
 }
-
+.tt1{
+  color: white;
+  font-size: 20px;
+  }
+  .tt2{
+  color: white;
+  font-size: 20px;
+  }
 
 .noite{
 text-align: center;
@@ -246,6 +259,7 @@ padding: 20px;
   margin-bottom: 0;
   margin-top: 30px;
   height: 50px;
+  user-select: none;
 }
   .rod1{
   color: #a80000;
@@ -266,4 +280,232 @@ padding: 20px;
   }
   .t7{
     font-size: 35px;
+  }
+  @media(max-width: 430px){
+    .icone_menu{
+      width: 40px;  
+      height: 40px;
+      margin-top: 20px;
+      margin-left: 20px;
+      display: inline;
+    }
+    .menu-options{
+      margin-top: 24px;
+      color: black;
+      border-radius: 0px 0px 10px 10px;
+      background-color: rgb(255, 255, 255);
+    }
+    .menu-options a{
+      color: rgb(0, 0, 0);
+      font-size: 15px;
+      margin-left: 20px;
+      padding: 10px;
+      border-radius: 10px;
+      display: flex;
+    }
+    .menu-options a:hover{
+      text-decoration: none;
+      color: rgb(255, 255, 255);
+      background-color: #a80000;
+    }
+    #menu-options {
+      display: none;
+    }
+    #menu-options.ativo {
+      display: flex;
+    }
+    .btn-cadastro {
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      right: 0px;
+      top: 20px;
+      bottom: auto;
+    }
+    
+    .icone-perfil {
+      width: 40px;  
+      height: 40px;
+    }
+    
+    header{
+      background-color: white;
+      height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    #carouselExampleIndicators{
+      width: 400px;
+      margin: 0 auto;
+    }
+    .img_festa{
+      display: block;
+      width: 100%;
+    }
+    
+    .conteiner-carrossel{
+      width: 100%;
+      background-color: #a80000;
+      height: 300px;
+      top: 0%;
+      padding-top: 60px;
+    }
+    
+    .senai{
+      height: 40px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 20px;
+    }
+    .bemvindo{
+      background-color: white;
+      text-align: center;
+      
+      }
+      .t1{
+      font-size: 23px;
+      color: #a80000;
+      }
+      .cdp{
+      font-size: 15px;
+      color: black;
+      }
+      .bot1{
+      border-radius: 50px;
+      background-color: #a80000; 
+      height: 40px;
+      width: 200px;
+      border: none;
+      font-size: 15px;
+      margin-left: auto;
+      margin-right: auto;
+      }
+      .bot2{
+      border-radius: 50px;
+      background-color: #a80000;
+      margin-left: auto;
+      margin-top: 0px;
+      height: 40px;
+      width: 200px;
+      border: none;
+      font-size: 15px;
+      margin-left: auto;
+      margin-right: auto;
+      }
+      .bot1 a:hover{
+        color: white;
+        text-decoration: none;
+      }
+      .bot2 a:hover{
+        color: white;
+        text-decoration: none;
+      }
+      .tt1{
+        color: white;
+        font-size: 15px;
+        }
+        .tt2{
+        color: white;
+        font-size: 15px;
+        }
+      .container_botao{
+        margin-top: 80px;
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .noite{
+        text-align: center;
+        color: white;
+        background-color: #a80000;
+        height: 100%;
+        }
+        .subtitulo{
+        font-size: 20px;
+        }
+        .container_texto{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+        
+        }
+        .texto{
+          grid-column: auto;
+          margin-top: auto;
+          margin-left: 0;
+          text-align: left;
+          margin-left: 5px;
+          margin-right: auto;
+        }
+        
+        .t3{
+          font-size: 15px;
+
+        }
+        .t5{
+          font-size: 15px;
+
+        }
+        .t6{
+          font-size: 15px;
+          
+        }
+        .t7{
+          font-size: 15px;
+        }
+       
+        .texto img{
+          width: 40px;
+          height: 40px;
+        }
+        .img2{
+          margin-left: auto;
+        }
+        .img3{
+          margin-left:auto;
+        }
+
+          #centro{
+          
+          justify-content: center;
+          text-align: left;
+        }
+        .sup{
+          background-color: white;
+          height: 100px;
+          text-align: center;
+          
+        }
+          .contato{
+          font-size: 10px;
+        }
+          .cont{
+            font-size: 20px;
+          }
+          .sup1{
+          background-color: #a80000;
+          border-radius: 40px;
+          width: 200px;
+          height: 40px;
+          margin-top: 50px;
+          font-size: 20px;
+          color: white;
+          border: none;
+        }
+        .rodape{
+          background-color: #a80000;
+          margin-bottom: 0;
+          margin-top: 50px;
+          height: 30px;
+          user-select: none;
+        }
+          .rod1{
+          color: #a80000;
+          font-size: 20px;
+        }
   }

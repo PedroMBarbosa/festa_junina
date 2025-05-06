@@ -1,8 +1,9 @@
 const menu = document.getElementById('menu');
 const opcoes = document.getElementById('menu-options');
+const mediaQuery = window.matchMedia('(max-width: 430px)');
 
 function abre_menu() {
-    opcoes.style.display = 'grid';
+    opcoes.style.display = 'flex';
 }
 
 function fecha_menu() {
@@ -10,12 +11,26 @@ function fecha_menu() {
 }
 
 function toggle_menu() {
-    const estaAberto = opcoes.style.display === 'grid';
-    if (estaAberto) {
-        fecha_menu();
-    } else {
-        abre_menu();
+    if (mediaQuery.matches) {
+        const estaAberto = opcoes.style.display === 'flex';
+        if (estaAberto) {
+            fecha_menu();
+        } else {
+            abre_menu();
+        }
     }
 }
 
+// Ouvinte para clique no botão do menu
 menu.addEventListener('click', toggle_menu);
+
+// Ouvinte para mudanças na tela (por exemplo, redimensionamento)
+mediaQuery.addEventListener('change', function (e) {
+    if (!e.matches) {
+        // Se a tela ficou maior que 430px, restaurar o estilo padrão
+        opcoes.style.display = 'flex'; // ou '' se quiser que o CSS cuide
+    } else {
+        // Se a tela ficou menor que 430px, esconder o menu por padrão
+        opcoes.style.display = 'none';
+    }
+});
