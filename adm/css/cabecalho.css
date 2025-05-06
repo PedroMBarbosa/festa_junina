@@ -1,41 +1,41 @@
-.navbar {
-  background-color: #8b0000;
+/* Topo branco com logo e perfil */
+.top-bar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  background-color: white;
   padding: 10px 30px;
-  position: relative;
-  z-index: 2;
 }
 
 .logo {
   height: 40px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Ícone de perfil no canto direito */
+.perfil-icon {
+  font-size: 28px;
+  color: black;
+  cursor: pointer;
+  float: right;
+  margin-top: -15px;
+}
+
+/* Barra de navegação vermelha com os links */
+.navbar {
+  background-color: #8b0000;
+  padding: 10px 0;
+  text-align: center;
 }
 
 .navbar nav a {
   color: white;
-  margin: 0 10px;
+  margin: 0 8px;
   text-decoration: none;
   font-weight: bold;
 }
 
 .navbar nav a:hover {
   text-decoration: underline;
-}
-
-.perfil-icon {
-  font-size: 24px;
-  color: white;
-  cursor: pointer;
-}
-
-/* Ajustes no main para não esconder a navbar */
-main {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 60px); /* Desconta altura da navbar */
-  padding-top: 30px;
 }
