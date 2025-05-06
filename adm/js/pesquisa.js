@@ -1,5 +1,4 @@
-// const urlPerguntas = 'http://localhost:3000/perguntas'; // ENDPOINT DAS PERGUNTAS FAKE
-// const urlRespostas = 'http://localhost:3000/respostas'; 
+
 
 const urlPerguntas = 'http://10.90.146.37/api/api/Perguntas';
 const urlRespostas = 'http://10.90.146.37/api/api/Respostas/CadastrarRespostas'
