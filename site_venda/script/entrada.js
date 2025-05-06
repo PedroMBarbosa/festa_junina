@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
   const apiBase = "http://10.90.146.37/api/api/Clientes";
-
+  // Endpoint do JSON Server
   const urlUsuarios = 'http://10.90.146.37/api/api/Clientes/CadastrarCliente';
   const urlLogin = 'http://10.90.146.37/api/api/Clientes/LoginCliente';
 
   // REGISTRO
   async function registrarUsuario(event) {
     event.preventDefault();
-    const nome = document.getElementById("nome").value;
+    const nome = document.getElementById("nome").value;   
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
     const telefone = document.getElementById("telefone").value;
@@ -16,18 +16,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const response = await fetch(`${apiBase}/CadastrarCliente`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, email, senha, telefone }),
+        body: JSON.stringify({ nome, email, senha, telefone })
       });
 
       const data = await response.json();
 
       if (response.ok) {
         alert("Cadastro realizado com sucesso!");
-        // Salva dados no localStorage
-        localStorage.setItem("usuarioNome", data.nome);
-        localStorage.setItem("usuarioEmail", data.email);
-        localStorage.setItem("usuarioTelefone", data.telefone);
-        window.location.href = "../pag/perfil.html";
+        window.location.href = "./perfil.html";
       } else {
         alert("Erro ao registrar: " + (data.message || "Verifique os dados."));
       }
@@ -49,35 +45,78 @@ document.addEventListener("DOMContentLoaded", function () {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, senha }),
       });
+    // Salva dados no localStorage se o usuário marcar "lembrar"
+    if (lembrar) {
+      localStorage.setItem("usuarioEmail", email);
+      localStorage.setItem("usuarioSenha", senha);
+    } else {
+      localStorage.removeItem("usuarioEmail");
+      localStorage.removeItem("usuarioSenha");
+    }
+
+    fetch(urlLogin, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        email: email, 
+        senha: senha 
+      })
+    })
+      .then(response => {
+        const statusOk = response.ok;
+        return response.json().then(data => {
+          console.log("Resposta da API:", data); // <-- aqui mostra o corpo no console
+          return { data, statusOk };
+        });
+      })
+      .then(({ data, statusOk }) => {
+        if (statusOk) {
+
+          const idCliente = data.cliente?.id || "usuário";
+
+          localStorage.setItem("usuarioId", idCliente);
+          localStorage.setItem("usuarioEmail", email);
+          localStorage.setItem("usuarioSenha", senha);
+
+          alert(`Bem-vindo, ${data.cliente?.id}!`);
+          window.location.href = "../index.html";
+        } else {
+          alert("Email ou senha incorretos.");
+        }
+      })
+      .catch(error => {
+        console.error("Erro na requisição:", error);
+        alert("Erro na requisição: " + error.message);
+      });
 
       const data = await response.json();
 
       if (response.ok) {
-        const cliente = data.cliente;
-
-        // Salva no localStorage
-        localStorage.setItem("usuarioNome", cliente.nome || "");
-        localStorage.setItem("usuarioEmail", cliente.email || "");
-        localStorage.setItem("usuarioTelefone", cliente.telefone || "");
-        localStorage.setItem("clienteId", cliente.id || "");
+        alert(`Bem-vindo, ${data.cliente?.nome || "usuário"}!`);
 
         if (lembrar) {
+          localStorage.setItem("usuarioEmail", email);
           localStorage.setItem("usuarioSenha", senha);
         } else {
+          localStorage.removeItem("usuarioEmail");
           localStorage.removeItem("usuarioSenha");
         }
 
-        alert(`Bem-vindo, ${cliente.nome}!`);
+        localStorage.setItem("usuarioNome", data.cliente?.nome || "");
+        localStorage.setItem("clienteId", data.cliente?.id || "");
+
         window.location.href = "../pag/perfil.html";
       } else {
-        alert("Email ou senha incorretos.");
+        alert("Erro no login: " + (data.message || "Email ou senha incorretos."));
       }
     } catch (error) {
       alert("Erro na requisição: " + error.message);
     }
   }
 
-  // ESQUECI SENHA
+  // ESQUECI MINHA SENHA
   async function forgotPassword(event) {
     event.preventDefault();
     const email = document.getElementById("loginEmail").value;
@@ -86,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const response = await fetch(`${apiBase}/esqueci-senha`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify(email)
       });
 
       const data = await response.json();
@@ -102,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // PREENCHER CAMPOS SE LEMBRAR
+  // Preenche campos se lembrar estiver ativado
   const emailSalvo = localStorage.getItem("usuarioEmail");
   const senhaSalva = localStorage.getItem("usuarioSenha");
 
@@ -120,7 +159,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // EVENTOS
+  // Botão de perfil/cadastro
+  const botaoPerfil = document.getElementById("perfilOuCadastro");
+  if (botaoPerfil) {
+    botaoPerfil.addEventListener("click", function (event) {
+      event.preventDefault();
+      const estaLogado = localStorage.getItem("usuarioEmail") && localStorage.getItem("usuarioSenha");
+
+      if (estaLogado) {
+        window.location.href = "../pag/perfil.html";
+      } else {
+        window.location.href = "../html/cadastro.html";
+      }
+    });
+  }
+
+  // Eventos dos formulários
   const formRegistro = document.getElementById("registerForm");
   if (formRegistro) {
     formRegistro.addEventListener("submit", registrarUsuario);
@@ -134,32 +188,5 @@ document.addEventListener("DOMContentLoaded", function () {
   const botaoEsqueciSenha = document.getElementById("esqueciSenha");
   if (botaoEsqueciSenha) {
     botaoEsqueciSenha.addEventListener("click", forgotPassword);
-  }
-
-  // VERIFICA SE O USUÁRIO ESTÁ LOGADO ANTES DE REDIRECIONAR NO BOTÃO PERFIL/CADASTRO
-  const botaoPerfil = document.getElementById("perfilOuCadastro");
-  if (botaoPerfil) {
-    botaoPerfil.addEventListener("click", function (event) {
-      event.preventDefault();
-      // Verifica se o email está salvo no localStorage
-      const emailLogado = localStorage.getItem("usuarioEmail");
-
-      if (emailLogado) {
-        // Se estiver logado, redireciona para a página de perfil
-        window.location.href = "../pag/perfil.html";
-      } else {
-        // Se não estiver logado, redireciona para a tela de cadastro
-        window.location.href = "../html/cadastro.html";
-      }
-    });
-  }
-
-  // PERFIL: mostrar dados
-  if (window.location.pathname.includes("perfil.html")) {
-    document.getElementById("username").textContent = localStorage.getItem("usuarioNome") || "Usuário";
-    document.getElementById("nome-completo").textContent = localStorage.getItem("usuarioNome") || "Nome completo";
-    document.getElementById("telefone").textContent = localStorage.getItem("usuarioTelefone") || "Telefone";
-    document.getElementById("email").textContent = localStorage.getItem("usuarioEmail") || "E-mail";
-    document.getElementById("senha").textContent = localStorage.getItem("usuarioSenha") ? "********" : "Senha";
   }
 });
