@@ -22,9 +22,11 @@ body {
     height: 64px;
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    justify-content: space-between;
+    padding: -50px; /* 🔽 diminui o espaçamento lateral */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   }
+  
   
   #home {
     width: 58px;
@@ -210,4 +212,5 @@ body {
     gap: 10px;
     margin-left: auto; /* 👈 Isso força a div a ir para o canto direito */
   }
+ 
   
