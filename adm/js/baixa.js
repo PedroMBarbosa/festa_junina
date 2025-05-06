@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Dados de exemplo com IDs e status_id
   const usuarios = [
-   
+    
   ];
 
   const lista = document.getElementById('lista-pagamentos');
