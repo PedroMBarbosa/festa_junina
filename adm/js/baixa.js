@@ -2,24 +2,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const dropdown = document.querySelector('.dropdown');
   const btnFiltro = document.getElementById('btn-filtro');
   const dropdownContent = document.getElementById('dropdown-filtro');
+  const lista = document.getElementById('lista-pagamentos');
+  let usuarios = [];
 
   btnFiltro.addEventListener('click', () => {
     dropdown.classList.toggle('show');
   });
 
-  // Fechar o dropdown se clicar fora
   window.addEventListener('click', function (e) {
-    if (!dropdown.contains(e.target)) {
+    if (!dropdown.contains(e.target) && e.target !== btnFiltro) {
       dropdown.classList.remove('show');
     }
   });
-
-  // Dados de exemplo com IDs e status_id
-  const usuarios = [
-    
-  ];
-
-  const lista = document.getElementById('lista-pagamentos');
 
   function renderLista(filtrados = usuarios) {
     lista.innerHTML = "";
@@ -29,59 +23,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
       li.innerHTML = `
         <span>${user.email}</span>
-        <span>${user.ingressos} ingressos</span>
-        <span class="status-label ${user.status.toLowerCase()}" style="cursor:pointer;">${user.status}</span>
+        <span>${user.ingressos.length} ingressos</span>
+        <span class="status-label ${user.statusTexto.toLowerCase()}" style="cursor:pointer;">${user.statusTexto}</span>
       `;
 
       const statusSpan = li.querySelector(".status-label");
       statusSpan.addEventListener("click", () => {
-        const novoStatus = user.status === "Pendente" ? "Confirmado" : "Pendente";
-        const novoStatusId = novoStatus === "Confirmado" ? 1 : 0;
+        const novoStatusId = user.status_id === 0 ? 1 : 0;
+        const novoStatusTexto = novoStatusId === 1 ? "Confirmado" : "Pendente";
 
-        const bodyPayload = {
-          id: user.id,
-          qrcode: "string",
+        const ingresso = user.ingressos[0]; // Pegando o primeiro ingresso do usuário
+
+        const payload = {
+          id: ingresso.id,
+          qrcode: ingresso.qrcode || "string",
           data: new Date().toISOString(),
-          tipo_ingresso_id: 0,
-          usuario_id: 0,
-          lote_id: 0,
+          tipo_ingresso_id: ingresso.tipo_ingresso_id,
+          usuario_id: ingresso.usuario_id,
+          lote_id: ingresso.lote_id,
           status_id: novoStatusId,
-          cliente_id: 0,
-          guid: "00000000-0000-0000-0000-000000000000"
+          cliente_id: ingresso.cliente_id,
+          guid: ingresso.guid
         };
 
-        fetch(`http://10.90.146.37/api/api/Ingresso/AlterarStatus/${user.id}`, {
+        fetch(`http://10.90.146.37/api/api/Ingresso/AlterarStatus/${ingresso.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(bodyPayload)
+          body: JSON.stringify(payload)
         })
-          .then(response => {
-            if (!response.ok) {
-              return response.text().then(txt => {
-                console.error("Erro ao atualizar status:", txt);
-                throw new Error("Erro ao atualizar status");
-              });
-            }
-            return response.json();
-          })
-          .then(data => {
-            user.status = novoStatus;
+          .then(res => res.json())
+          .then(() => {
             user.status_id = novoStatusId;
-
-            const filtroAtivo = document.querySelector(".dropdown-content button.active");
-            if (filtroAtivo) {
-              const statusFiltro = filtroAtivo.dataset.status;
-              const filtrados = usuarios.filter(u => u.status.toLowerCase() === statusFiltro);
-              renderLista(filtrados);
-            } else {
-              renderLista(usuarios);
-            }
+            user.statusTexto = novoStatusTexto;
+            renderLista(usuarios);
           })
-          .catch(error => {
-            alert("Erro ao atualizar o status no servidor.");
-            console.error(error);
+          .catch(err => {
+            console.error("Erro ao atualizar status:", err);
+            alert("Erro ao atualizar status.");
           });
       });
 
@@ -89,7 +69,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  renderLista();
+  function carregarUsuarios() {
+    fetch('http://10.90.146.37/api/api/Ingresso')
+      .then(res => res.json())
+      .then(data => {
+        const agrupados = {};
+
+        data.forEach(ingresso => {
+          const idUsuario = ingresso.usuario_id;
+          if (!agrupados[idUsuario]) {
+            agrupados[idUsuario] = {
+              id: idUsuario,
+              email: ingresso.usuario?.email || `Usuário ${idUsuario}`,
+              ingressos: [],
+              status_id: ingresso.status_id,
+              statusTexto: ingresso.status_id === 1 ? "Confirmado" : "Pendente"
+            };
+          }
+
+          agrupados[idUsuario].ingressos.push(ingresso);
+        });
+
+        usuarios = Object.values(agrupados);
+        renderLista(usuarios);
+      })
+      .catch(err => {
+        console.error("Erro ao buscar dados:", err);
+        alert("Erro ao carregar dados.");
+      });
+  }
 
   // Filtro funcional
   document.querySelectorAll('.filtro-status').forEach(btn => {
@@ -98,9 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('active');
 
       const status = btn.dataset.status;
-      const filtrados = usuarios.filter(user => user.status.toLowerCase() === status);
+      const filtrados = usuarios.filter(user => user.statusTexto.toLowerCase() === status);
       renderLista(filtrados);
       dropdown.classList.remove('show');
     });
   });
+
+  carregarUsuarios();
 });
