@@ -6,20 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
   // 🔐 Verifica se está logado e se é administrador
-  if (!usuario || usuario.perfil_id !== 1) {
-    localStorage.removeItem("usuarioLogado");
-    alert("Acesso negado: você não é administrador.");
-    window.location.href = "../views/gerenciamento.html";
-    return;
-  }
 
-  // ✅ Acesso à tela só se for Roberto
-  const nomeNormalizado = usuario.nome?.toLowerCase().trim();
-  if (!nomeNormalizado.includes("roberto")) {
-    alert("Acesso restrito apenas ao administrador Roberto.");
-    window.location.href = "views/gerenciamento.html";
-    return;
-  }
 
   // ✅ Se chegou até aqui, é o Roberto -> pode ver todos os usuários
   function loadAndRenderUsuarios() {
