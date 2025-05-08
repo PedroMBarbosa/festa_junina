@@ -3,25 +3,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const addButton = document.querySelector(".add-button");
   const API_URL = "http://10.90.146.37/api/api/Usuario";
 
-  // Recupera usuário logado
   const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado")) || {};
   const currentUserId = Number(usuarioLogado.id);
   const currentPerfil = Number(usuarioLogado.perfil_id);
   const isGestaoProjeto = currentPerfil === 1;
 
-  // DEBUG LOGS
   console.log("→ usuarioLogado:", usuarioLogado);
   console.log("→ currentUserId:", currentUserId);
-  console.log("→ currentPerfil:", currentPerfil);
+  console.log("→ currentPerfil:", localStorage.getItem("tipoperfilId"));
   console.log("→ isGestaoProjeto:", isGestaoProjeto);
 
-  // Exibe botão de adicionar apenas para Gestão de Projeto
+  // Mostra botão de adicionar somente para perfil 1
   if (addButton) {
-    addButton.hidden = !isGestaoProjeto;
     if (isGestaoProjeto) {
+      addButton.hidden = false;
       addButton.addEventListener("click", () => {
         window.location.href = "../gerenciamento/cadastroadm.html";
       });
+    } else {
+      addButton.hidden = true;
     }
   }
 
@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderUsuarios(usuarios) {
     adminList.innerHTML = "";
+
     if (!Array.isArray(usuarios) || usuarios.length === 0) {
       adminList.innerHTML = '<p>Nenhum usuário encontrado.</p>';
       return;
@@ -56,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const actions = document.createElement("div");
       actions.className = "admin-actions";
 
-      // Botão de editar
       const editBtn = document.createElement("button");
       editBtn.classList.add("edit-button");
       editBtn.textContent = "✏️";
@@ -70,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
         editBtn.title = "Sem permissão";
       }
 
-      // Botão de excluir
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("delete-button");
       deleteBtn.textContent = "🗑️";
