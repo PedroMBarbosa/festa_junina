@@ -1,109 +1,140 @@
 document.addEventListener("DOMContentLoaded", function () {
   const apiBase = "http://10.90.146.37/api/api/Clientes";
-  
-  const urlUsuarios = 'http://10.90.146.37/api/api/Clientes/CadastrarCliente';
-  const urlLogin = 'http://10.90.146.37/api/api/Clientes/LoginCliente';
+  const urlUsuarios = `${apiBase}/CadastrarCliente`;
+  const urlLogin = `${apiBase}/LoginCliente`;
 
-  // REGISTRO
-  async function registrarUsuario(event) {
-    event.preventDefault();
-    const nome = document.getElementById("nome").value;
-    const email = document.getElementById("email").value;
-    const senha = document.getElementById("senha").value;
-    const telefone = document.getElementById("telefone").value;
+  // Função para verificar se está logado
+  function estaLogado() {
+    return localStorage.getItem("usuarioEmail") && localStorage.getItem("usuarioSenha");
+  }
 
-    try {
-      const response = await fetch(urlUsuarios, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, email, senha, telefone })
-      });
+  const estaNaPastaPag = window.location.pathname.includes("/pag/");
+  const caminhoPerfil = estaNaPastaPag ? "./perfil.html" : "./pag/perfil.html";
+  const caminhoCadastro = estaNaPastaPag ? "./cadastro.html" : "./pag/cadastro.html";
 
-      const data = await response.json();
+  // Botão perfil
+  const botaoPerfil = document.getElementById("botao_perfil");
+  if (botaoPerfil) {
+    botaoPerfil.addEventListener("click", function (event) {
+      event.preventDefault();
+      window.location.href = estaLogado() ? caminhoPerfil : caminhoCadastro;
+    });
+  }
 
-      if (response.ok) {
-        alert("Cadastro realizado com sucesso!");
-
-        // Salva no localStorage
-        localStorage.setItem("usuarioNome", data.cliente?.nome || nome);
-        localStorage.setItem("usuarioEmail", email);
-        localStorage.setItem("usuarioTelefone", telefone);
-        localStorage.setItem("usuarioSenha", senha);
-        localStorage.setItem("idLogado", data.cliente?.id || "");
-
-        window.location.href = "./perfil.html";
-      } else {
-        alert("Erro ao registrar: " + (data.message || "Verifique os dados."));
-      }
-    } catch (error) {
-      alert("Erro na requisição: " + error.message);
+  // Verificação de login para botões de ingresso
+  function validarLoginOuRedirecionar(event) {
+    if (!estaLogado()) {
+      event.preventDefault();
+      window.location.href = caminhoCadastro;
     }
   }
 
-  // LOGIN
-  async function loginUsuario(event) {
-    event.preventDefault();
-    const email = document.getElementById("loginEmail").value;
-    const senha = document.getElementById("loginSenha").value;
-    const lembrar = document.getElementById("lembrarUsuario")?.checked;
+  ["garanta", "ver", "garanta2", "ver2"].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener("click", validarLoginOuRedirecionar);
+  });
 
-    try {
-      const response = await fetch(urlLogin, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, senha }),
-      });
+  // Formulários
+  const formRegistro = document.getElementById("registerForm");
+  if (formRegistro) {
+    formRegistro.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      const nome = document.getElementById("nome").value;
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
+      const telefone = document.getElementById("telefone").value;
 
-      const data = await response.json();
+      try {
+        const response = await fetch(urlUsuarios, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome, email, senha, telefone })
+        });
 
-      if (response.ok) {
-        alert(`Bem-vindo, ${data.cliente?.nome || "usuário"}!`);
+        const data = await response.json();
 
-        // Salva dados no localStorage
-        localStorage.setItem("usuarioNome", data.cliente?.nome || "");
-        localStorage.setItem("usuarioEmail", data.cliente?.email || email);
-        localStorage.setItem("usuarioTelefone", data.cliente?.telefone || "");
-        localStorage.setItem("usuarioSenha", senha); // ⚠️ NÃO use em produção!
-        localStorage.setItem("clienteId", data.cliente?.id || "");
+        if (response.ok) {
+          alert("Cadastro realizado com sucesso!");
+          localStorage.setItem("usuarioNome", data.cliente?.nome || nome);
+          localStorage.setItem("usuarioEmail", email);
+          localStorage.setItem("usuarioTelefone", telefone);
+          localStorage.setItem("usuarioSenha", senha);
+          localStorage.setItem("idLogado", data.cliente?.id || "");
 
-        if (lembrar) {
-          localStorage.setItem("lembrarUsuario", "true");
+          window.location.href = "./perfil.html";
         } else {
-          localStorage.removeItem("lembrarUsuario");
+          alert("Erro ao registrar: " + (data.message || "Verifique os dados."));
         }
-
-        window.location.href = "../pag/perfil.html";
-      } else {
-        alert("Erro no login: " + (data.message || "Email ou senha incorretos."));
+      } catch (error) {
+        alert("Erro na requisição: " + error.message);
       }
-    } catch (error) {
-      alert("Erro na requisição: " + error.message);
-    }
+    });
   }
 
-  // ESQUECI MINHA SENHA
-  async function forgotPassword(event) {
-    event.preventDefault();
-    const email = document.getElementById("loginEmail").value;
+  const formLogin = document.getElementById("loginForm");
+  if (formLogin) {
+    formLogin.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const senha = document.getElementById("loginSenha").value;
+      const lembrar = document.getElementById("lembrarUsuario")?.checked;
 
-    try {
-      const response = await fetch(`${apiBase}/esqueci-senha`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email })
-      });
+      try {
+        const response = await fetch(urlLogin, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, senha }),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (response.ok) {
-        alert("Nova senha enviada ao seu email.");
-        window.location.href = "login.html";
-      } else {
-        alert("Erro ao redefinir senha: " + (data.message || "E-mail não encontrado."));
+        if (response.ok) {
+          alert(`Bem-vindo, ${data.cliente?.nome || "usuário"}!`);
+          localStorage.setItem("usuarioNome", data.cliente?.nome || "");
+          localStorage.setItem("usuarioEmail", data.cliente?.email || email);
+          localStorage.setItem("usuarioTelefone", data.cliente?.telefone || "");
+          localStorage.setItem("usuarioSenha", senha);
+          localStorage.setItem("clienteId", data.cliente?.id || "");
+
+          lembrar
+            ? localStorage.setItem("lembrarUsuario", "true")
+            : localStorage.removeItem("lembrarUsuario");
+
+          window.location.href = "../pag/perfil.html";
+        } else {
+          alert("Erro no login: " + (data.message || "Email ou senha incorretos."));
+        }
+      } catch (error) {
+        alert("Erro na requisição: " + error.message);
       }
-    } catch (error) {
-      alert("Erro na requisição: " + error.message);
-    }
+    });
+  }
+
+  const botaoEsqueciSenha = document.getElementById("esqueciSenha");
+  if (botaoEsqueciSenha) {
+    botaoEsqueciSenha.addEventListener("click", async function (event) {
+      event.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+
+      try {
+        const response = await fetch(`${apiBase}/esqueci-senha`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert("Nova senha enviada ao seu email.");
+          window.location.href = "login.html";
+        } else {
+          alert("Erro ao redefinir senha: " + (data.message || "E-mail não encontrado."));
+        }
+      } catch (error) {
+        alert("Erro na requisição: " + error.message);
+      }
+    });
   }
 
   // Preencher login se lembrar estiver ativado
@@ -121,38 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Redireciona com base no login
-  const botaoPerfil = document.getElementById("perfilOuCadastro");
-  if (botaoPerfil) {
-    botaoPerfil.addEventListener("click", function (event) {
-      event.preventDefault();
-      const estaLogado = localStorage.getItem("usuarioEmail") && localStorage.getItem("usuarioSenha");
-
-      if (estaLogado) {
-        window.location.href = "../pag/perfil.html";
-      } else {
-        window.location.href = "../pag/cadastro.html";
-      }
-    });
-  }
-
-  // Eventos dos formulários
-  const formRegistro = document.getElementById("registerForm");
-  if (formRegistro) {
-    formRegistro.addEventListener("submit", registrarUsuario);
-  }
-
-  const formLogin = document.getElementById("loginForm");
-  if (formLogin) {
-    formLogin.addEventListener("submit", loginUsuario);
-  }
-
-  const botaoEsqueciSenha = document.getElementById("esqueciSenha");
-  if (botaoEsqueciSenha) {
-    botaoEsqueciSenha.addEventListener("click", forgotPassword);
-  }
-
-  // Carrega dados no perfil.html
+  // Carregar dados no perfil
   const perfilPage = window.location.pathname.includes("perfil.html");
   if (perfilPage) {
     const nome = localStorage.getItem("usuarioNome") || "Nome não encontrado";
@@ -173,6 +173,13 @@ document.addEventListener("DOMContentLoaded", function () {
     setValue("telefone", "input-telefone", telefone);
     setValue("senha", "input-senha", senha);
   }
+
+  // Logout
+  const botao_logout = document.getElementById("botao_logout");
+  if (botao_logout) {
+    botao_logout.addEventListener("click", function () {
+      localStorage.clear();
+      window.location.href = "../index.html";
+    });
+  }
 });
-
-
