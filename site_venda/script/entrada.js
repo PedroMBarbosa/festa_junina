@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("usuarioEmail", email);
         localStorage.setItem("usuarioTelefone", telefone);
         localStorage.setItem("usuarioSenha", senha);
-        localStorage.setItem("clienteId", data.cliente?.id || "");
+        localStorage.setItem("idLogado", data.cliente?.id || "");
 
         window.location.href = "./perfil.html";
       } else {
