@@ -1,3 +1,48 @@
+function alterarStatus(pedidoId, guid) {
+  // Endpoints para alterar o status
+  const urlPedido = `http://10.90.146.37/api/api/Pedidos/AlterarStatus/${pedidoId}`;
+
+  // Alteração do status do pedido
+  const requestOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      status_id: 2 // Novo status para o pedido (exemplo: "Confirmado")
+    })
+  };
+
+  // Primeiramente, alteramos o status do pedido
+  fetch(urlPedido, requestOptions)
+    .then(resPedido => {
+      if (!resPedido.ok) {
+        throw new Error("Erro ao alterar o status do pedido");
+      }
+
+      // Agora, alteramos o status de todos os ingressos com o mesmo GUID
+      const ingressosComMesmoGuid = usuarios
+        .flatMap(user => user.ingressos)
+        .filter(ingresso => ingresso.guid === guid);
+
+      // Cria um array de promessas de requisições para alterar o status dos ingressos
+      const ingressosPromises = ingressosComMesmoGuid.map(ingresso => {
+        return fetch(`http://10.90.146.37/api/api/Ingresso/AlterarStatus/${ingresso.id}`, requestOptions);
+      });
+
+      // Executa todas as requisições de alteração de status de ingressos em paralelo
+      return Promise.all(ingressosPromises);
+    })
+    .then(() => {
+      alert("Status alterado com sucesso!");
+      carregarUsuarios(); // Recarrega os usuários para refletir as alterações
+    })
+    .catch(err => {
+      console.error("Erro na requisição:", err);
+      alert("Erro ao processar a alteração.");
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const dropdown = document.querySelector('.dropdown');
   const btnFiltro = document.getElementById('btn-filtro');
@@ -24,74 +69,61 @@ document.addEventListener('DOMContentLoaded', () => {
       li.innerHTML = `
         <span>${user.email}</span>
         <span>${user.ingressos.length} ingressos</span>
-        <span class="status-label ${user.statusTexto.toLowerCase()}" style="cursor:pointer;">${user.statusTexto}</span>
+        <span class="status-label ${user.statusTexto.toLowerCase()}" style="cursor:pointer;" onclick="alterarStatus(${user.id}, '${user.ingressos[0]?.guid}')">
+          ${user.statusTexto}
+        </span>
       `;
-
-      const statusSpan = li.querySelector(".status-label");
-      statusSpan.addEventListener("click", () => {
-        const novoStatusId = user.status_id === 0 ? 1 : 0;
-        const novoStatusTexto = novoStatusId === 1 ? "Confirmado" : "Pendente";
-
-        const ingresso = user.ingressos[0]; // Pegando o primeiro ingresso do usuário
-
-        const payload = {
-          id: ingresso.id,
-          qrcode: ingresso.qrcode || "string",
-          data: new Date().toISOString(),
-          tipo_ingresso_id: ingresso.tipo_ingresso_id,
-          usuario_id: ingresso.usuario_id,
-          lote_id: ingresso.lote_id,
-          status_id: novoStatusId,
-          cliente_id: ingresso.cliente_id,
-          guid: ingresso.guid
-        };
-
-        fetch(`http://10.90.146.37/api/api/Ingresso/AlterarStatus/${ingresso.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
-        })
-          .then(res => res.json())
-          .then(() => {
-            user.status_id = novoStatusId;
-            user.statusTexto = novoStatusTexto;
-            renderLista(usuarios);
-          })
-          .catch(err => {
-            console.error("Erro ao atualizar status:", err);
-            alert("Erro ao atualizar status.");
-          });
-      });
 
       lista.appendChild(li);
     });
   }
 
   function carregarUsuarios() {
-    fetch('http://10.90.146.37/api/api/Ingresso')
-      .then(res => res.json())
-      .then(data => {
-        const agrupados = {};
-
-        data.forEach(ingresso => {
-          const idUsuario = ingresso.usuario_id;
-          if (!agrupados[idUsuario]) {
-            agrupados[idUsuario] = {
-              id: idUsuario,
-              email: ingresso.usuario?.email || `Usuário ${idUsuario}`,
-              ingressos: [],
-              status_id: ingresso.status_id,
-              statusTexto: ingresso.status_id === 1 ? "Confirmado" : "Pendente"
-            };
-          }
-
-          agrupados[idUsuario].ingressos.push(ingresso);
+    // Executa as três requisições em paralelo
+    Promise.all([
+      fetch('http://10.90.146.37/api/api/Pedidos').then(res => res.json()),
+      fetch('http://10.90.146.37/api/api/Ingresso').then(res => res.json()),
+      fetch('http://10.90.146.37/api/api/Usuario').then(res => res.json())
+    ])
+      .then(([pedidos, ingressos, usuarios]) => {
+        // Mapeia os usuários por ID para acesso rápido
+        const usuariosMap = {};
+        usuarios.forEach(usuario => {
+          usuariosMap[usuario.id] = usuario.email;
         });
-
-        usuarios = Object.values(agrupados);
-        renderLista(usuarios);
+  
+        // Mapeia os ingressos por GUID (pedido)
+        const ingressosPorPedido = {};
+        ingressos.forEach(ingresso => {
+          const guid = ingresso.guid;
+          if (!ingressosPorPedido[guid]) {
+            ingressosPorPedido[guid] = [];
+          }
+          ingressosPorPedido[guid].push(ingresso);
+        });
+  
+        // Agrupa os pedidos com os ingressos e usuário
+        const pedidosAgrupados = pedidos.map(pedido => {
+          const ingressosDoPedido = ingressosPorPedido[pedido.guid] || [];
+          
+          // Obtém o usuario_id do primeiro ingresso relacionado ao pedido
+          const usuarioId = ingressosDoPedido.length > 0 ? ingressosDoPedido[0].usuario_id : null;
+  
+          return {
+            id: pedido.id,
+            data: pedido.data,
+            valor: pedido.valor,
+            guid: pedido.guid,
+            usuarioId: usuarioId,
+            email: usuarioId ? usuariosMap[usuarioId] || `Usuário ${usuarioId}` : "Não encontrado",
+            status_id: pedido.status_id,
+            statusTexto: pedido.status_id === 1 ? "Pendente" : "Confirmado",
+            quantidadeIngressos: ingressosDoPedido.length,
+            ingressos: ingressosDoPedido
+          };
+        });
+  
+        renderLista(pedidosAgrupados);
       })
       .catch(err => {
         console.error("Erro ao buscar dados:", err);
