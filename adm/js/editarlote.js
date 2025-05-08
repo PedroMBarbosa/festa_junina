@@ -5,9 +5,13 @@ const url = 'http://10.90.146.37/api/api/Lote/CadastrarLote'
 
 let lotePronto = null;
 
-const usuario_id = //FAZER O LOCALSTORAGE (ou outro tipo de armazenamento do id do usuario ao fazer login)  
+const usuario_id = 1//FAZER O LOCALSTORAGE (ou outro tipo de armazenamento do id do usuario ao fazer login)  
 
-function salvarEdicao() {
+function teste(){
+  console.log("teste")
+}
+
+function salvarEdicao(){
   const valor = document.getElementById('valor').value;
   const abertura = document.getElementById('abertura').value;
   const fechamento = document.getElementById('fechamento').value;
@@ -50,9 +54,28 @@ function salvarEdicao() {
     ativo: 0
   };
 
-  console.log("lote pronto: ", lotePronto)
+  console.log("lote pronto: ", lotePronto)  
+}
 
-} 
+function abrirmodal(){
+  document.getElementById("meuModal").style.display = "flex";
+  document.getElementById("modal").style.display = "flex";
+}
+
+function fecharmodal(){
+  document.getElementById("meuModal").style.display = "none";
+  document.getElementById("modal").style.display = "none";
+}
+
+function abrirModalErro(){
+  document.getElementById("modal-erro").style.display = "flex";
+  document.getElementById("modalconteudoerro").style.display = "flex";
+}
+
+function fecharModalErro(){
+  document.getElementById("modal-erro").style.display = "none";
+  document.getElementById("modalconteudoerro").style.display = "none";
+}
 
 function cancelar() {
   document.getElementById("valor").value = "16.00";
@@ -81,9 +104,11 @@ function salvar() {
     }
     const data = JSON.parse(text);
     console.log('Lote criado:', data);
+    abrirmodal()
   })
   .catch(error => {
     console.error('Erro ao criar lote:', error);
-    alert('Erro ao criar lote: ' + error.message);
+    abrirModalErro()
+    document.getElementById('mensagem-erro').innerText = error.message || 'Erro desconhecido.';
   });
 }
