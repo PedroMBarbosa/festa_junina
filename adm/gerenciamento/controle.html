@@ -5,48 +5,65 @@
   <title>Controle de Acesso</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/acesso.css">
-  <link rel="stylesheet" href="../css/cabecalho.css">
+  <link rel="stylesheet" href="../css/controle.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-  <header>
+
     <div class="banner-topo">
-        <img src="../images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo-senai">
-      </div>
+      <img src="../images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo-senai">
+    </div>
   
-      <div class="cabecalho-lotes">
-        <a href="../views/home.html" class="icone-voltar">
-          <img src="../images/home.png" alt="Voltar para Home" />
-        </a>
-        <span class="titulo-cabecalho">Baixa de Pagamento</span>
-        <a href="../views/perfil.html" class="icone-perfil">
-          <img src="../images/icon.png" alt="Ir para Perfil" />
-        </a>
-      </div>
-  </header>
-  <a href="../views/gerenciamento.html" class="voltar-lotes">
-    <img src="../images/seta.png" alt="Voltar" class="icone-voltar">
-  </a>
+      
+    <div>
+      <a href="../views/perfil.html" class="icone-perfil">
+      <img src="../images/icone-utilisateur.png" class="iconeperfil" alt="Ir para Perfil" />
+    </div>
+  
+    <div class="cabecalho-lotes">
+      <a href="../views/home.html" class="icone-voltar">
+        <button class="homeicone">Início |</button>
+      </a>
+      <a href="COLOCA O LINK JOAQUIM" class="gerencialote">
+        <button class="gerenciarlotes">Gerenciar Lotes |</button>
+      </a>
+      <a href="../views/gerenciamento.html" class="voltar-lotes">
+        <button class="gerenciarfesta">Gerenciar Festa |</button>
+      </a>
+      <a href="COLOCA O LINK JOAQUIM" class="gerenciapagamento">
+        <button class="gerenciarpagamentos">Gerenciar Pagamentos |</button>
+      </a>
+      <a href="COLOCA O LINK JOAQUIM" class="cadastro">
+        <button class="cadastrar">Cadastro </button>
+      </a>
+    </div>
+  
   <main class="conteudo">
     <div class="grafico-container">
-      <canvas id="graficoPizza" width="300" height="300"></canvas>
+      <canvas class="graficopizza" id="graficoPizza" width="700" height="700"></canvas>
     </div>
-
-    <div class="legenda-container">
-      <h3>Distribuição total de pessoas (619)</h3>
-      <div class="legenda">
-        <div class="item-legenda">
-          <div class="bolinha verde"></div>
-          <span>Pessoas que compareceram</span>
-        </div>
-        <div class="item-legenda">
-          <div class="bolinha vermelha"></div>
-          <span>Pessoas que não compareceram</span>
+    <div class="info">
+      <div class="legenda-container">
+        <h3>Distribuição total de pessoas (619)</h3>
+      </div>
+      <div class="pessoas">
+        <div class="legenda">
+          <div class="item-legenda">
+            <div class="bolinha verde"></div>
+            <span>Pessoas que compareceram</span>
+          </div>
+          <div class="item-legenda">
+            <div class="bolinha vermelha"></div>
+            <span>Pessoas que não compareceram</span>
+          </div>
         </div>
       </div>
-    </div>
+      </div>
   </main>
+  <footer class="rodape">
+    ...
+  </footer>
 </body>
 <script src="../js/acesso.js"></script>
 </html>
