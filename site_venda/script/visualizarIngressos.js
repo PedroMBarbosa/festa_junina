@@ -5,6 +5,7 @@ async function visualizarIngresso() {
       const urlIngressos = `http://10.90.146.37/api/api/Ingresso/ConsultarIngresso/${idLogado}`;
       const urlUsuarios = `http://10.90.146.37/api/api/Usuario`;
       const urlLotes = `http://10.90.146.37/api/api/Lote`;
+      const urlDeleta = `http://10.90.146.37/api/api/CancelarIngresso`;
 
       // Faz as duas requisições em paralelo
       const [resIngressos, resUsuarios, resLotes] = await Promise.all([
@@ -66,16 +67,14 @@ async function visualizarIngresso() {
                             <p class="status ${statusClass}">Pedido ${tipo}</p>
                             <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
                             <span id="valor">R$${lote.valor_un.toFixed(2) || "10,00"}</span></p>
-                            <div class="btns">  
-                                <button onclick="cancelarIngresso(${ingresso.id})">Cancelar</button>
-                                <button onclick="confirmarIngresso(${ingresso.id})">Confirmar Compra</button>
+                            <div class="btns"> 
                             </div>
                             <p class="aviso">*Trazer documento com foto no dia da festa*</p>
                         </div>
                     `;
                     container.appendChild(card);
                 }
-                else
+                else if (tipo == "pendente")
                 {
                     card.innerHTML = `
                         <div class="card-topo">Ingressos Adquiridos</div>
@@ -86,13 +85,15 @@ async function visualizarIngresso() {
                             <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
                             <span id="valor">R$${lote.valor_un.toFixed(2) || "10,00"}</span></p>
                             <div class="btns">  
-                                <button onclick="cancelarIngresso(${ingresso.id})">Cancelar</button>
-                                <button onclick="confirmarIngresso(${ingresso.id})">Confirmar Compra</button>
+                                <button id="botao_cancelar"">Cancelar</button>
                             </div>
                             <p class="aviso">*Trazer documento com foto no dia da festa*</p>
                         </div>
                     `;
                     container.appendChild(card);
+                }
+                else if(tipo == "cancelado"){
+                    
                 }
             });
 
@@ -103,6 +104,28 @@ async function visualizarIngresso() {
         console.error("Erro na requisição:", error);
         alert("Erro na requisição: " + error.message);
     }
+    async function deletarIngresso(id) {
+        const confirmacao = confirm("Tem certeza que deseja deletar este ingresso cancelado?");
+        if (!confirmacao) return;
+    
+        try {
+            const response = await fetch(`http://10.90.146.37/api/api/Ingresso/CancelarIngresso/${id}`, {
+                method: "DELETE"
+            });
+    
+            if (response.ok) {
+                alert("Ingresso deletado com sucesso!");
+                visualizarIngresso(); // recarrega os ingressos após a exclusão
+            } else {
+                const erro = await response.json();
+                alert("Erro ao deletar ingresso: " + (erro.message || "Tente novamente."));
+            }
+        } catch (error) {
+            alert("Erro na requisição: " + error.message);
+        }
+    }
+    const cancelar = document.getElementById("botao_cancelar");
+    cancelar.addEventListener("click", deletarIngresso)
 }
 
 visualizarIngresso()
