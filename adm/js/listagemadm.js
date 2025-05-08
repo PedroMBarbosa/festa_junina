@@ -1,154 +1,126 @@
 document.addEventListener("DOMContentLoaded", () => {
   const adminList = document.querySelector(".admin-list");
   const addButton = document.querySelector(".add-button");
-  const API_URL   = "http://10.90.146.37/api/api/Usuario";
-  const usuario   = JSON.parse(localStorage.getItem("usuarioLogado"));
+  const API_URL = "http://10.90.146.37/api/api/Usuario";
 
-  // somente perfil 1 pode cadastrar novo administrador
-  const isAdmin = usuario && Number(usuario.perfil_id) === 1;
-  console.log("DEBUG usuario:", usuario, "→ isAdmin:", isAdmin);
+  // Recupera usuário logado
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado")) || {};
+  const currentUserId = Number(usuarioLogado.id);
+  const currentPerfil = Number(usuarioLogado.perfil_id);
+  const isGestaoProjeto = currentPerfil === 1;
 
-  // ocultar botão para quem não é admin; para admin, mantém estilo original
-  if (addButton && !isAdmin) {
-    addButton.style.display = "none";
-  }
-  // registra ação de clique só se for admin
-  if (addButton && isAdmin) {
-    addButton.addEventListener("click", () => {
-      window.location.href = "../gerenciamento/cadastroadm.html";
-    });
-    console.log("DEBUG listener de adicionar ADM registrado");
-  }
+  // DEBUG LOGS
+  console.log("→ usuarioLogado:", usuarioLogado);
+  console.log("→ currentUserId:", currentUserId);
+  console.log("→ currentPerfil:", currentPerfil);
+  console.log("→ isGestaoProjeto:", isGestaoProjeto);
 
-  function loadAndRenderUsuarios() {
-    fetch(API_URL)
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.json();
-      })
-      .then(data => {
-        console.log("Usuários carregados da API:", data);
-        renderUsuarios(data);
-      })
-      .catch(error => {
-        console.error("Erro ao buscar usuários:", error);
-        alert("Não foi possível carregar a lista de usuários.");
+  // Exibe botão de adicionar apenas para Gestão de Projeto
+  if (addButton) {
+    addButton.hidden = !isGestaoProjeto;
+    if (isGestaoProjeto) {
+      addButton.addEventListener("click", () => {
+        window.location.href = "../gerenciamento/cadastroadm.html";
       });
+    }
   }
+
+  if (adminList) adminList.textContent = "Carregando administradores...";
+
+  fetch(API_URL)
+    .then(res => res.ok ? res.json() : Promise.reject(res.status))
+    .then(usuarios => renderUsuarios(usuarios))
+    .catch(err => {
+      console.error("Erro na API:", err);
+      if (adminList) adminList.textContent = "Falha ao carregar usuários.";
+    });
 
   function renderUsuarios(usuarios) {
-    if (!adminList) return;
     adminList.innerHTML = "";
-
-    if (usuarios.length === 0) {
+    if (!Array.isArray(usuarios) || usuarios.length === 0) {
       adminList.innerHTML = '<p>Nenhum usuário encontrado.</p>';
       return;
     }
 
-    // DEBUG: listar todos os usuários recebidos
-    console.log("DEBUG — todos os usuários vindos da API:");
-    usuarios.forEach(u => console.log(`→ id=${u.id}, nome=${u.nome}, perfil_id=${u.perfil_id}`));
-
-    usuarios.forEach(({ id, nome, perfil_id }, index) => {
+    usuarios.forEach(({ id, nome, perfil_id }) => {
       const card = document.createElement("div");
       card.className = "admin-card";
 
       const info = document.createElement("div");
       info.className = "admin-info";
-      
-      let label;
-      switch (Number(perfil_id)) {
-        case 1:
-          label = '[Admin]';
-          break;
-        case 2:
-          label = '[Usuário]';
-          break;
-        case 3:
-          label = '[Portaria]';
-          break;
-        default:
-          label = `[Perfil ${perfil_id}]`;
-      }
-
-      info.innerHTML = `
-        <span>👤</span>
-        <span>${nome}</span>
-        <span style="color: red; font-weight: bold;">${label}</span>
-      `;
+      const labels = { 1: 'Admin', 2: 'Usuário', 3: 'Portaria' };
+      const labelText = labels[perfil_id] || `Perfil ${perfil_id}`;
+      info.innerHTML = `<span>👤</span> <span>${nome}</span> <span style='color:red;'>[${labelText}]</span>`;
       card.appendChild(info);
 
-      // somente perfil 1 pode editar/excluir
-      if (isAdmin) {
-        const actions = document.createElement("div");
-        actions.className = "admin-actions";
+      const actions = document.createElement("div");
+      actions.className = "admin-actions";
 
-        const editBtn = document.createElement("button");
-        editBtn.innerText = "✏️";
-        editBtn.onclick = () => editUsuario(id, index, usuarios);
+      // Botão de editar
+      const editBtn = document.createElement("button");
+      editBtn.classList.add("edit-button");
+      editBtn.textContent = "✏️";
 
-        const deleteBtn = document.createElement("button");
-        deleteBtn.innerText = "🗑️";
-        deleteBtn.onclick = () => showDeleteConfirmation(id, card, index, usuarios);
-
-        actions.append(editBtn, deleteBtn);
-        card.appendChild(actions);
+      const podeEditar = isGestaoProjeto || id === currentUserId;
+      if (podeEditar) {
+        editBtn.title = "Editar usuário";
+        editBtn.onclick = () => editUsuario(id, nome, perfil_id);
+      } else {
+        editBtn.disabled = true;
+        editBtn.title = "Sem permissão";
       }
 
+      // Botão de excluir
+      const deleteBtn = document.createElement("button");
+      deleteBtn.classList.add("delete-button");
+      deleteBtn.textContent = "🗑️";
+
+      const podeExcluir = isGestaoProjeto && id !== currentUserId;
+      if (podeExcluir) {
+        deleteBtn.title = "Excluir usuário";
+        deleteBtn.onclick = () => deleteUsuario(id, card);
+      } else {
+        deleteBtn.disabled = true;
+        deleteBtn.title = "Sem permissão";
+      }
+
+      actions.append(editBtn, deleteBtn);
+      card.appendChild(actions);
       adminList.appendChild(card);
     });
   }
 
-  function editUsuario(userId, index, usuarios) {
-    const currentName = usuarios[index].nome;
-    const newName = prompt("Editar nome do usuário:", currentName);
-    if (!newName?.trim()) return;
+  function editUsuario(id, nomeAtual, perfil_id) {
+    const novo = prompt("Novo nome:", nomeAtual);
+    if (!novo) return;
 
-    fetch(`${API_URL}/${userId}`, {
+    fetch(`${API_URL}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nome: newName.trim() })
+      body: JSON.stringify({ id, nome: novo, perfil_id })
     })
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        usuarios[index].nome = newName.trim();
-        renderUsuarios(usuarios);
+      .then(r => r.ok ? reloadList() : Promise.reject(r.status))
+      .catch(() => alert("Erro ao editar."));
+  }
+
+  function deleteUsuario(id, card) {
+    if (!confirm("Confirma exclusão?")) return;
+
+    fetch(`${API_URL}/${id}`, { method: 'DELETE' })
+      .then(r => {
+        if (r.ok) card.remove();
+        else return Promise.reject(r.status);
       })
-      .catch(err => {
-        console.error('Erro ao atualizar:', err);
-        alert('Falha ao atualizar usuário.');
+      .catch(() => alert("Erro ao excluir."));
+  }
+
+  function reloadList() {
+    if (adminList) adminList.textContent = "Atualizando...";
+    fetch(API_URL)
+      .then(res => res.ok ? res.json() : Promise.reject())
+      .then(renderUsuarios)
+      .catch(() => {
+        if (adminList) adminList.textContent = "Erro ao atualizar lista.";
       });
   }
-
-  function showDeleteConfirmation(userId, card, index, usuarios) {
-    const confirmBox = document.createElement("div");
-    confirmBox.className = "confirm-delete";
-    confirmBox.innerHTML = `
-      TEM CERTEZA QUE DESEJA EXCLUIR?
-      <button class="yes">SIM</button>
-      <button class="no">NÃO</button>
-    `;
-
-    const [yesBtn, noBtn] = confirmBox.querySelectorAll("button");
-
-    yesBtn.onclick = () => {
-      fetch(`${API_URL}/${userId}`, { method: 'DELETE' })
-        .then(response => {
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          usuarios.splice(index, 1);
-          renderUsuarios(usuarios);
-        })
-        .catch(err => {
-          console.error('Erro ao excluir:', err);
-          alert('Falha ao excluir usuário.');
-        });
-    };
-
-    noBtn.onclick = () => renderUsuarios(usuarios);
-
-    card.innerHTML = "";
-    card.appendChild(confirmBox);
-  }
-
-  loadAndRenderUsuarios();
 });
