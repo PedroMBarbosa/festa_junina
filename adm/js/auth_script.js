@@ -9,12 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
     mensagemErro.style.display = "block";
     mensagemErro.style.opacity = "1";
 
-    //ocultar após 4 segundos
+    // Ocultar após 4 segundos
     setTimeout(() => {
       mensagemErro.style.opacity = "0";
       setTimeout(() => {
         mensagemErro.style.display = "none";
-      }, 300); //tempo para transição de fade-out
+      }, 300); // Tempo para transição de fade-out
     }, 4000);
   }
 
@@ -44,7 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (usuario && usuario.cliente && usuario.cliente.email) {
         localStorage.setItem("usuarioLogado", JSON.stringify(usuario.cliente));
-        window.location.href = "./views/home.html";
+
+        // Redireciona dependendo do primeiro acesso
+        if (usuario.cliente.primeiroAcesso === true) {
+          window.location.href = "./views/criarsenha.html";
+        } else {
+          window.location.href = "./views/home.html";
+        }
       } else {
         mostrarErro("EMAIL OU SENHA INVÁLIDOS!");
       }

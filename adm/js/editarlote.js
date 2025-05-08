@@ -5,7 +5,7 @@ const url = 'http://10.90.146.37/api/api/Lote/CadastrarLote'
 
 let lotePronto = null;
 
-const usuario_id = 1
+const usuario_id = //FAZER O LOCALSTORAGE (ou outro tipo de armazenamento do id do usuario ao fazer login)  
 
 function salvarEdicao() {
   const valor = document.getElementById('valor').value;
@@ -40,7 +40,7 @@ function salvarEdicao() {
   // }
 
 
-  const lotePronto = {
+  lotePronto = {
     id: 0,
     qtd_total: parseInt(quantidade),
     data_inicio: new Date(abertura).toISOString(),
@@ -72,12 +72,12 @@ function salvar() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(lotePronto) // Enviando lotePronto diretamente
+    body: JSON.stringify(lotePronto)
   })
   .then(async response => {
     const text = await response.text();
     if (!response.ok) {
-      throw new Error(text); // Lança um erro se a resposta não for OK
+      throw new Error(text); 
     }
     const data = JSON.parse(text);
     console.log('Lote criado:', data);
