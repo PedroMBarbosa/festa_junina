@@ -6,39 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/acesso.css">
   <link rel="stylesheet" href="../css/controle.css">
+  <link rel="stylesheet" href="../css/cabecalho.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
-
-    <div class="banner-topo">
-      <img src="../images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo-senai">
-    </div>
+  <div class="top-bar">
+    <img src="../images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo" />
+   
+  </div>
   
-      
-    <div>
-      <a href="../views/perfil.html" class="icone-perfil">
-      <img src="../images/icone-utilisateur.png" class="iconeperfil" alt="Ir para Perfil" />
-    </div>
-  
-    <div class="cabecalho-lotes">
-      <a href="../views/home.html" class="icone-voltar">
-        <button class="homeicone">Início |</button>
+  <!-- Faixa vermelha: menu centralizado -->
+  <header class="navbar">
+    <nav>
+      <a href="../views/home.html">Início</a> |
+      <a href="../views/lotes.html">Gerenciar Lotes</a> |
+      <a href="../views/gerenciamento.html">Gerenciar Festa</a> |
+      <a href="../views/baixa.html">Gerenciar Pagamentos</a> |
+      <a href="../gerenciamento/cadastroadm.html">Cadastro</a>
+      <a href="../views/perfil.html">
+        <img src="../images/icon.png" alt="Perfil" class="perfil-icon" />
       </a>
-      <a href="COLOCA O LINK JOAQUIM" class="gerencialote">
-        <button class="gerenciarlotes">Gerenciar Lotes |</button>
-      </a>
-      <a href="../views/gerenciamento.html" class="voltar-lotes">
-        <button class="gerenciarfesta">Gerenciar Festa |</button>
-      </a>
-      <a href="COLOCA O LINK JOAQUIM" class="gerenciapagamento">
-        <button class="gerenciarpagamentos">Gerenciar Pagamentos |</button>
-      </a>
-      <a href="COLOCA O LINK JOAQUIM" class="cadastro">
-        <button class="cadastrar">Cadastro </button>
-      </a>
-    </div>
-  
+    </nav>
+  </header>
   <main class="conteudo">
     <div class="grafico-container">
       <canvas class="graficopizza" id="graficoPizza" width="700" height="700"></canvas>
