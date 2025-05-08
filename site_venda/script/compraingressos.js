@@ -34,9 +34,9 @@ function carregarLoteAtivo() {
                 ingressosRestantes = loteAtivo.qtd_total || 0;
                 atualizarIngressosRestantes();
                 
-                atualizarPrecosFront();
-                atualizarListaCarrinho();
-                atualizarTotal();
+                atualizarPrecosFront();  // Atualiza os preços na interface
+                atualizarListaCarrinho();  // Recarrega a lista de itens no carrinho com os novos preços
+                atualizarTotal();  // Atualiza o total de preços no carrinho
             } else {
                 loteElement.textContent = 'Nenhum lote ativo no momento';
                 ingressosRestantesElement.textContent = 'Nenhum ingresso disponível';
@@ -46,6 +46,22 @@ function carregarLoteAtivo() {
             console.error('Erro ao carregar lotes:', error);
         });
 }
+
+// Atualizar o lote periodicamente
+function atualizarLotePeriodicamente() {
+    setInterval(() => {
+        carregarLoteAtivo();  // Recarrega o lote ativo
+        // Aqui podemos chamar funções para atualizar o carrinho ou recalcular os totais conforme necessário
+    }, 10);  // Atualiza a cada 30 segundos
+}
+
+// Inicializa a página e começa a atualização periódica
+window.onload = function() {
+    carregarLoteAtivo();
+    atualizarLotePeriodicamente();  // Inicia a atualização periódica do lote ativo
+    adicionarCarrinho();  // Adiciona os itens do carrinho
+};
+
 
 // Atualizar o lote periodicamente
 function atualizarLotePeriodicamente() {
