@@ -42,14 +42,14 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Resposta da API de login:", usuario);
 
       if (usuario && usuario.cliente) {
-        // Extrai apenas id e perfil_id para verificação futura
-        const { id, perfil_id } = usuario.cliente;
-        localStorage.setItem(
-          "usuarioLogado",
-          JSON.stringify({ id, perfil_id })
-        );
+        const { id, perfil_id, nome, email } = usuario.cliente;
 
-        // Redireciona conforme necessário
+        // Armazena dados no localStorage
+        localStorage.setItem("usuarioLogado", JSON.stringify({ id, perfil_id }));
+        localStorage.setItem("nomeUsuario", nome.trim().toLowerCase());
+        localStorage.setItem("emailUsuario", email.trim().toLowerCase());
+
+        // Redireciona
         window.location.href = "./views/home.html";
       } else {
         mostrarErro("Dados de usuário inválidos.");
