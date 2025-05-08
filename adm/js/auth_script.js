@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
       mensagemErro.style.opacity = "0";
       setTimeout(() => {
         mensagemErro.style.display = "none";
-      }, 300); // Tempo para transição de fade-out
+      }, 300);
     }, 4000);
   }
 
@@ -27,9 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch("http://10.90.146.37/api/api/Usuario/LoginUser", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, senha }),
       });
 
@@ -41,18 +39,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const usuario = await response.json();
+      console.log("Resposta da API de login:", usuario);
 
-      if (usuario && usuario.cliente && usuario.cliente.email) {
-        localStorage.setItem("usuarioLogado", JSON.stringify(usuario.cliente));
+      if (usuario && usuario.cliente) {
+        // Extrai apenas id e perfil_id para verificação futura
+        const { id, perfil_id } = usuario.cliente;
+        localStorage.setItem(
+          "usuarioLogado",
+          JSON.stringify({ id, perfil_id })
+        );
 
-        // Redireciona dependendo do primeiro acesso
-        if (usuario.cliente.primeiroAcesso === true) {
-          window.location.href = "./views/criarsenha.html";
-        } else {
-          window.location.href = "./views/home.html";
-        }
+        // Redireciona conforme necessário
+        window.location.href = "./views/home.html";
       } else {
-        mostrarErro("EMAIL OU SENHA INVÁLIDOS!");
+        mostrarErro("Dados de usuário inválidos.");
       }
     } catch (error) {
       console.error("Erro ao fazer login:", error);
