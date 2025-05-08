@@ -20,8 +20,13 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+  
 }
-
+.logo-senai{
+  width: 500px;
+  height: 120px;
+  margin: center;
+}
 .logo {
   height: 60px;
   margin-right: 20px;
@@ -34,6 +39,63 @@ header {
   background-color: white;
   padding: 10px 20px;
   border-radius: 10px;
+}
+.icone-voltar{
+  height: 20px;
+}
+.homeicone{
+  height: 25px;
+  position: absolute;
+  left: 500px;
+  top: 165px;
+  border: none;
+  background-color: #800000;
+  color: white;
+  font-size: 25px;
+}
+.gerenciarlotes{
+  height: 25px;
+  position: absolute;
+  left: 590px;
+  top: 165px;
+  border: none;
+  background-color: #800000;
+  color: white;
+  font-size: 25px;
+}
+.gerenciarfesta{
+  height: 25px;
+  position: absolute;
+  left: 800px;
+  top: 165px;
+  border: none;
+  background-color: #800000;
+  color: white;
+  font-size: 25px;
+}
+.gerenciarpagamentos{
+  height: 25px;
+  position: absolute;
+  left: 1000px;
+  top: 165px;
+  border: none;
+  background-color: #800000;
+  color: white;
+  font-size: 25px;
+}
+.cadastrar{
+  height: 25px;
+  position: absolute;
+  left: 1280px;
+  top: 165px;
+  border: none;
+  background-color: #800000;
+  color: white;
+  font-size: 25px;
+}
+.cabecalho-lotes{
+  background-color: #800000;
+  height: 80px;
 }
 
 .menu {
@@ -72,9 +134,15 @@ header {
   font-size: 1.3em;
   font-weight: bold;
 }
-.perfil-icon {
-  font-size: 1.5em;
+.icone-perfil {
+  position: absolute;
+  top: 20px;
+  left: 1800px;
  
+}
+.iconeperfil{
+  height: 50px;
+  margin-top: 15px;
 }
 
 .dashboard {

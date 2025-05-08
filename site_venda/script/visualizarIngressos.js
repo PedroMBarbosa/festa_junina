@@ -1,28 +1,28 @@
 async function visualizarIngresso() {
-    try {
-        const idLogado = localStorage.getItem("usuarioId");
+  try {
+      const idLogado = localStorage.getItem("clienteId");
 
-        const urlIngressos = `http://10.90.146.37/api/api/Ingresso/ConsultarIngresso/${idLogado}`;
-        const urlUsuarios = `http://10.90.146.37/api/api/Usuario`;
-        const urlLotes = `http://10.90.146.37/api/api/Lote`;
+      const urlIngressos = `http://10.90.146.37/api/api/Ingresso/ConsultarIngresso/${idLogado}`;
+      const urlUsuarios = `http://10.90.146.37/api/api/Usuario`;
+      const urlLotes = `http://10.90.146.37/api/api/Lote`;
 
-        // Faz as duas requisições em paralelo
-        const [resIngressos, resUsuarios, resLotes] = await Promise.all([
-            fetch(urlIngressos),
-            fetch(urlUsuarios),
-            fetch(urlLotes)
-        ]);
+      // Faz as duas requisições em paralelo
+      const [resIngressos, resUsuarios, resLotes] = await Promise.all([
+          fetch(urlIngressos),
+          fetch(urlUsuarios),
+          fetch(urlLotes)
+      ]);
 
-        const ingressos = await resIngressos.json();
-        const usuarios = await resUsuarios.json();
-        const lotes = await resLotes.json();
+      const ingressos = await resIngressos.json();
+      const usuarios = await resUsuarios.json();
+      const lotes = await resLotes.json();
 
-        if (resIngressos.ok && resUsuarios.ok) {
-            console.log("Ingressos:", ingressos);
-            console.log("Usuários:", usuarios);
-            console.log("Usuários:", lotes);
+      if (resIngressos.ok && resUsuarios.ok) {
+          console.log("Ingressos:", ingressos);
+          console.log("Usuários:", usuarios);
+          console.log("Usuários:", lotes);
 
-            const container = document.querySelector(".container");
+          const container = document.querySelector(".container");
             container.innerHTML = ""; // limpa os cards antigos
 
             ingressos.forEach(ingresso => {
@@ -81,7 +81,7 @@ async function visualizarIngresso() {
                         <div class="card-topo">Ingressos Adquiridos</div>
                         <div class="card-conteudo">
                             <p>PDV: <span id="nome">${nomeUsuario}</span></p>
-                            <img src="https://media.licdn.com/dms/image/v2/D5603AQH9C63cE7LO0A/profile-displayphoto-shrink_800_800/B56ZUkICDuGQAg-/0/1740067841523?e=1752105600&v=beta&t=wRpF51VnKY2-y-ia2--CPYNIj8wVYOb2mm9F-HF-C3A" alt="QR Code" id="qrcode">
+                            <img src="../img/a64784b6-eb50-4131-a1af-2694027ee471.png" alt="QR Code" id="qrcode">
                             <p class="status ${statusClass}">Pedido ${tipo}</p>
                             <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
                             <span id="valor">R$${lote.valor_un.toFixed(2) || "10,00"}</span></p>

@@ -135,7 +135,7 @@ function montarPedido(quantidadeTipos) {
 
     const emailLogado = localStorage.getItem("usuarioEmail");
     const senhaLogado = localStorage.getItem("usuarioSenha");
-    const idLogado = localStorage.getItem("usuarioId");
+    const idLogado = localStorage.getItem("clienteId");
     console.log("id: " + idLogado, " - Email: " + emailLogado);
 
     const tiposId = [5, 2, 1, 4, 3];

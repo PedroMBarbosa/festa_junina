@@ -23,7 +23,7 @@
   
   /* Navegação */
   nav {
-    background-color: #a80000;
+    background-color: #97080A;
     color: white;
     display: flex;
     align-items: center;
@@ -33,7 +33,7 @@
   }
   
   .teste {
-    color: #D32F30;
+    color: #97080A;
     text-decoration: none;
     font-weight: bold;
     margin-left: 90px;
@@ -156,7 +156,7 @@
       height: 40px;
     }
     nav {
-      background-color: #a80000;
+      background-color: #97080A;
       color: white;
       display: flex;
       align-items: center;
@@ -166,7 +166,7 @@
       width: 100%;
     }
     .teste {
-      color: #D32F30;
+      color: #97080A;
       text-decoration: none;
       font-weight: bold;
       
