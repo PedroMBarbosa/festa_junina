@@ -155,3 +155,8 @@ h2 .icone-titulo {
     height: auto;
     margin-right: 10px; /* Adiciona um espaço entre a seta e o texto */
 }
+@media(max-width:600px){
+    header{
+        display: flex;
+    }
+}
