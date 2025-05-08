@@ -181,6 +181,62 @@ function atualizarTotal() {
     document.getElementById('total').textContent = total.toFixed(2);
 }
 
+function montarPedido(quantidadeTipos) {
+
+    quantidadeTipos = qtdTipos;
+
+    const urlPedido = 'http://10.90.146.37/api/api/Ingresso/ReservaIngressos';
+
+    const emailLogado = localStorage.getItem("usuarioEmail");
+    const senhaLogado = localStorage.getItem("usuarioSenha");
+    const idLogado = localStorage.getItem("usuarioId");
+    console.log("id: " + idLogado, " - Email: " + emailLogado);
+
+    const tiposId = [5, 2, 1, 4, 3];
+
+    const pedidos = [];
+
+    quantidadeTipos.forEach((quantidade, index) => {
+        const tipoId = tiposId[index];
+
+        for (let i = 0; i < quantidade; i++)
+        {
+            pedidos.push({
+                id: 0,
+                qrcode: "string",
+                data: "2025-05-06T11:32:12.597Z",
+                tipo_ingresso_id: tipoId,
+                usuario_id: 1, // ou quem estiver logado
+                lote_id: 1,
+                status_id: 0,
+                cliente_id: idLogado, // ✅ Vírgula adicionada aqui
+                guid: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            });
+        }
+    });
+
+    console.log("Pedido montado:", pedidos);
+
+    fetch(urlPedido, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pedidos)
+      })
+        .then(response => {
+            const statusOk = response.ok;
+            return response.json().then(data => ({ data, statusOk }));
+      })
+      .then(({ data, statusOk }) => {
+        console.log(data);
+        if (statusOk) {
+            alert("Usuário registrado com sucesso!");
+            console.log("Novo usuário:", data);
+        }
+    }); // ✅ Fechando corretamente com ponto e vírgula
+}
+
 // Inicializa a página e começa a atualização periódica
 window.onload = function() {
     carregarLoteAtivo();
