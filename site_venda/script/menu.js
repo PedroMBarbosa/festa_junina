@@ -1,13 +1,19 @@
 const menu = document.getElementById('menu');
-const opcoes = document.getElementById('menu-options');
+const opcoes = document.getElementById('menu-options2');
 const mediaQuery = window.matchMedia('(max-width: 430px)');
 
 function abre_menu() {
     opcoes.style.display = 'flex';
+    Array.from(opcoes.children).forEach(child => {
+        child.style.display = 'flex';
+    });
 }
 
 function fecha_menu() {
     opcoes.style.display = 'none';
+    Array.from(opcoes.children).forEach(child => {
+        child.style.display = 'none';
+    });
 }
 
 function toggle_menu() {
@@ -26,11 +32,6 @@ menu.addEventListener('click', toggle_menu);
 
 // Ouvinte para mudanças na tela (por exemplo, redimensionamento)
 mediaQuery.addEventListener('change', function (e) {
-    if (!e.matches) {
-        // Se a tela ficou maior que 430px, restaurar o estilo padrão
-        opcoes.style.display = 'flex'; // ou '' se quiser que o CSS cuide
-    } else {
-        // Se a tela ficou menor que 430px, esconder o menu por padrão
-        opcoes.style.display = 'none';
-    }
+    // Quando a tela muda de tamanho, sempre fechamos o menu visualmente.
+    fecha_menu();
 });

@@ -16,39 +16,6 @@ body {
 /* ============================= */
 
 /* Container do botão de menu */
-.icone_menu{
-  width: 40px;  
-  height: 40px;
-  margin-top: 20px;
-  margin-left: 20px;
-  display: none;
-}
-.menu-options{
-  color: black;
-  border-radius: 0px 0px 10px 10px;
-  display: flex;
-}
-.menu-options a{
-  color: rgb(0, 0, 0);
-  font-size: 20px;
-  margin-left: 20px;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 15px;
-}
-.menu-options a:hover{
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-  background-color: #a80000;
-}
-#menu-options {
-  display: flex;
-}
-#menu-options.ativo {
-  display: none;
-}
-
-
 /* Keyframes das animações utilizadas */
 @keyframes navLinkFade {
   from {
@@ -286,38 +253,6 @@ padding: 20px;
     font-size: 35px;
   }
   @media(max-width: 430px){
-    .icone_menu{
-      width: 40px;  
-      height: 40px;
-      margin-top: 20px;
-      margin-left: 20px;
-      display: inline;
-    }
-    .menu-options{
-      margin-top: 24px;
-      color: black;
-      border-radius: 0px 0px 10px 10px;
-      background-color: rgb(255, 255, 255);
-    }
-    .menu-options a{
-      color: rgb(0, 0, 0);
-      font-size: 15px;
-      margin-left: 20px;
-      padding: 10px;
-      border-radius: 10px;
-      display: flex;
-    }
-    .menu-options a:hover{
-      text-decoration: none;
-      color: rgb(255, 255, 255);
-      background-color: #a80000;
-    }
-    #menu-options {
-      display: none;
-    }
-    #menu-options.ativo {
-      display: flex;
-    }
     .btn-cadastro {
       background: none;
       border: none;

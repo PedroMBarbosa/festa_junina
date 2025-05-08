@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (estaLogado) {
         window.location.href = "../pag/perfil.html";
       } else {
-        window.location.href = "../html/cadastro.html";
+        window.location.href = "../pag/cadastro.html";
       }
     });
   }
