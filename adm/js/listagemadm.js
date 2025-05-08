@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const adminList = document.querySelector(".admin-list");
   const addButton = document.querySelector(".add-button");
   const API_URL = "http://10.90.146.37/api/api/Usuario";
+  const URL_EXCLUIR = "http://10.90.146.37/api/api/Usuario/ExcluirUsuario";
+  const URL_EDITAR = "http://10.90.146.37/api/api/Usuario/AtualizarPerfil";
 
   const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado")) || {};
   const currentUserId = Number(usuarioLogado.id);
@@ -98,36 +100,76 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-function editUsuario(id, nomeAtual, perfil_id) {
-  const novo = prompt("Novo nome:", nomeAtual);
-  if (!novo) return;
-
-  fetch(`${API_URL}/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ id, nome: novo, perfil_id })
-  })
-    .then(r => {
-      if (!r.ok) throw new Error(`Erro ${r.status}`);
-      return r.text(); // Use r.json() se a API retornar JSON
-    })
-    .then(res => {
-      console.log("Resposta da edição:", res);
-      alert("Usuário editado com sucesso!");
+  async function editUsuario(id, nomeAtual) {
+    try {
+      // 1️⃣ Busca todos os usuários
+      const response = await fetch(API_URL);
+  
+      if (!response.ok) {
+        throw new Error(`Erro ao buscar usuários: ${response.status}`);
+      }
+  
+      // 2️⃣ Converte para JSON e encontra o usuário desejado
+      const usuarios = await response.json();
+      const usuarioAtual = usuarios.find(u => u.id === id);
+  
+      if (!usuarioAtual) {
+        alert("Usuário não encontrado.");
+        return;
+      }
+  
+      // 3️⃣ Pergunta o novo nome ao usuário
+      const novoNome = prompt("Novo nome:", nomeAtual);
+      if (!novoNome || novoNome === nomeAtual) return;
+  
+      // 4️⃣ Monta o objeto JSON com todos os campos
+      const usuarioEditado = {
+        id: usuarioAtual.id,
+        nome: novoNome,
+        caminho_foto: usuarioAtual.caminho_foto,
+        email: usuarioAtual.email,
+        senha: usuarioAtual.senha,
+        telefone: usuarioAtual.telefone,
+        perfil_id: usuarioAtual.perfil_id
+      };
+  
+      // 5️⃣ Envia para o endpoint de atualização
+      console.log("🔄 JSON Enviado para Atualização:", usuarioEditado);
+  
+      const updateResponse = await fetch(`${URL_EDITAR}/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(usuarioEditado)
+      });
+  
+      if (!updateResponse.ok) {
+        // ❌ Em caso de erro, loga o JSON que foi enviado
+        console.error("❌ Erro ao atualizar usuário:", updateResponse.status);
+        console.log("📌 JSON que causou o erro:", usuarioEditado);
+        throw new Error(`Erro ao atualizar usuário: ${updateResponse.status}`);
+      }
+  
+      // 6️⃣ Converte a resposta para JSON e loga no console
+      const responseJson = await updateResponse.json();
+      console.log("✅ Resposta da API:", responseJson);
+  
+      // 7️⃣ Sucesso
+      alert("Nome do usuário atualizado com sucesso!");
       reloadList(); // Recarrega a lista após edição
-    })
-    .catch(err => {
-      console.error("Erro ao editar:", err);
-      alert("Erro ao editar o usuário.");
-    });
-}
+    } catch (err) {
+      console.error("Erro ao editar usuário:", err.message);
+      alert("Erro ao editar o nome do usuário.");
+    }
+  }
+  
+  
 
 function deleteUsuario(id, card) {
   if (!confirm("Confirma exclusão?")) return;
 
-  fetch(`${API_URL}/${id}`, {
+  fetch(`${URL_EXCLUIR}/${id}`, {
     method: 'DELETE'
   })
     .then(r => {
