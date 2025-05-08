@@ -1,61 +1,64 @@
 let loteParaExcluir = null;
 let idParaExcluir = null;
+const BASE_URL = "http://10.90.146.37/api/Lote";
 
 function abrirModal(botao) {
-  const modal = document.getElementById("modal");
-  modal.style.display = "flex";
+  document.getElementById("modal").style.display = "flex";
   loteParaExcluir = botao.closest(".lote");
-  idParaExcluir = botao.getAttribute("data-id");
+  idParaExcluir = botao.dataset.id;
 }
 
 function fecharModal() {
-  const modal = document.getElementById("modal");
-  modal.style.display = "none";
+  document.getElementById("modal").style.display = "none";
   loteParaExcluir = null;
   idParaExcluir = null;
 }
 
 function confirmarExclusao() {
-  if (idParaExcluir) {
-    fetch(`http://10.90.146.37/api/api/Lote/ExcluirLote/${idParaExcluir}`, {
-      method: "DELETE"
+  if (!idParaExcluir) return;
+
+  fetch(`${BASE_URL}/DeletarLote/${idParaExcluir}`, { method: "DELETE" })
+    .then(res => {
+      if (!res.ok) throw new Error();
+      fecharModal();
+      carregarLotes();
     })
-      .then(response => {
-        if (!response.ok) throw new Error("Erro ao excluir lote.");
-        alert("Lote excluído com sucesso!");
-        carregarLotes(); // atualiza a lista
-        fecharModal();
-      })
-      .catch(error => {
-        console.error("Erro ao excluir lote:", error);
-        alert("Erro ao excluir lote.");
-      });
-  }
+    .catch(() => alert("Falha ao excluir lote."));
 }
 
-window.addEventListener("click", function (event) {
-  const modal = document.getElementById("modal");
-  if (event.target === modal) {
-    fecharModal();
-  }
+window.addEventListener("click", e => {
+  if (e.target.id === "modal") fecharModal();
 });
 
 function carregarLotes() {
-  fetch("http://10.90.146.37/api/api/Lote")
-    .then(res => res.json())
+  fetch(BASE_URL)
+    .then(res => {
+      if (!res.ok) throw new Error();
+      return res.json();
+    })
     .then(lotes => {
       const container = document.getElementById("container-lotes");
-      container.innerHTML = "";
+      container.innerHTML = "";              // limpa tudo
+      if (lotes.length === 0) {
+        // nenhum lote cadastrado ainda → nada é renderizado
+        return;
+      }
 
       lotes.forEach(lote => {
         const ativo = lote.ativo === 1;
-        const elemento = `
+        const html = `
           <div class="lote ${ativo ? "ativo" : "inativo"}">
-            <strong>${lote.nome || "LOTE SEM NOME"}</strong>
+            <h2>${lote.nome || "LOTE SEM NOME"}</h2>
             <div class="acoes">
-              <button class="editar">EDITAR</button>
-              <button class="excluir" onclick="abrirModal(this)" data-id="${lote.id}">EXCLUIR</button>
-              <p class="info">${ativo ? "Restam 50 ingressos para o fim do lote" : "LOTE NÃO INICIADO"}</p>
+              <a href="../views/editarlote.html?id=${lote.id}" class="editar">EDITAR</a>
+              <button class="excluir" onclick="abrirModal(this)" data-id="${lote.id}">
+                EXCLUIR
+              </button>
+              <p class="info">
+                ${ativo
+                  ? `Restam ${lote.qtd_total - lote.qtd_vendida} ingressos`
+                  : "LOTE NÃO INICIADO"}
+              </p>
               <p class="status-text">STATUS: ${ativo ? "ATIVADO" : "DESATIVADO"}</p>
               <label class="switch">
                 <input type="checkbox" ${ativo ? "checked" : ""}>
@@ -64,127 +67,59 @@ function carregarLotes() {
             </div>
           </div>
         `;
-        container.insertAdjacentHTML("beforeend", elemento);
+        container.insertAdjacentHTML("beforeend", html);
       });
 
       ativarSwitches();
     })
-    .catch(erro => {
-      console.error("Erro ao carregar lotes:", erro);
-    });
+    .catch(console.error);
 }
 
 function ativarSwitches() {
-  const switches = document.querySelectorAll(".switch input[type='checkbox']");
+  const checkboxes = document.querySelectorAll(".switch input");
+  checkboxes.forEach(cb =>
+    cb.addEventListener("change", () => {
+      if (!cb.checked) return (cb.checked = true);
 
-  switches.forEach((checkbox) => {
-    checkbox.addEventListener("change", () => {
-      const loteAtivado = checkbox.checked;
-      const loteAtual = checkbox.closest(".lote");
+      // desliga todos os outros
+      checkboxes.forEach(other => {
+        if (other !== cb) {
+          other.checked = false;
+          const loteEl = other.closest(".lote");
+          loteEl.classList.replace("ativo", "inativo");
+          loteEl.querySelector(".status-text").textContent = "STATUS: DESATIVADO";
+          loteEl.querySelector(".info").textContent = "LOTE NÃO INICIADO";
+          atualizarStatus(loteEl.querySelector("button.excluir").dataset.id, 0);
+        }
+      });
 
-      if (loteAtivado) {
-        switches.forEach((outroCheckbox) => {
-          const outroLote = outroCheckbox.closest(".lote");
-
-          if (outroCheckbox !== checkbox) {
-            outroCheckbox.checked = false;
-            outroLote.classList.remove("ativo");
-            outroLote.classList.add("inativo");
-            outroLote.querySelector(".status-text").textContent = "STATUS: DESATIVADO";
-            outroLote.querySelector(".info").textContent = "LOTE NÃO INICIADO";
-
-            const id = outroLote.querySelector("button.excluir").getAttribute("data-id");
-            atualizarStatus(id, false);
-          }
-        });
-
-        loteAtual.classList.remove("inativo");
-        loteAtual.classList.add("ativo");
-        loteAtual.querySelector(".status-text").textContent = "STATUS: ATIVADO";
-        loteAtual.querySelector(".info").textContent = "Restam 50 ingressos para o fim do lote";
-
-        const id = loteAtual.querySelector("button.excluir").getAttribute("data-id");
-        atualizarStatus(id, true);
-      } else {
-        checkbox.checked = true;
-      }
-    });
-  });
+      // liga este
+      const atual = cb.closest(".lote");
+      atual.classList.replace("inativo", "ativo");
+      atual.querySelector(".status-text").textContent = "STATUS: ATIVADO";
+      atual.querySelector(".info").textContent = `Restam ${50} ingressos`; // ou use qtd real
+      atualizarStatus(atual.querySelector("button.excluir").dataset.id, 1);
+    })
+  );
 }
 
-function atualizarStatus(id, ativar) {
-  fetch(`http://10.90.146.37/api/api/Lote/AtivarDesativar/${id}?ativo=${ativar ? 1 : 0}`, {
-    method: "PUT"
-  })
+function atualizarStatus(id, ativo) {
+  fetch(`${BASE_URL}/AtivarDesativar/${id}?ativo=${ativo}`, { method: "PUT" })
     .then(res => {
-      if (!res.ok) throw new Error("Erro ao atualizar status do lote");
-      return res.json();
+      if (!res.ok) throw new Error();
     })
-    .then(() => {
-      console.log(`Lote ${id} ${ativar ? "ativado" : "desativado"}`);
-    })
-    .catch(err => {
-      console.error("Erro ao alterar status do lote:", err);
-    });
-}
-
-function adicionarLote() {
-  const valor = document.getElementById('valor').value;
-  const abertura = document.getElementById('abertura').value;
-  const fechamento = document.getElementById('fechamento').value;
-  const quantidade = document.getElementById('quantidade').value;
-
-  if (!valor || !abertura || !fechamento || !quantidade) {
-    alert("Preencha todos os campos!");
-    return;
-  }
-
-  const valorNumerico = parseFloat(valor.replace("R$", "").replace(",", "."));
-  const valorInfantil = (valorNumerico * 0.5).toFixed(2);
-
-  const payload = {
-    id: 0,
-    qtd_total: parseInt(quantidade),
-    data_inicio: new Date(abertura).toISOString(),
-    data_termino: new Date(fechamento).toISOString(),
-    valor_un: valorNumerico,
-    usuario_id: 1,
-    ativo: 0
-  };
-
-  fetch("http://10.90.146.37/api/api/Lote/CadastrarLote", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload)
-  })
-    .then(response => {
-      if (!response.ok) throw new Error("Erro ao cadastrar lote.");
-      return response.json();
-    })
-    .then(data => {
-      alert("Lote cadastrado com sucesso!");
-      carregarLotes();
-
-      document.getElementById("valor").value = "";
-      document.getElementById("abertura").value = "";
-      document.getElementById("fechamento").value = "";
-      document.getElementById("quantidade").value = "";
-    })
-    .catch(error => {
-      console.error(error);
-      alert("Falha ao cadastrar o lote.");
-    });
-}
-
-function cancelar() {
-  document.getElementById("valor").value = "";
-  document.getElementById("abertura").value = "";
-  document.getElementById("fechamento").value = "";
-  document.getElementById("quantidade").value = "";
+    .catch(console.error);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   carregarLotes();
+
+  // Se veio um parâmetro ?created=true após redirecionar da página de cadastro,
+  // podemos recarregar automaticamente:
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("created") === "true") {
+    carregarLotes();
+    // opcional: limpar o parâmetro da URL para não recarregar de novo
+    history.replaceState(null, "", window.location.pathname);
+  }
 });
