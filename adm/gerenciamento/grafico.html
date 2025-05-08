@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../css/grafico.css" />
+  <link rel="stylesheet" href="../css/cabecalho.css" />
+  <title>Gráfico de Ingressos</title>
+</head>
+<body>
+
+  <!-- Logo do SENAI no topo -->
+  <div class="top-bar">
+    <img src="../images/SENAI_São_Paulo_logo.png" alt="Logo SENAI" class="logo" />
+  </div>
+
+  <!-- Cabeçalho de navegação -->
+  <header class="navbar">
+    <nav>
+      <a href="../views/home.html">Início</a> |
+      <a href="../views/lotes.html">Gerenciar Lotes</a> |
+      <a href="../views/gerenciamento.html">Gerenciar Festa</a> |
+      <a href="../views/baixa.html">Gerenciar Pagamentos</a> |
+      <a href="../criarsenha.html">Cadastro</a>
+      <a href="../views/perfil.html">
+        <img src="../images/icon.png" alt="Perfil" class="perfil-icon" />
+      </a>
+    </nav>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main class="grafico-container">
+    <div class="controle-superior">
+      <button class="btn-vendidos">
+        VENDIDOS <img src="../images/calendar.png" alt="Calendário" class="icone-calendario" />
+      </button>
+
+      <div class="seletor-data">
+        <label for="dataInput">Date</label>
+        <input type="date" id="dataInput" />
+      </div>
+
+      <h2 class="titulo-grafico">GRÁFICOS DOS INGRESSOS</h2>
+    </div>
+
+    <div class="conteudo-ingressos">
+      <div class="resumo-ingressos">
+        Alunos: 90 ingressos<br />
+        Familiares: 50 ingressos<br />
+        Infantil: 30 ingressos<br />
+        Colaboradores: 50 ingressos<br />
+        Comunidade: 100 ingressos<br /><br />
+        <strong>TOTAL: 320 ingressos</strong>
+      </div>
+
+      <canvas id="graficoPizza" width="300" height="300"></canvas>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../js/grafico.js"></script>
+
+</body>
+</html>
