@@ -1,27 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
   const adminList = document.querySelector(".admin-list");
   const addButton = document.querySelector(".add-button");
+  const API_URL   = "http://10.90.146.37/api/api/Usuario";
+  const usuario   = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-  const API_URL = "http://10.90.146.37/api/api/Usuario";
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+  // somente perfil 1 pode cadastrar novo administrador
+  const isAdmin = usuario && Number(usuario.perfil_id) === 1;
+  console.log("DEBUG usuario:", usuario, "→ isAdmin:", isAdmin);
 
-  // 🔐 Verifica se está logado e se é administrador
-  if (!usuario || usuario.perfil_id !== 1) {
-    localStorage.removeItem("usuarioLogado");
-    alert("Acesso negado: você não é administrador.");
-    window.location.href = "../views/gerenciamento.html";
-    return;
+  // ocultar botão para quem não é admin; para admin, mantém estilo original
+  if (addButton && !isAdmin) {
+    addButton.style.display = "none";
+  }
+  // registra ação de clique só se for admin
+  if (addButton && isAdmin) {
+    addButton.addEventListener("click", () => {
+      window.location.href = "../gerenciamento/cadastroadm.html";
+    });
+    console.log("DEBUG listener de adicionar ADM registrado");
   }
 
-  // ✅ Acesso à tela só se for Roberto
-  const nomeNormalizado = usuario.nome?.toLowerCase().trim();
-  if (!nomeNormalizado.includes("roberto")) {
-    alert("Acesso restrito apenas ao administrador Roberto.");
-    window.location.href = "views/gerenciamento.html";
-    return;
-  }
-
-  // ✅ Se chegou até aqui, é o Roberto -> pode ver todos os usuários
   function loadAndRenderUsuarios() {
     fetch(API_URL)
       .then(response => {
@@ -30,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then(data => {
         console.log("Usuários carregados da API:", data);
-        renderUsuarios(data); // Renderiza TODOS os usuários
+        renderUsuarios(data);
       })
       .catch(error => {
         console.error("Erro ao buscar usuários:", error);
@@ -47,31 +45,56 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // DEBUG: listar todos os usuários recebidos
+    console.log("DEBUG — todos os usuários vindos da API:");
+    usuarios.forEach(u => console.log(`→ id=${u.id}, nome=${u.nome}, perfil_id=${u.perfil_id}`));
+
     usuarios.forEach(({ id, nome, perfil_id }, index) => {
       const card = document.createElement("div");
       card.className = "admin-card";
 
       const info = document.createElement("div");
       info.className = "admin-info";
+      
+      let label;
+      switch (Number(perfil_id)) {
+        case 1:
+          label = '[Admin]';
+          break;
+        case 2:
+          label = '[Usuário]';
+          break;
+        case 3:
+          label = '[Portaria]';
+          break;
+        default:
+          label = `[Perfil ${perfil_id}]`;
+      }
+
       info.innerHTML = `
         <span>👤</span>
         <span>${nome}</span>
-        ${perfil_id === 1 ? '<span style="color: red; font-weight: bold;">[Admin]</span>' : ''}
+        <span style="color: red; font-weight: bold;">${label}</span>
       `;
+      card.appendChild(info);
 
-      const actions = document.createElement("div");
-      actions.className = "admin-actions";
+      // somente perfil 1 pode editar/excluir
+      if (isAdmin) {
+        const actions = document.createElement("div");
+        actions.className = "admin-actions";
 
-      const editBtn = document.createElement("button");
-      editBtn.innerText = "✏️";
-      editBtn.onclick = () => editUsuario(id, index, usuarios);
+        const editBtn = document.createElement("button");
+        editBtn.innerText = "✏️";
+        editBtn.onclick = () => editUsuario(id, index, usuarios);
 
-      const deleteBtn = document.createElement("button");
-      deleteBtn.innerText = "🗑️";
-      deleteBtn.onclick = () => showDeleteConfirmation(id, card, index, usuarios);
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "🗑️";
+        deleteBtn.onclick = () => showDeleteConfirmation(id, card, index, usuarios);
 
-      actions.append(editBtn, deleteBtn);
-      card.append(info, actions);
+        actions.append(editBtn, deleteBtn);
+        card.appendChild(actions);
+      }
+
       adminList.appendChild(card);
     });
   }
@@ -79,22 +102,22 @@ document.addEventListener("DOMContentLoaded", () => {
   function editUsuario(userId, index, usuarios) {
     const currentName = usuarios[index].nome;
     const newName = prompt("Editar nome do usuário:", currentName);
-    if (newName && newName.trim()) {
-      fetch(`${API_URL}/${userId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome: newName.trim() })
+    if (!newName?.trim()) return;
+
+    fetch(`${API_URL}/${userId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome: newName.trim() })
+    })
+      .then(response => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        usuarios[index].nome = newName.trim();
+        renderUsuarios(usuarios);
       })
-        .then(response => {
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          usuarios[index].nome = newName.trim();
-          renderUsuarios(usuarios);
-        })
-        .catch(err => {
-          console.error('Erro ao atualizar:', err);
-          alert('Falha ao atualizar usuário.');
-        });
-    }
+      .catch(err => {
+        console.error('Erro ao atualizar:', err);
+        alert('Falha ao atualizar usuário.');
+      });
   }
 
   function showDeleteConfirmation(userId, card, index, usuarios) {
@@ -125,12 +148,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     card.innerHTML = "";
     card.appendChild(confirmBox);
-  }
-
-  if (addButton) {
-    addButton.addEventListener("click", () => {
-      window.location.href = "../gerenciamento/cadastroadm.html";
-    });
   }
 
   loadAndRenderUsuarios();
