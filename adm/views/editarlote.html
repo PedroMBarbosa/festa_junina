@@ -20,15 +20,12 @@
         <a href="../views/lotes.html">Gerenciar Lotes</a> |
         <a href="../views/gerenciamento.html">Gerenciar Festa</a> |
         <a href="../views/baixa.html">Gerenciar Pagamentos</a> |
-        <a href="../criarsenha.html">Cadastro</a>
+        <a href="../gerenciamento/cadastroadm.html">Cadastro</a>
         <a href="../views/perfil.html">
           <img src="../images/icon.png" alt="Perfil" class="perfil-icon" />
         </a>
       </nav>
     </header>
-    
-  
-
   <a href="../views/lotes.html" class="voltar-lotes">
     <img src="../images/seta.png" alt="Voltar" class="icone-voltar">
   </a>
@@ -71,6 +68,22 @@
     <div class="botoes">
         <button class="concluir" onclick="salvar()">SALVAR</button>
         <button class="cancelar" onclick="cancelar()">CANCELAR</button>
+      </div>
+    </div>
+
+    <div id="meuModal" class="modal">
+      <div class="modal-conteudo" id="modal">
+        <h2 class="letras">Lote criado!</h2>
+        <p class="letras">Seu lote foi criado e pode ser visto em outra aba.</p>
+        <button class="fechar" onclick="fecharmodal()">Ok</button>
+      </div>
+    </div>
+
+    <div id="modal-erro" class="modal" >
+      <div class="modal-conteudo" id="modalconteudoerro">
+        <h2 class="letras">Erro</h2>
+        <p id="mensagem-erro" class="letras">Algo deu errado.</p>
+        <button onclick="fecharModalErro()">Ok</button>
       </div>
     </div>
 

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Gerenciador de Lotes</title>
-  <link rel="stylesheet" href="../css/lotes.css">
-  <link rel="stylesheet" href="../css/cabecalho.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listagem dos Administradores</title>
+  <link rel="stylesheet" href="../css/listagemadm.css" />
+  <link rel="stylesheet" href="../css/cabecalho.css" />
 </head>
 <body>
   <div class="top-bar">
@@ -25,21 +26,12 @@
       </a>
     </nav>
   </header>
-  <div class="container">
-    <!-- link de criar lote redireciona para sua página de cadastro -->
-    <a href="../views/novolote.html" class="criar-lote">CRIAR NOVO LOTE</a>
-  
-    <!-- container vazio: só vai receber itens depois que você criar via API -->
-    <div id="container-lotes"></div>
-  </div>
-  <div class="card-lote" data-lote-id="123">
-    <!-- conteúdo do lote -->
-  </div>
-  
-  <script src="../js/lotes.js"></script>
-  
+  <main>
+    <h2>Listagem dos Administradores</h2>
+    <div class="admin-list"></div>
+    <button class="add-button">Cadastrar Novo Administrador</button>
+  </main>
 
-
->>>>>>> 674ed41708747aacc79d642609d2d160b64ae9b2
+  <script src="../js/listagemadm.js"></script>
 </body>
 </html>

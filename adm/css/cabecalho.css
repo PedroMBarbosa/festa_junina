@@ -15,12 +15,13 @@
 
 /* Ícone de perfil no canto direito */
 .perfil-icon {
-  font-size: 28px;
+  font-size: 20px;
   color: black;
   cursor: pointer;
   float: right;
   margin-top: -15px;
 }
+
 
 /* Barra de navegação vermelha com os links */
 .navbar {

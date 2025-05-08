@@ -47,27 +47,14 @@
       <input type="number" id="quantidade" placeholder="250">
 
       <div class="botoes">
-        <button class="concluir" onclick="concluir()">CONCLUIR</button>
+        <button class="concluir" onclick="concluir()">ADICIONAR</button>
         <button class="cancelar" onclick="cancelar()">CANCELAR</button>
       </div>
     </div>
-
-    <table class="tabela-lotes">
-      <thead>
-        <tr>
-          <th>Valor</th>
-          <th>Valor Infantil</th>
-          <th>Abertura</th>
-          <th>Fechamento</th>
-          <th>Quantidade</th>
-        </tr>
-      </thead>
-      <tbody id="tabela-corpo">
-        <!-- Itens adicionados aqui via JS -->
-      </tbody>
-    </table>
-
-    <button class="adicionar" onclick="adicionarLote()">ADICIONAR</button>
+    <div class="card-lote" data-lote-id="123">
+      <!-- conteúdo do lote -->
+    </div>
+    
   </main>
 
   <script src="../js/adicionarlote.js"></script>

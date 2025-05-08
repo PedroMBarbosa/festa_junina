@@ -1,88 +1,70 @@
-.grafico-container {
-    padding: 40px 20px;
-    max-width: 900px;
-    margin: auto;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
   
-  .controle-superior {
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  main {
+    padding: 30px;
+  }
+  
+  .botoes-topo {
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
     gap: 20px;
+    margin: 30px 0;
   }
   
-  .btn-vendidos {
-    background-color: #a00000;
+  .botoes-topo button {
+    padding: 10px 30px;
+    background-color: #990000;
     color: white;
-    font-weight: bold;
     border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 14px;
     cursor: pointer;
   }
   
-  .icone-calendario {
-    width: 20px;
-    height: 20px;
+  .botoes-topo button.ativo {
+    background-color: #660000;
   }
   
-  .seletor-data {
-    background-color: #ddd;
-    border-radius: 10px;
-    padding: 10px 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-  }
-  
-  .seletor-data::before {
-    content: "";
-    position: absolute;
-    left: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    border-right: 10px solid #ddd;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-  }
-  
-  #dataInput {
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .titulo-grafico {
-    background-color: #a00000;
-    color: white;
+  #filtroData {
     padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 1rem;
+    border-radius: 12px;
+    border: 1px solid #999;
+    font-size: 14px;
+    color: #333;
   }
   
-  .conteudo-ingressos {
+  .conteudo {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 40px;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
     flex-wrap: wrap;
-    gap: 30px;
   }
   
-  .resumo-ingressos {
-    background-color: #ccc;
+  .info-vendas {
+    background-color: #f1f1f1;
     padding: 20px;
     border-radius: 15px;
-    font-weight: bold;
     width: 250px;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  
+  .info-vendas strong {
+    font-weight: bold;
   }
   
   canvas {
-    max-width: 300px;
+    max-width: 500px;
   }
   

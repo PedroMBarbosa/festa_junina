@@ -20,7 +20,7 @@ header {
 
 /* Faixa Inferior: Barra vermelha com ícones */
 .bottom-bar {
-  background-color: #a80000;  /* Tom de vermelho conforme a identidade visual */
+  background-color: #97080A;  /* Tom de vermelho conforme a identidade visual */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -72,7 +72,7 @@ body {
 .main {
   width: 800px;
   height: 600px;
-  background: #a80000;
+  background: #97080A;
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 5px 20px 50px #000;
@@ -125,7 +125,7 @@ input {
   display: block;
   margin: 10px auto; /* Mantém as margens laterais e inferior inalteradas */
   margin-top: 2px;   /* Reduz o margin-top para subir o botão */
-  color: #a80000;
+  color: #97080A;
   background: #fefefe;
   font-size: 1em;
   font-weight: bold;
@@ -182,7 +182,7 @@ input {
   display: block;
   margin: 10px auto;
   color: hsl(0, 0%, 100%);
-  background: #a80000;
+  background: #97080A;
   font-size: 1em;
   font-weight: bold;
   margin-top: 30px;
@@ -218,7 +218,7 @@ input {
 
 .login label {
   text-size-adjust: 50px;
-  color: #a80000;
+  color: #97080A;
   transform: scale(0.6);
 }
 
@@ -239,6 +239,18 @@ input {
 .lembrar{
   margin-left: 10px;
 }
+
+.forgot-btn{
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #97080A;
+}
+
+.remember-container{
+  margin-top: 25px;
+}
+
 /* Responsividade: ajuste o tamanho visual da caixa sem alterar seu formato */
 @media (max-width: 430px) {
   .main {

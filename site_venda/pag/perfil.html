@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/perfil.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../css/menu.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kode+Mono:wght@400..700&family=Lexend:wght@100..900&family=Prata&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -15,7 +16,15 @@
     </header>
 
     <div class="cabecalho2">
-        <button><a href="../index.html"><img src="../img/home.png" alt="voltar" id="home"></a></button>
+        <div class="menu-options" id="centro_menu">
+            <a href="../index.html"  id="none_border">Ínicio</a>
+            <a href="./compraingresso.html">Garanta seu ingresso</a>
+            <a href="./qrcode.html">Ver meus ingressos</a>
+            <a href="./mapa.html">Mapa Da Pagina</a>
+            <a href="./misscaipira.html">Miss Caipíra</a>
+            <a href="./cadastro.html">Cadastro</a>
+        </div>
+        <button><img src="../img/loguot.png" alt="logout" id="botao_logout" class="botao_logout"></button>
     </div>
 
     <div class="container-perfil">
@@ -66,6 +75,7 @@
         </div>
     </div>
     <script src="../script/entrada.js"></script>
+    <script src="../script/menu.js"></script>
 </body>
 </html>
 
