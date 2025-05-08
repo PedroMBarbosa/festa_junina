@@ -48,11 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
       alert(`Bem-vindo, ${data.cliente?.nome || "usuário"}!`);
 
       // Grava dados principais no localStorage
-      localStorage.setItem("usuarioNome",     data.cliente?.nome     || "");
-      localStorage.setItem("usuarioEmail",    data.cliente?.email    || email);
+      localStorage.setItem("usuarioNome", data.cliente?.nome || "");
+      localStorage.setItem("usuarioEmail",data.cliente?.email || email);
       localStorage.setItem("usuarioTelefone", data.cliente?.telefone || "");
-      localStorage.setItem("usuarioSenha",    senha);
-      localStorage.setItem("tipo_perfil",    data.cliente?.tipo_perfil || "");
+      localStorage.setItem("usuarioSenha", senha);
+      localStorage.setItem('tipo_perfil', data.cliente?.tipo_perfil || "");
 
       // Novo: pega e salva o perfil_id para controle de permissões
       const perfilId = data.perfil_id ?? data.cliente?.perfil_id ?? null;
