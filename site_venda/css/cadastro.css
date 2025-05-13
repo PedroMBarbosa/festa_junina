@@ -292,27 +292,39 @@ input {
   color: #97080A;
 }
 
+@media (max-width: 1024px) {
+  .txt1 {
+    font-size: 35px;
+    margin-bottom: -10px;
+    margin-top: 30px;
+  }
+  .cont{
+    width: 100%;
+    font-size: 30px;
+    margin-top: -20px;
+  }
+}
 
 /* Responsividade: ajuste o tamanho visual da caixa sem alterar seu formato */
-@media (max-width: 800px) {
+@media (max-width: 600px) {
   header{
     display: flex;
   }
   .main {
-    transform: scale(0.55);
-    margin-left: -46%;
-    margin-right: auto;
+    transform: scale(0.65);
+    margin-left: -100px;
     
   }
   .logo{
-    margin-left: 100px;
+    margin-left: 140px;
   }
   .sup{
     width: 100%;
   }
   .txt1 {
-    font-size: 30px;
-    margin-left: -10px;
+    font-size: 25px;
+    margin-bottom: -10px;
+    margin-top: 30px;
   }
   .cabecario {
     width: 100%;
@@ -321,7 +333,9 @@ input {
   .cont{
     width: 100%;
     font-size: 20px;
+    margin-top: -260px;
   }
+
   .rodape{
     width: 100%;
     height: 50px;
