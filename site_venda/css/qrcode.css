@@ -160,11 +160,13 @@ h2 .icone-titulo {
 }
 
 
-.sup{
-    position: fixed;
-    bottom: 40px;
-    left: 33pc;
-  }
+.sup {
+    margin: 0 auto;
+    width: fit-content; /* Faz o elemento ajustar sua largura ao conteúdo */
+    position: relative; /* Garante que o posicionamento seja relativo ao fluxo normal */
+    bottom: 40px; /* A distância do rodapé */
+}
+
     .contato{
     font-size: 10px;
     margin-top: 50px;
