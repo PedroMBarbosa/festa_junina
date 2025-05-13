@@ -294,13 +294,13 @@ input {
 
 
 /* Responsividade: ajuste o tamanho visual da caixa sem alterar seu formato */
-@media (max-width: 500px) {
+@media (max-width: 800px) {
   header{
     display: flex;
   }
   .main {
     transform: scale(0.55);
-    margin-left: -150px;
+    margin-left: -46%;
     margin-right: auto;
     
   }

@@ -59,7 +59,7 @@
   #menu-options.ativo {
     display: none;
   }
-  @media(max-width:600px){
+  @media(max-width:800px){
     .icone_menu{
       width: 40px;  
       height: 40px;
