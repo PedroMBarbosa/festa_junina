@@ -303,12 +303,6 @@ input {
     font-size: 30px;
     margin-top: -20px;
   }
-
-  .menu-container {
-    width: 10px;
-    margin-right: 63.5pc;
-    position: absolute;
-  }
 }
 
 /* Responsividade: ajuste o tamanho visual da caixa sem alterar seu formato */
