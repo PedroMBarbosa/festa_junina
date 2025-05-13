@@ -1,6 +1,6 @@
 const menu = document.getElementById('menu');
 const opcoes = document.getElementById('menu-options2');
-const mediaQuery = window.matchMedia('(max-width: 1024px)' && '(max-width:600px)');
+const mediaQuery = window.matchMedia('(max-width: 1024px)');
 
 function abre_menu() {
     opcoes.style.display = 'grid';

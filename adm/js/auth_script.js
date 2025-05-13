@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       // === ALERT DE DEBUG ===
-      alert("Dados retornados da API:\n" + JSON.stringify(data, null, 2));
+      // alert("Dados retornados da API:\n" + JSON.stringify(data, null, 2));
 
       if (!response.ok) {
         console.error("Erro do servidor:", data);
@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert(`Bem-vindo, ${data.cliente?.nome || "usuário"}!`);
 
       // Grava dados principais no localStorage
+      localStorage.setItem("usuarioId", data.cliente?.id || "");
       localStorage.setItem("usuarioNome", data.cliente?.nome || "");
       localStorage.setItem("usuarioEmail",data.cliente?.email || email);
       localStorage.setItem("usuarioTelefone", data.cliente?.telefone || "");
