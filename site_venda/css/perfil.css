@@ -25,7 +25,7 @@ header{
 }
 .botao_logout{
     margin-right: 0;
-    margin-left: 1800px;
+    margin-left: 88.5pc;
     width: 60px;
     height: 60px;
 }
@@ -242,11 +242,67 @@ input{
     font-size: 20px;
     font-family: sans-serif;
   }
-  @media (max-width: 500px) {
+  
+  @media (max-width: 1024px) {
+    .menu-container {
+      margin-right: auto;
+    }
+
+    .senai {
+      position: absolute;
+      margin-left: 10px;
+    }
+
+    .botao_logout {
+      margin-left: 59pc;
+    }
+
+    .menu-options {
+      display: none;
+    }
+
+    #centro_menu {
+      display: none;
+    }
+
+    .rodape{
+      background-color: #97080A;
+      margin-top: 40px;
+      height: 70px;
+      user-select: none;
+      bottom: 0;
+      left: 0;
+      z-index: 999;
+    }
+
+    .cont b {
+      font-size: 30px;
+    }
+
+    .foto-user {
+      margin-left: -5pc;
+      margin-top: 20px;
+    }
+  }
+
+  @media (max-width: 600px) {
   .container-perfil {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+  }
+
+  .perfil {
+    margin-left: 109px;
+  }
+
+  .menu-container {
+    margin-right: auto;
+  }
+
+  .senai {
+    position: absolute;
+    margin-left: 10px;
   }
 
   .dados {
@@ -257,6 +313,7 @@ input{
 
   .foto-user {
     width: 200px;
+    margin: 0 auto;
   }
 
   #editar-btn {
@@ -285,5 +342,9 @@ input{
   .botao_logout {
     margin-left: auto;
     margin-right: 10px;
+  }
+
+  .cont b {
+    font-size: 25px;
   }
 }

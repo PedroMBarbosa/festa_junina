@@ -416,6 +416,27 @@ select {
     font-size: 30px;
   }
   
+@media (max-width: 1024px) {
+    .carrinho{
+        width: 50%;
+        height: 20pc;
+        margin-top: 25px;
+    }
+
+    .mensagem-centro p {
+        font-size: 32px;
+    }
+
+    .mensagem-centro g {
+        font-size: 27px;
+    }
+
+    .menu-container {
+        width: 10px;
+        margin-right: 63.5pc;
+        position: absolute;
+    }
+}
 
 @media(max-width: 600px){
     header{

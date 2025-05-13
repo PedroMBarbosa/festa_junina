@@ -60,10 +60,9 @@ main {
 }
 
 .mapa-img {
-    width: 100%;
+    width: 60%;
     max-width: 90%;
     height: auto;
-    border: 1px solid #ccc;
 }
 
 .sup{
@@ -104,8 +103,21 @@ main {
     font-size: 30px;
   }
   
+@media (max-width: 1024px) {
+    .mapa-img {
+        width: 80%;
+        max-width: 90%;
+        height: auto;
+    }
 
-@media (max-width: 500px) {
+    .menu-container {
+        width: 10px;
+        margin-right: 63.5pc;
+        position: absolute;
+    }
+}
+
+@media (max-width: 600px) {
     header{
         display: flex;
         flex-direction: row;
@@ -128,7 +140,7 @@ main {
     .usuario img {
         width: 40px;
         position: absolute;
-        left: 360px;
+        left: 20px;
         margin-top: -10px; 
     }
 
