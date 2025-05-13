@@ -1,3 +1,29 @@
+function mostrarModal(mensagem, tipo = "info") {
+    const modal = document.getElementById("myModal");
+    const textoModal = document.getElementById("texto_modal");
+    const fecharModal = document.getElementById("close_modal");
+
+    textoModal.textContent = mensagem;
+
+    modal.classList.remove("modal-success", "modal-error");
+    if (tipo === "sucesso") modal.classList.add("modal-success");
+    if (tipo === "erro") modal.classList.add("modal-error");
+
+    modal.style.display = "block";
+
+    fecharModal.onclick = () => {
+      modal.style.display = "none";
+    };
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    setTimeout(() => {
+      modal.style.display = "none";
+    }, 3000);
+  }
 function alterarQtd(item, incremento) {
     const qtdElement = document.getElementById(`qtd-${item}`);
     let qtdAtual = parseInt(qtdElement.textContent);
@@ -21,6 +47,7 @@ function alterarQtd(item, incremento) {
     });
 
     if (totalSelecionado > 5) {
+        mostrarModal("Você só pode reservar até 5 ingressos por pedido")
         return; // cancela se passar do limite
     }
 
@@ -178,11 +205,16 @@ function montarPedido(quantidadeTipos) {
         console.log(data)
         if (statusOk) {
           console.log("Novo usuário:", data);
-          window.location.href="./qrcode.html"
+          mostrarModal("Ingressos reservados com sucesso")
+          setTimeout(()=>{
+                window.location.href="./qrcode.html"
+            }, 3000);
         } else {
+            mostrarModal("Houve algum erro ao reservar os ingressos, verifique se você está conectado a alguma conta")
         }
       })
       .catch(error => {
+        mostrarModal("Houve algum erro ao reservar os ingressos, verifique se você está conectado a alguma conta")
         console.error("Erro na requisição:", error);
       });
 }

@@ -3,6 +3,33 @@ document.addEventListener("DOMContentLoaded", function () {
   const urlUsuarios = `${apiBase}/CadastrarCliente`;
   const urlLogin = `${apiBase}/LoginCliente`;
 
+  function mostrarModal(mensagem, tipo = "info") {
+    const modal = document.getElementById("myModal");
+    const textoModal = document.getElementById("texto_modal");
+    const fecharModal = document.getElementById("close_modal");
+
+    textoModal.textContent = mensagem;
+
+    modal.classList.remove("modal-success", "modal-error");
+    if (tipo === "sucesso") modal.classList.add("modal-success");
+    if (tipo === "erro") modal.classList.add("modal-error");
+
+    modal.style.display = "block";
+
+    fecharModal.onclick = () => {
+      modal.style.display = "none";
+    };
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    setTimeout(() => {
+      modal.style.display = "none";
+    }, 3000);
+  }
+
   function estaLogado() {
     return localStorage.getItem("usuarioEmail") && localStorage.getItem("usuarioSenha");
   }
@@ -41,21 +68,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const data = await response.json();
 
-      if (response.ok) {
-        localStorage.setItem("usuarioNome", data.cliente?.nome || "");
-        localStorage.setItem("usuarioEmail", data.cliente?.email || email);
-        localStorage.setItem("usuarioTelefone", data.cliente?.telefone || "");
+      if (response.ok && data.cliente) {
+        localStorage.setItem("usuarioNome", data.cliente.nome || "");
+        localStorage.setItem("usuarioEmail", data.cliente.email || email);
+        localStorage.setItem("usuarioTelefone", data.cliente.telefone || "");
         localStorage.setItem("usuarioSenha", senha);
-        localStorage.setItem("clienteId", data.cliente?.id || "");
+        localStorage.setItem("clienteId", data.cliente.id || "");
+
+        mostrarModal("Você entrou na sua conta com sucesso!", "sucesso");
 
         if (redirecionar) {
-          window.location.href = caminhoPerfil;
+          setTimeout(() => {
+            window.location.href = caminhoPerfil;
+          }, 3000);
         }
+        return true;
       } else {
-
+        mostrarModal("Email ou senha incorretos. Tente novamente.", "erro");
+        return false;
       }
     } catch (error) {
-
+      mostrarModal("Erro ao tentar fazer login. Verifique sua conexão.", "erro");
+      return false;
     }
   }
 
@@ -78,33 +112,34 @@ document.addEventListener("DOMContentLoaded", function () {
         const data = await response.json();
 
         if (response.ok) {
-
-          await fazerLogin(email, senha);
-          window.location.href="../pag/compraingresso.html" // login automático
+          await fazerLogin(email, senha, false);
+          mostrarModal("Cadastro realizado com sucesso!", "sucesso");
+          setTimeout(() => {
+            window.location.href = "../pag/compraingresso.html";
+          }, 3000);
         } else {
-
+          mostrarModal("Seu cadastro deu errado. Verifique os dados e tente novamente.", "erro");
         }
       } catch (error) {
-
+        mostrarModal("Erro de conexão ao tentar cadastrar. Tente novamente.", "erro");
       }
     });
   }
 
   const formLogin = document.getElementById("loginForm");
   if (formLogin) {
-    formLogin.addEventListener("submit", function (event) {
+    formLogin.addEventListener("submit", async function (event) {
       event.preventDefault();
       const email = document.getElementById("loginEmail").value;
       const senha = document.getElementById("loginSenha").value;
       const lembrar = document.getElementById("lembrarUsuario")?.checked;
 
-      fazerLogin(email, senha).then(() => {
-        if (lembrar) {
-          localStorage.setItem("lembrarUsuario", "true");
-        } else {
-          localStorage.removeItem("lembrarUsuario");
-        }
-      });
+      const sucesso = await fazerLogin(email, senha, true);
+      if (sucesso && lembrar) {
+        localStorage.setItem("lembrarUsuario", "true");
+      } else {
+        localStorage.removeItem("lembrarUsuario");
+      }
     });
   }
 
@@ -124,13 +159,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const data = await response.json();
 
         if (response.ok) {
-
-          window.location.href = "login.html";
+          mostrarModal("Link de recuperação enviado para seu email.", "sucesso");
         } else {
-
+          mostrarModal("Erro ao solicitar nova senha. Verifique o email.", "erro");
         }
       } catch (error) {
-  
+        mostrarModal("Erro de conexão ao solicitar nova senha.", "erro");
       }
     });
   }
