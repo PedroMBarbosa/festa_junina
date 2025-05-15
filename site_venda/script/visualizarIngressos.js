@@ -3,8 +3,9 @@ const urlUsuarios = `${apiBase}/CadastrarCliente`;
 const urlLogin = `${apiBase}/LoginCliente`;
 
 let ingressoIdParaDeletar = null;
+let ingressoGuidParaDeletar = null;
 
-function mostrarModal(mensagem, tipo = "info", ingressoId = null) {
+function mostrarModal(mensagem, tipo = "info", ingressoId = null, ingressoGuid = null) {
     const modal = document.getElementById("myModal");
     const textoModal = document.getElementById("texto_modal");
     const fecharModal = document.getElementById("close_modal");
@@ -19,6 +20,7 @@ function mostrarModal(mensagem, tipo = "info", ingressoId = null) {
     modal.style.display = "block";
 
     ingressoIdParaDeletar = ingressoId
+    ingressoGuidParaDeletar = ingressoGuid
 
     fecharModal.onclick = () => {
         modal.style.display = "none";
@@ -31,15 +33,17 @@ function mostrarModal(mensagem, tipo = "info", ingressoId = null) {
 
     botaoOk.onclick = async function () {
         if (ingressoIdParaDeletar !== null) {
-            await deletarIngresso(ingressoIdParaDeletar);
+            await deletarIngresso(ingressoIdParaDeletar, ingressoGuidParaDeletar);
             ingressoIdParaDeletar = null;
+            ingressoGuidParaDeletar = null;
             modal.style.display = "none";
         }
     };
 }
 
-function abrirModal(id) {
+function abrirModal(id, guid) {
     ingressoIdParaDeletar = id;
+    ingressoGuidParaDeletar = guid;
     document.getElementById("myModal").style.display = "block";
 }
 
@@ -47,21 +51,23 @@ function abrirModal(id) {
 document.getElementById("botao_cancelar").onclick = () => {
     document.getElementById("myModal").style.display = "none";
     ingressoIdParaDeletar = null;
+    ingressoGuidParaDeletar = null;
 };
 
 // Confirmar e excluir o ingresso
 document.getElementById("botao_confirmar").onclick = async () => {
     if (ingressoIdParaDeletar !== null) {
-        await deletarIngresso(ingressoIdParaDeletar);
+        await deletarIngresso(ingressoIdParaDeletar, ingressoGuidParaDeletar);
         ingressoIdParaDeletar = null;
+        ingressoGuidParaDeletar = null;
         document.getElementById("myModal").style.display = "none";
     }
 };
 
 // Mova a função deletarIngresso para o escopo global
-async function deletarIngresso(id) {
+async function deletarIngresso(id, guid) {
     try {
-        const response = await fetch(`http://10.90.146.37/api/api/Ingresso/CancelarIngresso/${id}`, {
+        const response = await fetch(`http://10.90.146.37/api/api/Ingresso/CancelarIngresso/${id}/${guid}`, {
             method: "DELETE"
         });
 
@@ -143,9 +149,9 @@ async function visualizarIngresso() {
                                 <img src="http://10.90.146.37/qrcodes/${ingresso.qrcode}.png" alt="QR Code" id="qrcode">
                                 <p class="status ${statusClass}">Pedido ${tipo}</p>
                                 <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
-                                <span id="valor">R$6.00"</span></p>
+                                <span id="valor">R$6.00</span></p>
                                 <div class="btns"> 
-                                    <button onclick="abrirModal(${ingresso.id})">Cancelar</button>
+                                    <button onclick="abrirModal(${ingresso.id}, '${ingresso.guid}')">Cancelar</button>
                                 </div>
                                 <p class="aviso">*Trazer documento com foto no dia da festa*</p>
                             </div>
@@ -161,7 +167,7 @@ async function visualizarIngresso() {
                                 <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
                                 <span id="valor">R$6.00</span></p>
                                 <div class="btns">  
-                                    <button onclick="abrirModal(${ingresso.id})">Cancelar</button>
+                                    <button onclick="abrirModal(${ingresso.id}, '${ingresso.guid}')">Cancelar</button>
                                 </div>
                                 <p class="aviso">*Trazer documento com foto no dia da festa*</p>
                             </div>
@@ -192,9 +198,9 @@ async function visualizarIngresso() {
                                 <img src="http://10.90.146.37/qrcodes/${ingresso.qrcode}.png" alt="QR Code" id="qrcode">
                                 <p class="status ${statusClass}">Pedido ${tipo}</p>
                                 <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
-                                <span id="valor">R$${lote.valor_un.toFixed(2) || "10,00"}</span></p>
+                                <span id="valor">R$${lote.valor_un?.toFixed(2) || "10,00"}</span></p>
                                 <div class="btns"> 
-                                    <button onclick="abrirModal(${ingresso.id})">Cancelar</button>
+                                    <button onclick="abrirModal(${ingresso.id}, '${ingresso.guid}')">Cancelar</button>
                                 </div>
                                 <p class="aviso">*Trazer documento com foto no dia da festa*</p>
                             </div>
@@ -208,9 +214,9 @@ async function visualizarIngresso() {
                                 <img src="../img/qrcodeBorrado.png" alt="QR Code" id="qrcode">
                                 <p class="status ${statusClass}">Pedido ${tipo}</p>
                                 <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
-                                <span id="valor">R$${lote.valor_un.toFixed(2) || "10,00"}</span></p>
+                                <span id="valor">R$${lote.valor_un?.toFixed(2) || "10,00"}</span></p>
                                 <div class="btns">  
-                                    <button onclick="abrirModal(${ingresso.id})">Cancelar</button>
+                                    <button onclick="abrirModal(${ingresso.id}, '${ingresso.guid}')">Cancelar</button>
                                 </div>
                                 <p class="aviso">*Trazer documento com foto no dia da festa*</p>
                             </div>
@@ -224,7 +230,7 @@ async function visualizarIngresso() {
                                 <img src="../img/a64784b6-eb50-4131-a1af-2694027ee471.png" alt="QR Code" id="qrcode">
                                 <p class="status ${statusClass}">Pedido ${tipo}</p>
                                 <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
-                                <span id="valor">R$${lote.valor_un.toFixed(2) || "10,00"}</span></p>
+                                <span id="valor">R$${lote.valor_un?.toFixed(2) || "10,00"}</span></p>
                                 <div class="btns">  
                                     <button id="botao_cancelar">Cancelar</button>
                                 </div>
