@@ -56,17 +56,22 @@ body {
 }
 
 .icone-perfil {
-  width: 60px;  
-  height: 60px;
+  width: 63px;
+  height: 63px;
+  cursor: pointer;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
 }
 
 header{
-  background-color: white;
-  height: 84px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 20px;
+    text-align: center;
+    margin-bottom: 5.2pc;
 }
 
 #carouselExampleIndicators{
@@ -84,15 +89,18 @@ header{
   background-color: #97080A;
   height: 600px;
   top: 0%;
-  padding-top: 60px;
 }
 
 .senai{
-  height: 60px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 15px;
+    height: 60px;
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .bemvindo{
@@ -280,17 +288,7 @@ margin-top: 60px;
     width: 40px;  
     height: 40px;
   }
-  
-  header {
-    background-color: white;
-    height: 84px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-  }
-  
+
   #carouselExampleIndicators {
     width: 80%;
     margin: 0 auto;
@@ -307,14 +305,7 @@ margin-top: 60px;
     height: auto;
     padding-top: 40px;
     padding-bottom: 40px;
-  }
-  
-  .senai {
-    height: 40px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 20px;
+    display: flex;
   }
   
   .bemvindo {

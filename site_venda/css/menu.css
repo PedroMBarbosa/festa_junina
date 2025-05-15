@@ -1,13 +1,19 @@
 .icone_menu{
-    width: 40px;  
+    width: 40px;
     height: 40px;
     display: none;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    z-index: 2;
   }
+
   .menu-options {
     background-color: #97080A;
     color: white;
     font-family: Arial, sans-serif;
-    padding: 2px 20px;
+    padding: 40px;
     position: relative;
     display: flex;
     justify-content: center;
@@ -15,22 +21,21 @@
     margin-right: auto;
 }
   .menu-options2{
-    color: rgb(255, 255, 255);
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    background-color: white;
-    text-align: center;
-    margin-top: 24px;
+    color: #97080A;
     display: none;
+    grid-template-columns: 1fr;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
     border-radius: 0 0 10px 10px;
-    z-index: 1;
     position: absolute;
+    top: 80px; /* Ajuste de acordo com a altura do menu */
+    left: 0;
+    width: 100%;
+    z-index: 1;
   }
   .menu-options2 a{
-    display: none;
     color: #97080A;
     font-size: 15px;
-    margin-left: 20px;
     padding: 10px;
     border-radius: 10px;
     margin-top: 15px;
@@ -42,7 +47,6 @@
     margin-left: 0;
     margin-right: 0;
     padding:5px;
-    margin-top: 15px;
     border-left: 2px solid white;
     text-decoration: none;
   }
@@ -81,13 +85,12 @@
     .menu-options2{
       color: rgb(255, 255, 255);
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
       background-color: white;
       text-align: center;
       margin-top: 24px;
       display: none;
       border-radius: 0 0 10px 10px;
-      z-index: 2;
+      z-index: 999;
     }
     .menu-options2 a{
       color: #97080A;
@@ -96,6 +99,7 @@
       padding: 10px;
       border-radius: 10px;
       margin-top: 15px;
+      font-style: oblique;
     }
     .menu-options a{
       color: white;
@@ -132,6 +136,7 @@
       margin-top: 20px;
       margin-left: 20px;
       display: inline;
+      position: absolute;
     }
     .menu-options{
       color: rgb(255, 255, 255);
@@ -143,23 +148,17 @@
       top: 10,5%;
     }
     .menu-options2{
-      color: rgb(255, 255, 255);
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      background-color: white;
-      text-align: center;
-      margin-top: 24px;
-      display: none;
-      border-radius: 0 0 10px 10px;
-      z-index: 2;
+      grid-template-columns: 1fr;
+      left: 0;
+      right: 0;
+      margin: 0;
+      width: 100%;
+      border-radius: 0;
     }
     .menu-options2 a{
-      color: #97080A;
-      font-size: 15px;
-      margin-left: 20px;
-      padding: 10px;
-      border-radius: 10px;
-      margin-top: 15px;
+      margin-left: 0;
+        padding: 15px;
+        font-size: 18px;
     }
     .menu-options a{
       color: white;
