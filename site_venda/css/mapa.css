@@ -41,7 +41,8 @@ header {
     width: 63px;
     height: 63px;
     cursor: pointer;
-    margin-right: 20px;
+    margin-right: 0;
+    position: relative;
     display: flex;
     align-items: center;
     gap: 1px;
