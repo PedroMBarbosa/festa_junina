@@ -9,8 +9,14 @@
     <title>Meus Ingressos - SENAI</title>
 </head>
 <body>
-    <header>
-        <div class="menu-container">
+  <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="close_modal">&times;</span>
+        <p id="texto_modal"></p>
+        <button class="botao_ok" onclick="deletarIngresso()">OK</button>
+      </div>
+    </div>
+    <div class="menu-container">
             <img src="../img/menu.png" class="icone_menu" id="menu">
             <div class="menu-options2" id="menu-options2">
               <a href="../index.html"  id="none_border">Ínicio</a>
@@ -21,6 +27,7 @@
               <a href="./cadastro.html">Criar/Entrar na conta</a>
             </div>
           </div>
+    <header>
         <img src="../img/SENAI_São_Paulo_logo.png" alt="SENAI" class="logo-senai">
         <a href="./cadastro.html"><img src="../img/icone_perfil.png" alt="Ícone" class="icone-perfil" id="botao_perfil"></a>
     </header>
@@ -41,6 +48,7 @@
 
 
     <div class="container">
+
     </div>
 
     <div class="sup">

@@ -225,10 +225,6 @@ h2 .icone-titulo {
         z-index: 999;
     }
 
-    .sup {
-
-    }
-
     .sup1 {
         width: 220px;
         margin-bottom: 50px;
@@ -239,13 +235,17 @@ h2 .icone-titulo {
         margin-right: 63.5pc;
         position: absolute;
     }
+    .navbar {
+        background-color: #97080A;
+        padding: 40px;
+    }
 }
 
 @media(max-width:600px){
     header{
         display: flex;
     }
-
+    
     .sup b {
         font-size: 21.5px;
     }
@@ -253,5 +253,10 @@ h2 .icone-titulo {
     .sup1 {
         width: 190px;
         margin-bottom: 50px;
+    }
+
+    .navbar {
+        background-color: #97080A;
+        padding: 40px;
     }
 }
