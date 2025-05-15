@@ -277,6 +277,9 @@
       padding: 10px 0;
       display: flex;
     }
+    .icone_menu{
+      border:#000 solid;
+    }
     
     header img {
       height: 60px;

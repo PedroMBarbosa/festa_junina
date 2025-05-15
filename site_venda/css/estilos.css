@@ -549,48 +549,114 @@ margin-top: 60px;
     margin-left: -20px;
   }
 }
-@media (max-width: 600px) {
-  .t1 {
-    font-size: 25px;
-  }
-
-  .cdp {
-    font-size: 20px;
-  }
-
+@media (max-width: 480px) {
   .bot1,
   .bot2 {
-    width: 220px;
-    height: 55px;
-    font-size: 14px;
-    margin-left: -3px;
+    width: 150px;
+    height: 50px;
+    margin-left: -20px;
   }
 
   .container_botao {
     display: flex;
-    gap: 10px;
+    gap: 35px;
     width: 100%;
     height: 20px;
     align-items: center;
     margin-top: -40px;
-    margin-left: -1.4pc;
+    border: black solid;
   }
 
   .tt1, .tt2 {
-    font-size: 16px;
+    font-size: 11px;
+    
   }
 
   .t1 {
     font-size: 30px;
     color: #97080A;
-    position: absolute;
+    position:absolute;
     margin-top: 140px;
     width: 25pc;
-    margin-right: 200px;
-    text-align: justify;
+    margin-left: -85px;
+    text-align: center;
+    
+ 
   }
 
+  .cdp {
+    font-size: 15px;
+    color: black;
+    position: absolute;
+    margin-top: 155px;
+    width: 25pc;
+    margin-left: -85px;
+    text-align: center;
+    
 
+ 
+  }
 
+  .bemvindo {
+    background-color: white;
+    text-align: center;
+    width: 100%;
+    height: 35pc;
+    padding: 100px;
+
+  }
+
+  .subtitulo {
+    font-size: 30px;
+    
+  }
+
+  .texto {
+    width: 100%;
+    
+  }
+
+  .t3 {
+    font-size: 20px;
+  }
+
+  .t5 {
+    font-size: 20px;
+  }
+
+  .t6 {
+    font-size: 20px;
+  }
+
+  .t7 {
+    font-size: 20px;
+    text-align: start;
+  }
+
+  .texto img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .sup1 {
+    width: 180px;
+    height: 40px;
+    font-size: 18px;
+    
+  }
+
+  .rod1 {
+    font-size: 16px;
+    
+  }
+
+  .rodape {
+    background-color: #97080A;
+    user-select: none;
+    width: 110.5%;
+  }
+  body{
+
+  width: 110.5%;
+  }
 }
-
