@@ -144,8 +144,11 @@ h2 .icone-titulo {
 
 
 .sup {
-    position: absolute;
-    bottom: 20px; /* Distância do rodapé */
+    display: flex;
+    position:relative;
+    justify-content: center;
+    align-items: center;
+    bottom: 20px; 
     left: 50%;
     transform: translateX(-50%);
     padding: 15px 30px;
@@ -167,8 +170,7 @@ h2 .icone-titulo {
         font-size: 20px;
         color: white;
         border: none;
-        margin-bottom: 30px;
-        margin-left: 8pc;
+        margin-left: 11pc;
     }
     .rodape{
         background-color: #97080A;
@@ -224,13 +226,12 @@ h2 .icone-titulo {
     }
 
     .sup {
-        position: fixed;
-        bottom: 40px;
-        left: 240px;
+
     }
 
     .sup1 {
         width: 220px;
+        margin-bottom: 50px;
     }
 
     .menu-container {
@@ -245,17 +246,12 @@ h2 .icone-titulo {
         display: flex;
     }
 
-    .sup {
-        position: fixed;
-        bottom: 40px;
-        left: 50px;
-    }
-
     .sup b {
-        font-size: 23px;
+        font-size: 21.5px;
     }
 
     .sup1 {
-        width: 220px;
+        width: 190px;
+        margin-bottom: 50px;
     }
 }
