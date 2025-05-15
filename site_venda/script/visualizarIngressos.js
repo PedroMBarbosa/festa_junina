@@ -1,6 +1,36 @@
+const apiBase = "http://10.90.146.37/api/api/Clientes";
+  const urlUsuarios = `${apiBase}/CadastrarCliente`;
+  const urlLogin = `${apiBase}/LoginCliente`;
+
+  function mostrarModal(mensagem, tipo = "info") {
+    const modal = document.getElementById("myModal");
+    const textoModal = document.getElementById("texto_modal");
+    const fecharModal = document.getElementById("close_modal");
+
+    textoModal.textContent = mensagem;
+
+    modal.classList.remove("modal-success", "modal-error");
+    if (tipo === "sucesso") modal.classList.add("modal-success");
+    if (tipo === "erro") modal.classList.add("modal-error");
+
+    modal.style.display = "block";
+
+    fecharModal.onclick = () => {
+      modal.style.display = "none";
+    };
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    setTimeout(() => {
+      modal.style.display = "none";
+    }, 3000);
+  }
 // Mova a função deletarIngresso para o escopo global
 async function deletarIngresso(id) {
-    const confirmacao = confirm("Tem certeza que deseja deletar este ingresso cancelado?");
+    const confirmacao = mostrarModal("Deseja cancelar a reserva do ingresso?")
     if (!confirmacao) return;
 
     try {
