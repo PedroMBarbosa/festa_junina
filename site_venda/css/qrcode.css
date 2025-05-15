@@ -1,33 +1,20 @@
-.faixa-vermelha {
-    background-color: #97080A; /* Cor vermelha */
-    padding: 20px;
-    font-weight: bold;
-    display: flex; /* Usar flexbox para alinhar os itens */
-    justify-content: space-between; /* Espaçar os itens ao máximo */
-    align-items: center; /* Alinhar verticalmente ao centro */
-    border: 0px;
-}
-.faixa-branca {
-    background-color: #FFFFFF; /* Cor branca */
-    padding: 1px;
-    font-weight: bold;
-
-}
-
-.icone-esquerda {
-    max-width: 30px; /* Ajuste o tamanho conforme necessário */
-    height: auto;
-}
-
-.icone-direita {
-    max-width: 30px; /* Ajuste o tamanho conforme necessário */
-    height: auto;
+.icone-perfil {
+    width: 63px;
+    height: 63px;
+    cursor: pointer;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    margin-top: 10px;
 }
 
 /* Restante dos seus estilos CSS (mantenha-os) */
 body {
     font-family: sans-serif;
     margin: 0;
+    padding: 0;
+    min-height: 100vh;
     color: #333;
     height: 100%;
     display: flex;
@@ -35,23 +22,19 @@ body {
 }
 
 header {
-    background-color: #ffffff; 
-    color: white;
-    padding: 15px;
-    text-align: center;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 20px;
+    margin-bottom: 0.5pc;
 }
 
-header h1 {
+.logo-senai {
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    height: 60px;
     margin: 0;
-    font-size: 24px;
-    color: #000; /* Cor do texto do título */
-}
-
-header img {
-    max-width: 200px;
-    height: auto;
-    display: block;
-    margin: 0 auto 10px;/*margem senai bai*/
 }
 
 h2 {
@@ -161,10 +144,13 @@ h2 .icone-titulo {
 
 
 .sup {
-    margin: 0 auto;
-    width: fit-content; /* Faz o elemento ajustar sua largura ao conteúdo */
-    position: relative; /* Garante que o posicionamento seja relativo ao fluxo normal */
-    bottom: 40px; /* A distância do rodapé */
+    position: absolute;
+    bottom: 20px; /* Distância do rodapé */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 30px;
+    border-radius: 10px;
+    z-index: 999;
 }
 
     .contato{
@@ -173,29 +159,27 @@ h2 .icone-titulo {
   }
 
     .sup1{
-    background-color: #97080A;
-    border-radius: 40px;
-    width: 170px;
-    height: 50px;
-    margin-top: 20px;
-    font-size: 20px;
-    color: white;
-    border: none;
-    margin-bottom: 30px;
-    margin-left: 9pc;
-  }
+        background-color: #97080A;
+        border-radius: 40px;
+        width: 170px;
+        height: 50px;
+        margin-top: 20px;
+        font-size: 20px;
+        color: white;
+        border: none;
+        margin-bottom: 30px;
+        margin-left: 8pc;
+    }
     .rodape{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #97080A;
-    height: 50px;
-    text-align: center;
-    color: white;
-    user-select: none;
-    z-index: 999;
-  }
+        background-color: #97080A;
+        height: 50px;
+        text-align: center;
+        color: white;
+        user-select: none;
+        width: 100%;
+        margin-top: auto; /* Empurra o rodapé para o final */
+        line-height: 50px;
+    }
     .rod1{
     color: #97080A;
   }

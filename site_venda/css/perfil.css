@@ -1,32 +1,45 @@
 body{
     margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .senai{
-    height: 60px;
+  height: 60px;
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
  
 header{
-    background-color: white;
-    width: 100%;
-    height: 84px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+    justify-content: flex-end;
+    padding: 10px 20px;
+    text-align: center;
+    margin-bottom: 5pc;
 }
 
-.cabecalho2{
-    background-color: #97080A;
-    width: 100%;
-    height: 64px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    display: flex;
-}
 .botao_logout{
     margin-right: 0;
     margin-left: 88.5pc;
+    margin-top: 8px;
+    width: 63px;
+    height: 60px;
+    position: absolute;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.botao_logout img{
     width: 60px;
     height: 60px;
 }
@@ -229,12 +242,16 @@ input{
     border: none;
   }
     .rodape{
-    background-color: #97080A;
-    margin-bottom: 0;
-    margin-top: 30px;
-    height: 50px;
-    user-select: none;
-  }
+      background-color: #97080A;
+      height: 50px;
+      text-align: center;
+      color: white;
+      user-select: none;
+      width: 100%;
+      margin-top: auto; /* Empurra o rodapé para o final */
+      line-height: 50px; /* Centraliza verticalmente */
+      margin-top: 10px;
+    }
     .rod1{
     color: #97080A;
   }
@@ -245,6 +262,11 @@ input{
   }
   
   @media (max-width: 1024px) {
+    .navbar {
+        background-color: #97080A;
+        padding: 40px;
+    }
+
     .menu-container {
       margin-right: auto;
     }
@@ -287,6 +309,15 @@ input{
   }
 
   @media (max-width: 600px) {
+    header {
+      margin-bottom: 1pc;
+    }
+
+    .navbar {
+        background-color: #97080A;
+        padding: 40px;
+    }
+
   .container-perfil {
     flex-direction: column;
     align-items: center;

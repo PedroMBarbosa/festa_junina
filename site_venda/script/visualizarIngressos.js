@@ -28,7 +28,6 @@ async function visualizarIngresso() {
         const urlIngressos = `http://10.90.146.37/api/api/Ingresso/ConsultarIngresso/${idLogado}`;
         const urlUsuarios = `http://10.90.146.37/api/api/Usuario`;
         const urlLotes = `http://10.90.146.37/api/api/Lote`;
-        const urlDeleta = `http://10.90.146.37/api/api/CancelarIngresso`;
 
         // Faz as duas requisições em paralelo
         const [resIngressos, resUsuarios, resLotes] = await Promise.all([
@@ -99,7 +98,7 @@ async function visualizarIngresso() {
                         <div class="card-topo">Ingressos Adquiridos</div>
                         <div class="card-conteudo">
                             <p>PDV: <span id="nome">${nomeUsuario}</span></p>
-                            <img src="../img/a64784b6-eb50-4131-a1af-2694027ee471.png" alt="QR Code" id="qrcode">
+                            <img src="../img/qrcodeBorrado.png" alt="QR Code" id="qrcode">
                             <p class="status ${statusClass}">Pedido ${tipo}</p>
                             <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
                             <span id="valor">R$${lote.valor_un.toFixed(2) || "10,00"}</span></p>

@@ -150,15 +150,98 @@ function atualizarTotal() {
     }
     document.getElementById('total').textContent = total.toFixed(2);
 }
-window.onload = adicionarCarrinho;
+window.onload = () => {
+    adicionarCarrinho();
+    carregarLoteAtivo();
+    carregarIngressosRestantes();
+    carregarPrecos();
+}
 
+async function carregarIngressosRestantes() {
+    try{
+        const urlIngresso = await fetch('http://10.90.146.37/api/api/Ingresso');
+        const dataIngresso = await urlIngresso.json();
+
+        const urlLote = await fetch('http://10.90.146.37/api/api/Lote');
+        const dataLote = await urlLote.json();
+
+        // console.log(dataIngresso);
+        // console.log(dataLote)
+
+        const loteAtivo = dataLote.find(i => i.ativo == 1);
+
+        if(loteAtivo == null){
+            console.error("Nenhum lote ativo encontrado.");
+            document.getElementById("ingressos-restantes").textContent = "Nenhum lote ativo no momento.";
+            return;
+        }
+        
+        const ingressosVendidos = dataIngresso.filter(i => (i.lote_id == loteAtivo.id));
+        const ingressosRestantes = loteAtivo.qtd_total - ingressosVendidos.length;
+
+        document.getElementById("ingressos-restantes").textContent = `${ingressosRestantes}`;
+
+    }
+    catch (error) {
+        console.error("Erro ao carregar os ingressos restantes", error);
+        mostrarModal("Erro ao carregar os ingressos restantes.", "erro");
+    }
+}
+
+async function carregarLoteAtivo() {
+    try {
+        const response = await fetch("http://10.90.146.37/api/api/Lote");
+        const data = await response.json();
+
+        const valorFiltrado = data.find(i => i.ativo == 1);
+
+        if(valorFiltrado != null){
+            document.getElementById("lote-ativo").textContent = `Lote Ativo: ${valorFiltrado.id}`;
+        }
+        else{
+            document.getElementById("lote-ativo").textContent = `Nenhum lote ativo no momento`;
+        }
+        // document.querySelector('.lote_ativo :nth-child(2)').textContent = `R$${precos.aluno}`;
+
+    } catch (error) {
+        console.error("Erro ao carregar os preços dos ingressos:", error);
+        mostrarModal("Erro ao carregar os preços dos ingressos.", "erro");
+    }
+}
+
+async function carregarPrecos() {
+    try {
+        const response = await fetch("http://10.90.146.37/api/api/Lote");
+        const data = await response.json();
+
+        const valorFiltrado = data.find(i => i.ativo == 1);
+
+        const precos = {
+            aluno: valorFiltrado.valor_un,
+            comunidade: valorFiltrado.valor_un,
+            colaborador: valorFiltrado.valor_un,
+            familiar: valorFiltrado.valor_un,
+            infantil: (valorFiltrado.valor_un / 2).toFixed(2)
+        };
+
+        document.querySelector('.item-1 span:nth-child(2)').textContent = `R$${precos.aluno}`;
+        document.querySelector('.item-2 span:nth-child(2)').textContent = `R$${precos.comunidade}`;
+        document.querySelector('.item-3 span:nth-child(2)').textContent = `R$${precos.colaborador}`;
+        document.querySelector('.item-4 span:nth-child(2)').textContent = `R$${precos.familiar}`;
+        document.querySelector('.item-5 span:nth-child(2)').textContent = `R$6`;
+
+    } catch (error) {
+        console.error("Erro ao carregar os preços dos ingressos:", error);
+        mostrarModal("Erro ao carregar os preços dos ingressos.", "erro");
+    }
+}
 
 function montarPedido(quantidadeTipos) {
 
     quantidadeTipos = qtdTipos;
 
     const urlPedido = 'http://10.90.146.37/api/api/Ingresso/ReservaIngressos';
-
+     
     const emailLogado = localStorage.getItem("usuarioEmail");
     const senhaLogado = localStorage.getItem("usuarioSenha");
     const idLogado = localStorage.getItem("clienteId");
