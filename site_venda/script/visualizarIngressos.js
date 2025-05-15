@@ -1,19 +1,74 @@
+const apiBase = "http://10.90.146.37/api/api/Clientes";
+const urlUsuarios = `${apiBase}/CadastrarCliente`;
+const urlLogin = `${apiBase}/LoginCliente`;
+
+let ingressoIdParaDeletar = null;
+
+function mostrarModal(mensagem, tipo = "info", ingressoId = null) {
+    const modal = document.getElementById("myModal");
+    const textoModal = document.getElementById("texto_modal");
+    const fecharModal = document.getElementById("close_modal");
+    const botaoOk = document.getElementById("botao_ok");
+
+    textoModal.textContent = mensagem;
+
+    modal.classList.remove("modal-success", "modal-error");
+    if (tipo === "sucesso") modal.classList.add("modal-success");
+    if (tipo === "erro") modal.classList.add("modal-error");
+
+    modal.style.display = "block";
+
+    ingressoIdParaDeletar = ingressoId
+
+    fecharModal.onclick = () => {
+        modal.style.display = "none";
+    };
+    window.onclick = function (event) {
+        if (event.target === modal) {
+        modal.style.display = "none";
+        }
+    };
+
+    botaoOk.onclick = async function () {
+        if (ingressoIdParaDeletar !== null) {
+            await deletarIngresso(ingressoIdParaDeletar);
+            ingressoIdParaDeletar = null;
+            modal.style.display = "none";
+        }
+    };
+}
+
+function abrirModal(id) {
+    ingressoIdParaDeletar = id;
+    document.getElementById("myModal").style.display = "block";
+}
+
+// Fechar o modal sem excluir
+document.getElementById("botao_cancelar").onclick = () => {
+    document.getElementById("myModal").style.display = "none";
+    ingressoIdParaDeletar = null;
+};
+
+// Confirmar e excluir o ingresso
+document.getElementById("botao_confirmar").onclick = async () => {
+    if (ingressoIdParaDeletar !== null) {
+        await deletarIngresso(ingressoIdParaDeletar);
+        ingressoIdParaDeletar = null;
+        document.getElementById("myModal").style.display = "none";
+    }
+};
+
 // Mova a função deletarIngresso para o escopo global
 async function deletarIngresso(id) {
-    const confirmacao = confirm("Tem certeza que deseja deletar este ingresso cancelado?");
-    if (!confirmacao) return;
-
     try {
         const response = await fetch(`http://10.90.146.37/api/api/Ingresso/CancelarIngresso/${id}`, {
             method: "DELETE"
         });
 
         if (response.ok) {
-
             visualizarIngresso(); // recarrega os ingressos após a exclusão
         } else {
             const erro = await response.json();
-
         }
     } catch (error) {
 
@@ -90,6 +145,7 @@ async function visualizarIngresso() {
                                 <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
                                 <span id="valor">R$6.00"</span></p>
                                 <div class="btns"> 
+                                    <button onclick="abrirModal(${ingresso.id})">Cancelar</button>
                                 </div>
                                 <p class="aviso">*Trazer documento com foto no dia da festa*</p>
                             </div>
@@ -105,7 +161,7 @@ async function visualizarIngresso() {
                                 <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
                                 <span id="valor">R$6.00</span></p>
                                 <div class="btns">  
-                                    <button onclick="deletarIngresso(${ingresso.id})">Cancelar</button>
+                                    <button onclick="abrirModal(${ingresso.id})">Cancelar</button>
                                 </div>
                                 <p class="aviso">*Trazer documento com foto no dia da festa*</p>
                             </div>
@@ -138,6 +194,7 @@ async function visualizarIngresso() {
                                 <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
                                 <span id="valor">R$${lote.valor_un.toFixed(2) || "10,00"}</span></p>
                                 <div class="btns"> 
+                                    <button onclick="abrirModal(${ingresso.id})">Cancelar</button>
                                 </div>
                                 <p class="aviso">*Trazer documento com foto no dia da festa*</p>
                             </div>
@@ -153,7 +210,7 @@ async function visualizarIngresso() {
                                 <p><span id="lote">${ingresso.lote_id || "1"}º Lote</span><br>
                                 <span id="valor">R$${lote.valor_un.toFixed(2) || "10,00"}</span></p>
                                 <div class="btns">  
-                                    <button onclick="deletarIngresso(${ingresso.id})">Cancelar</button>
+                                    <button onclick="abrirModal(${ingresso.id})">Cancelar</button>
                                 </div>
                                 <p class="aviso">*Trazer documento com foto no dia da festa*</p>
                             </div>
@@ -175,7 +232,6 @@ async function visualizarIngresso() {
                             </div>`;
                     }
                 }
-
             });
         } else {
 
