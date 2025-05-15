@@ -35,3 +35,19 @@ mediaQuery.addEventListener('change', function (e) {
     // Quando a tela muda de tamanho, sempre fechamos o menu visualmente.
     fecha_menu();
 });
+
+document.getElementById("toggle-senha").addEventListener("click", function (e) {
+    e.preventDefault();
+    const inputSenha = document.getElementById("input-senha");
+    const eyeIcon = document.getElementById("eye-icon");
+
+    if (inputSenha.type === "password") {
+        inputSenha.type = "text";
+        eyeIcon.src = "../img/eye-open.png";  // Ícone de olho aberto
+        eyeIcon.alt = "Mostrar senha";
+    } else {
+        inputSenha.type = "password";
+        eyeIcon.src = "../img/eye-close.png";  // Ícone de olho fechado
+        eyeIcon.alt = "Esconder senha";
+    }
+});
