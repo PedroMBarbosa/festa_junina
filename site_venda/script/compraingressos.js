@@ -93,7 +93,6 @@ function removerItem(item) {
 }
 
 async function atualizarListaCarrinho() {
-
     try {
         const urlLote = await fetch('http://10.90.146.37/api/api/Lote');
         const dataLote = await urlLote.json();
@@ -141,7 +140,11 @@ async function atualizarListaCarrinho() {
     }
 }
 
-function atualizarTotal() {
+async function atualizarTotal() {
+    const urlLote = await fetch('http://10.90.146.37/api/api/Lote');
+    const dataLote = await urlLote.json();
+
+    const loteAtivo = dataLote.find(i => i.ativo == 1);
     let total = 0;
     for (const item in carrinhoItens) {
         let preco;
@@ -150,10 +153,10 @@ function atualizarTotal() {
             case 'comunidade':
             case 'colaborador':
             case 'familiar':
-                preco = 10.00;
+                preco = loteAtivo.valor_un;
                 break;
             case 'infantil':
-                preco = 5.00;
+                preco = 6.00;
                 break;
         }
         total += preco * carrinhoItens[item];
@@ -260,7 +263,7 @@ async function montarPedido(quantidadeTipos) {
     const idLogado = localStorage.getItem("clienteId");
     console.log("id: " + idLogado, " - Email: " + emailLogado);
 
-    const tiposId = [5, 2, 1, 4, 3];
+    const tiposId = [1, 2, 3, 5, 4];
 
     const pedidos = [];
 
@@ -303,7 +306,7 @@ async function montarPedido(quantidadeTipos) {
           console.log("Novo usuário:", data);
           mostrarModal("Ingressos reservados com sucesso")
           setTimeout(()=>{
-                window.location.href="./qrcode.html"
+                // window.location.href="./qrcode.html"
             }, 3000);
         } else {
             mostrarModal("Houve algum erro ao reservar os ingressos, verifique se você está conectado a alguma conta")
