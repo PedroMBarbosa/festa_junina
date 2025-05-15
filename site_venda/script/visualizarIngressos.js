@@ -40,6 +40,7 @@ async function visualizarIngresso() {
         const usuarios = await resUsuarios.json();
         const lotes = await resLotes.json();
 
+
         if (resIngressos.ok && resUsuarios.ok) {
             console.log("Ingressos:", ingressos);
             console.log("Usuários:", usuarios);
