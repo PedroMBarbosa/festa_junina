@@ -92,42 +92,52 @@ function removerItem(item) {
     atualizarTotal();
 }
 
-function atualizarListaCarrinho() {
-    const listaCarrinho = document.getElementById('lista-carrinho');
-    listaCarrinho.innerHTML = '';
-    for (const item in carrinhoItens) {
-        let nomeItem;
-        let preco;
-        switch (item) {
-            case 'aluno':
-                nomeItem = 'Aluno';
-                preco = 10.00;
-                break;
-            case 'comunidade':
-                nomeItem = 'Comunidade';
-                preco = 10.00;
-                break;
-            case 'colaborador':
-                nomeItem = 'Colaborador';
-                preco = 10.00;
-                break;
-            case 'familiar':
-                nomeItem = 'Familiar';
-                preco = 10.00;
-                break;
-            case 'infantil':
-                nomeItem = 'Infantil (até 10 anos)';
-                preco = 5.00;
-                break;
+async function atualizarListaCarrinho() {
+
+    try {
+        const urlLote = await fetch('http://10.90.146.37/api/api/Lote');
+        const dataLote = await urlLote.json();
+
+        const loteAtivo = dataLote.find(i => i.ativo == 1);
+
+        const listaCarrinho = document.getElementById('lista-carrinho');
+        listaCarrinho.innerHTML = '';
+        for (const item in carrinhoItens) {
+            let nomeItem;
+            let preco;
+            switch (item) {
+                case 'aluno':
+                    nomeItem = 'Aluno';
+                    preco = loteAtivo.valor_un;
+                    break;
+                case 'comunidade':
+                    nomeItem = 'Comunidade';
+                    preco = loteAtivo.valor_un;
+                    break;
+                case 'colaborador':
+                    nomeItem = 'Colaborador';
+                    preco = loteAtivo.valor_un;
+                    break;
+                case 'familiar':
+                    nomeItem = 'Familiar';
+                    preco = loteAtivo.valor_un;
+                    break;
+                case 'infantil':
+                    nomeItem = 'Infantil (até 10 anos)';
+                    preco = 6.00;
+                    break;
+            }
+            const li = document.createElement('li');
+            li.innerHTML = `
+                ${nomeItem} R$${preco.toFixed(2)} <span>${String(carrinhoItens[item]).padStart(2, '0')}</span>
+                <button onclick="removerItem('${item}')">
+                    <img src="../img/lixeira.png" alt="Remover" class="icone-lixeira">
+                </button>
+            `;
+            listaCarrinho.appendChild(li);
         }
-        const li = document.createElement('li');
-        li.innerHTML = `
-            ${nomeItem} R$${preco.toFixed(2)} <span>${String(carrinhoItens[item]).padStart(2, '0')}</span>
-            <button onclick="removerItem('${item}')">
-                <img src="../img/lixeira.png" alt="Remover" class="icone-lixeira">
-            </button>
-        `;
-        listaCarrinho.appendChild(li);
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -150,6 +160,7 @@ function atualizarTotal() {
     }
     document.getElementById('total').textContent = total.toFixed(2);
 }
+
 window.onload = () => {
     adicionarCarrinho();
     carregarLoteAtivo();
@@ -164,9 +175,6 @@ async function carregarIngressosRestantes() {
 
         const urlLote = await fetch('http://10.90.146.37/api/api/Lote');
         const dataLote = await urlLote.json();
-
-        // console.log(dataIngresso);
-        // console.log(dataLote)
 
         const loteAtivo = dataLote.find(i => i.ativo == 1);
 
@@ -192,7 +200,7 @@ async function carregarLoteAtivo() {
     try {
         const response = await fetch("http://10.90.146.37/api/api/Lote");
         const data = await response.json();
-
+        
         const valorFiltrado = data.find(i => i.ativo == 1);
 
         if(valorFiltrado != null){
@@ -236,11 +244,16 @@ async function carregarPrecos() {
     }
 }
 
-function montarPedido(quantidadeTipos) {
+async function montarPedido(quantidadeTipos) {
 
     quantidadeTipos = qtdTipos;
 
     const urlPedido = 'http://10.90.146.37/api/api/Ingresso/ReservaIngressos';
+
+    const response = await fetch("http://10.90.146.37/api/api/Lote");
+    const data = await response.json();
+        
+    const valorFiltrado = data.find(i => i.ativo == 1);
      
     const emailLogado = localStorage.getItem("usuarioEmail");
     const senhaLogado = localStorage.getItem("usuarioSenha");
@@ -263,7 +276,7 @@ function montarPedido(quantidadeTipos) {
                 data: "2025-05-06T11:32:12.597Z",
                 tipo_ingresso_id: tipoId,
                 usuario_id: 1, // ou quem estiver logado
-                lote_id: 1,
+                lote_id: valorFiltrado.id,
                 status_id: 0,
                 cliente_id: idLogado,
                 guid: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
