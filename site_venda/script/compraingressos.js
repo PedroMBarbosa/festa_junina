@@ -306,7 +306,7 @@ async function montarPedido(quantidadeTipos) {
           console.log("Novo usuário:", data);
           mostrarModal("Ingressos reservados com sucesso")
           setTimeout(()=>{
-                // window.location.href="./qrcode.html"
+                window.location.href="./qrcode.html"
             }, 3000);
         } else {
             mostrarModal("Houve algum erro ao reservar os ingressos, verifique se você está conectado a alguma conta")
