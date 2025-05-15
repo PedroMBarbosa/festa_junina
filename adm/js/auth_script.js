@@ -62,10 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
       mostrarModal(`Bem-vindo, ${data.cliente?.nome || "usuário"}!`)
       // Grava dados principais no localStorage
       localStorage.setItem("usuarioId", data.cliente?.id || "");
-      localStorage.setItem("usuarioNome", data.cliente?.nome || "");
-      localStorage.setItem("usuarioEmail",data.cliente?.email || email);
-      localStorage.setItem("usuarioTelefone", data.cliente?.telefone || "");
-      localStorage.setItem("usuarioSenha", senha);
+      localStorage.setItem("usuarioNome1", data.cliente?.nome || "");
+      localStorage.setItem("usuarioEmail1",data.cliente?.email || email);
+      localStorage.setItem("usuarioTelefone1", data.cliente?.telefone || "");
+      localStorage.setItem("usuarioSenha1", senha);
       localStorage.setItem('tipo_perfil', data.cliente?.tipo_perfil || "");
 
       // Novo: pega e salva o perfil_id para controle de permissões
