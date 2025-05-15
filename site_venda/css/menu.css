@@ -24,7 +24,6 @@
     color: #97080A;
     display: none;
     grid-template-columns: 1fr;
-    background-color: rgb(255, 255, 255);
     text-align: center;
     border-radius: 0 0 10px 10px;
     position: absolute;
@@ -57,7 +56,7 @@
     border-radius: 10px;
     text-decoration: none;
     color: #97080A;
-    background-color: #ffffff;
+    background-color: rgb(132, 132, 132);
   }
   #menu-options {
     display: flex;
@@ -83,14 +82,14 @@
       top: 10,5%;
     }
     .menu-options2{
-      color: rgb(255, 255, 255);
+      color: rgb(132, 132, 132);
       display: grid;
-      background-color: white;
       text-align: center;
       margin-top: 24px;
       display: none;
       border-radius: 0 0 10px 10px;
-      z-index: 999;
+      z-index: 88;
+      width: 10%;
     }
     .menu-options2 a{
       color: #97080A;
@@ -100,6 +99,7 @@
       border-radius: 10px;
       margin-top: 15px;
       font-style: oblique;
+      background-color:rgb(171, 166, 166);
     }
     .menu-options a{
       color: white;
@@ -139,7 +139,7 @@
       position: absolute;
     }
     .menu-options{
-      color: rgb(255, 255, 255);
+      color: rgb(132, 132, 132);
       display: none;
       background-color: #97080A;
       text-align: center;
@@ -159,6 +159,7 @@
       margin-left: 0;
         padding: 15px;
         font-size: 18px;
+        background-color:rgb(171, 166, 166);
     }
     .menu-options a{
       color: white;

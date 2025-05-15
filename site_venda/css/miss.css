@@ -64,6 +64,7 @@
     flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
+    z-index: 1;
   }
   
   .imagem {
@@ -253,10 +254,14 @@
 
     .menu-container {
         width: 10px;
-        margin-right: 63.5pc;
         position: absolute;
     }
-
+    .menu_options2{
+      width: 100%;
+      z-index: 2;
+      position: absolute;
+      margin-right: 0;
+    }
     .navbar {
         background-color: #97080A;
         padding: 40px;
