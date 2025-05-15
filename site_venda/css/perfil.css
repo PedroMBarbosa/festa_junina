@@ -127,6 +127,7 @@ header{
     border-radius: 8px;
     display: flex;
     align-items: center;
+    margin-bottom: 4px;
 }
 
 .info-item1{
@@ -135,6 +136,7 @@ header{
     border-radius: 8px;
     display: flex;
     align-items: center;
+    margin-bottom: 4px;
 }
   
 
@@ -361,6 +363,7 @@ input{
   .info-container {
     width: 90%;
     margin-top: 50px;
+    
   }
 
   header {
