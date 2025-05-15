@@ -97,28 +97,34 @@ document.addEventListener("DOMContentLoaded", function () {
       const nome = document.getElementById("nome").value;
       const email = document.getElementById("email").value;
       const senha = document.getElementById("senha").value;
+      const confirmaSenha = document.getElementById("confirmSenha").value;
       const telefone = document.getElementById("telefone").value;
 
-      try {
-        const response = await fetch(urlUsuarios, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ nome, email, senha, telefone })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          await fazerLogin(email, senha, false);
-          mostrarModal("Cadastro realizado com sucesso!", "sucesso");
-          setTimeout(() => {
-            window.location.href = "../pag/compraingresso.html";
-          }, 3000);
-        } else {
-          mostrarModal("Seu cadastro deu errado. Verifique os dados e tente novamente.", "erro");
+      if(senha == confirmaSenha){
+        try {
+          const response = await fetch(urlUsuarios, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, email, senha, telefone })
+          });
+  
+          const data = await response.json();
+  
+          if (response.ok) {
+            await fazerLogin(email, senha, false);
+            mostrarModal("Cadastro realizado com sucesso!", "sucesso");
+            setTimeout(() => {
+              window.location.href = "../pag/compraingresso.html";
+            }, 3000);
+          } else {
+            mostrarModal("Seu cadastro deu errado. Verifique os dados e tente novamente.", "erro");
+          }
+        } catch (error) {
+          mostrarModal("Erro de conexão ao tentar cadastrar. Tente novamente.", "erro");
         }
-      } catch (error) {
-        mostrarModal("Erro de conexão ao tentar cadastrar. Tente novamente.", "erro");
+      }
+      else{
+        mostrarModal("Senhas não coincidem, tente novamente", "erro");
       }
     });
   }
