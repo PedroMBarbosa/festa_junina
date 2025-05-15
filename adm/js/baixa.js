@@ -44,7 +44,7 @@ function carregarUsuarios() {
     fetch('http://10.90.146.37/api/api/Pedidos').then(res => res.json()),
     fetch('http://10.90.146.37/api/api/Ingresso').then(res => res.json()),
     fetch('http://10.90.146.37/api/api/Usuario').then(res => res.json())
-  ])
+  ])    
     .then(([pedidos, ingressos, usuariosApi]) => {
       usuarios = []; // Limpa o array antes de popular
       const usuariosMap = {};

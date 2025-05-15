@@ -29,15 +29,12 @@ document.addEventListener("DOMContentLoaded", function () {
       modal.style.display = "none";
     }, 3000);
   }
-
-  function estaLogado() {
-    return localStorage.getItem("usuarioEmail") && localStorage.getItem("usuarioSenha");
-  }
-
   const estaNaPastaPag = window.location.pathname.includes("/pag/");
   const caminhoPerfil = estaNaPastaPag ? "./perfil.html" : "./pag/perfil.html";
   const caminhoCadastro = estaNaPastaPag ? "./cadastro.html" : "./pag/cadastro.html";
-
+  function estaLogado() {
+  return localStorage.getItem("usuarioEmail") && localStorage.getItem("usuarioSenha");
+}
   const botaoPerfil = document.getElementById("botao_perfil");
   if (botaoPerfil) {
     botaoPerfil.addEventListener("click", function (event) {
@@ -52,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = caminhoCadastro;
     }
   }
-
+  
   ["garanta", "ver", "garanta2", "ver2"].forEach(id => {
     const btn = document.getElementById(id);
     if (btn) btn.addEventListener("click", validarLoginOuRedirecionar);
@@ -159,9 +156,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const data = await response.json();
 
         if (response.ok) {
-          mostrarModal("Link de recuperação enviado para seu email.", "sucesso");
+          mostrarModal("Link de recuperação enviado para seu email, pode demorar demorar para o email de recupeção para chegar o email", "sucesso");
         } else {
-          mostrarModal("Erro ao solicitar nova senha. Verifique o email.", "erro");
+          mostrarModal("Erro ao solicitar nova senha. Verifique ou insira o email.", "erro");
         }
       } catch (error) {
         mostrarModal("Erro de conexão ao solicitar nova senha.", "erro");

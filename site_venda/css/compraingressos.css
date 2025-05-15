@@ -383,7 +383,9 @@ select {
   .contato b{
     font-size: 30px;
   }
-  
+  .aviso{
+    color:#97080A;
+  }
 @media (max-width: 1024px) {
     .carrinho{
         width: 50%;
